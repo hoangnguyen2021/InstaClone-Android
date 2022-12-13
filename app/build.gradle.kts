@@ -65,6 +65,7 @@ dependencies {
     kapt(DaggerHilt.hiltCompiler)
 
     implementation(project(Module.core))
+    implementation(project(Module.coreUi))
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
