@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.And
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -69,6 +71,7 @@ dependencies {
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
+    implementation(AndroidX.coreSplashScreen)
 
     implementation(Google.material)
 
