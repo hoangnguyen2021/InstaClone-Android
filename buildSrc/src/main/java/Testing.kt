@@ -1,7 +1,6 @@
 object Testing {
     private const val junitVersion = "4.13.2"
     private const val junitAndroidExtVersion = "1.1.4"
-    private const val coroutinesTestVersion = "1.6.4"
     private const val truthVersion = "1.1.3"
     private const val mockkVersion = "1.13.3"
     private const val turbineVersion = "0.12.1"
@@ -10,7 +9,7 @@ object Testing {
 
     const val junit4 = "junit:junit:$junitVersion"
     const val junitAndroidExt = "androidx.test.ext:junit:$junitAndroidExtVersion"
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Coroutines.version}"
     const val truth = "com.google.truth:truth:$truthVersion"
     const val mockk = "io.mockk:mockk:$mockkVersion"
     const val mockkAndroid = "io.mockk:mockk-android:$mockkVersion"

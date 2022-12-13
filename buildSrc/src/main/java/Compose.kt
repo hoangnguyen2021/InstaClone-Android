@@ -1,10 +1,8 @@
 object Compose {
     const val composeVersion = "1.3.2"
     const val composeMaterial3 = "1.0.1"
-    private const val navigationVersion = "2.5.3"
-    private const val hiltNavigationComposeVersion = "1.0.0"
-    private const val activityComposeVersion = "1.6.1"
-    private const val lifecycleVersion = "2.5.1"
+    private const val hiltNavigationVersion = "1.0.0"
+    private const val pagingComposeVersion = "1.0.0-rc1"
 
     const val animation = "androidx.compose.animation:animation:$composeVersion"
     const val compiler = "androidx.compose.compiler:compiler:$composeVersion"
@@ -13,8 +11,9 @@ object Compose {
     const val ui = "androidx.compose.ui:ui:$composeVersion"
     const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$composeVersion"
 
-    const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
-    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion"
-    const val activityCompose = "androidx.activity:activity-compose:$activityComposeVersion"
-    const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion"
+    const val navigation = "androidx.navigation:navigation-compose:${Navigation.version}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion"
+    const val activityCompose = "androidx.activity:activity-compose:${Activity.version}"
+    const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Lifecycle.version}"
+    const val pagingCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
 }
