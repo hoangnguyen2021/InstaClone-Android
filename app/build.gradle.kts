@@ -6,7 +6,6 @@ plugins {
 }
 
 android {
-    namespace = ProjectConfig.namespace
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
@@ -53,6 +52,7 @@ dependencies {
     implementation(Compose.animation)
     implementation(Compose.compiler)
     implementation(Compose.ui)
+    debugImplementation(Compose.uiTooling)
     implementation(Compose.uiToolingPreview)
     implementation(Compose.hiltNavigationCompose)
     implementation(Compose.material3)

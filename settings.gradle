@@ -16,3 +16,4 @@ rootProject.name = "InstaClone"
 include ':app'
 include ':core'
 include ':onboarding'
+include ':core-ui'

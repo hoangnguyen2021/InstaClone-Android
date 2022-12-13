@@ -9,6 +9,7 @@ object Compose {
     const val material3 = "androidx.compose.material3:material3:$composeMaterial3"
     const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
     const val ui = "androidx.compose.ui:ui:$composeVersion"
+    const val uiTooling = "androidx.compose.ui:ui-tooling:$composeVersion"
     const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$composeVersion"
 
     const val navigation = "androidx.navigation:navigation-compose:${Navigation.version}"
