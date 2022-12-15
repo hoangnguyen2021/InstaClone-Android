@@ -1,4 +1,4 @@
-package myapp.hoang.core_ui
+package myapp.hoang.core_ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import myapp.hoang.core_ui.*
 
 @Composable
 fun PrimaryButton(
@@ -42,8 +43,8 @@ fun PrimaryButton(
 @Composable
 fun PrimaryButtonPreview() {
     InstaCloneTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            Row {
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.Center) {
                 PrimaryButton("Follow", {})
             }
         }
@@ -85,9 +86,68 @@ fun SecondaryButton(
 @Composable
 fun SecondaryButtonPreview() {
     InstaCloneTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            Row {
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.Center) {
                 SecondaryButton("Message", {})
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun AddPostButtonPreview() {
+    InstaCloneTheme {
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                IconButton({}) {
+                    NewPostIcon()
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun NotificationButtonPreview() {
+    InstaCloneTheme {
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                IconButton({}) {
+                    HeartIcon()
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MessageButtonPreview() {
+    InstaCloneTheme {
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                IconButton({}) {
+                    MessageIcon()
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun HomeButtonPreview() {
+    InstaCloneTheme {
+        Surface(modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.Center) {
+                IconButton({}) {
+                    HomeUnselectedIcon()
+                }
+                IconButton({}) {
+                    HomeSelectedIcon()
+                }
             }
         }
     }
