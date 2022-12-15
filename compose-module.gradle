@@ -28,19 +28,22 @@ android {
         }
     }
     compileOptions {
-        coreLibraryDesugaringEnabled true
-
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        resources.excludes.add("/META-INF/LICENSE.md")
+        resources.excludes.add("META-INF/LICENSE-notice.md")
+    }
 }
 
 dependencies {
     implementation Compose.compiler
     implementation Compose.ui
+    debugImplementation Compose.uiTooling
     implementation Compose.uiToolingPreview
     implementation Compose.hiltNavigationCompose
     implementation Compose.material3

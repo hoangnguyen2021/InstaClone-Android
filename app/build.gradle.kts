@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.And
-
 plugins {
     id("com.android.application")
     kotlin("android")

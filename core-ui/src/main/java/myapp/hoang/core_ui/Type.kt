@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.ui.theme
+package myapp.hoang.core_ui
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
