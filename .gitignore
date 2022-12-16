@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+buildSrc/build/pluginUnderTestMetadata/plugin-under-test-metadata.properties
+.idea/deploymentTargetDropDown.xml
