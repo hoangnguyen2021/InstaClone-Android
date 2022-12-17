@@ -15,7 +15,7 @@ fun NewPostIcon() {
 @Composable
 fun HeartIcon() {
     Icon(
-        painter = painterResource(id = R.drawable.ic_heart),
+        painter = painterResource(id = R.drawable.ic_heart_notifications),
         contentDescription = "Notifications"
     )
 }
@@ -31,7 +31,7 @@ fun MessageIcon() {
 @Composable
 fun HomeUnselectedIcon() {
     Icon(
-        painter = painterResource(id = R.drawable.ic_home_unselected),
+        painter = painterResource(id = R.drawable.ic_home_outline),
         contentDescription = "Home"
     )
 }
@@ -39,7 +39,87 @@ fun HomeUnselectedIcon() {
 @Composable
 fun HomeSelectedIcon() {
     Icon(
-        painter = painterResource(id = R.drawable.ic_home_selected),
+        painter = painterResource(id = R.drawable.ic_home_fill),
         contentDescription = "Home"
+    )
+}
+
+@Composable
+fun SearchUnselectedIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_search_outline),
+        contentDescription = "Search"
+    )
+}
+
+@Composable
+fun SearchSelectedIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_search_fill),
+        contentDescription = "Search"
+    )
+}
+
+@Composable
+fun ReelsUnselectedIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_reels_outline),
+        contentDescription = "Reels"
+    )
+}
+
+@Composable
+fun ReelsSelectedIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_reels_fill),
+        contentDescription = "Reels"
+    )
+}
+
+@Composable
+fun ShopUnselectedIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_shop_outline),
+        contentDescription = "Shop"
+    )
+}
+
+@Composable
+fun ShopSelectedIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_shop_fill),
+        contentDescription = "Shop"
+    )
+}
+
+@Composable
+fun SaveIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_save_outline),
+        contentDescription = "Save"
+    )
+}
+
+@Composable
+fun UnsaveIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_save_fill),
+        contentDescription = "Unsave"
+    )
+}
+
+@Composable
+fun LikeIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_heart_outline),
+        contentDescription = "Like"
+    )
+}
+
+@Composable
+fun UnlikeIcon() {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_heart_fill),
+        contentDescription = "Unlike"
     )
 }
