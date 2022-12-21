@@ -2,6 +2,8 @@ package myapp.hoang.core_ui
 
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 
 @Composable
@@ -121,5 +123,35 @@ fun UnlikeIcon() {
     Icon(
         painter = painterResource(id = R.drawable.ic_heart_fill),
         contentDescription = "Unlike"
+    )
+}
+
+@Composable
+fun CancelIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_cancel),
+        contentDescription = "Like",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun PasswordHiddenIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_password_hidden),
+        contentDescription = "Hide password",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun PasswordShownIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_password_shown),
+        contentDescription = "Show password",
+        modifier = modifier,
+        tint = color
     )
 }
