@@ -49,6 +49,10 @@ android {
 }
 
 dependencies {
+    implementation(project(Module.core))
+    implementation(project(Module.coreUi))
+    implementation(project(Module.onBoarding))
+
     implementation(Compose.animation)
     implementation(Compose.compiler)
     implementation(Compose.ui)
@@ -63,9 +67,6 @@ dependencies {
 
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
-
-    implementation(project(Module.core))
-    implementation(project(Module.coreUi))
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
