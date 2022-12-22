@@ -76,14 +76,14 @@ private val OnboardingColorScheme = lightColorScheme(
     primaryContainer = MidnightGreen,
     onPrimaryContainer = White,
     secondary = MidnightGreen,
-    onSecondary = AliceBlue,
-    tertiary = LightGray,
-    onTertiary = Blue,
+    onSecondary = GrayBlue,
+    tertiaryContainer = Blue,
+    onTertiaryContainer = White,
     background = MidnightGreen,
     onBackground = WeldonBlue,
     surface = Black,
     onSurface = White,
-    outline = GrayBlue
+    outline = LightBlue
 )
 
 @Composable

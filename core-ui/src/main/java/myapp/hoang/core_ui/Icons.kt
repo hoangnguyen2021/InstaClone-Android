@@ -1,10 +1,16 @@
 package myapp.hoang.core_ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun NewPostIcon() {
@@ -154,4 +160,56 @@ fun PasswordShownIcon(color: Color, modifier: Modifier = Modifier) {
         modifier = modifier,
         tint = color
     )
+}
+
+@Composable
+fun GradientInstagramIcon(modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.instagram_logo),
+        contentDescription = "Instagram logo",
+        modifier = modifier,
+        tint = Unspecified
+    )
+}
+
+@Composable
+fun MetaIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.logo_meta_platforms_inc_white),
+        contentDescription = "Meta logo",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Preview
+@Composable
+fun OnBoardingIconsPreview() {
+    OnBoardingTheme {
+        Surface(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.3f)
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier
+                    .background(
+                        brush = onBoardingBackgroundBrush
+                    )
+                    .padding(
+                        horizontal = LocalDimension.current.small
+                    )
+            ) {
+                GradientInstagramIcon(
+                    modifier = Modifier.size(LocalDimension.current.eightExtraLarge)
+                )
+                MetaIcon(
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier
+                        .size(LocalDimension.current.fiveExtraLarge)
+                )
+            }
+        }
+    }
 }

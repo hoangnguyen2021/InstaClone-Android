@@ -28,7 +28,7 @@ fun UsernameTextField(
     onValueChange: (String) -> Unit,
     label: String
 ) {
-    var borderColor by remember { mutableStateOf(GrayBlue) }
+    var isFocused by remember { mutableStateOf(false) }
 
     TextField(
         value = value,
@@ -41,19 +41,22 @@ fun UsernameTextField(
         ),
         modifier = Modifier
             .fillMaxWidth()
+            .height(LocalDimension.current.sevenExtraLarge)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .border(
                 width = 1.dp,
-                color = borderColor,
+                color = if (isFocused) AliceBlue else GrayBlue,
                 shape = RoundedCornerShape(LocalDimension.current.extraSmall)
             )
+            .padding(vertical = LocalDimension.current.extraSmall)
             .onFocusChanged { focusState ->
-                borderColor = if (focusState.isFocused) AliceBlue else GrayBlue
+                isFocused = focusState.isFocused
             },
-        textStyle = MaterialTheme.typography.displayMedium,
+        textStyle = MaterialTheme.typography.bodyLarge,
         label = {
             Text(
                 text = label,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = if (isFocused) AliceBlue else MaterialTheme.colorScheme.onPrimary
             )
         },
         trailingIcon = if (value.isNotEmpty()) {
@@ -95,33 +98,36 @@ fun PasswordTextField(
         ),
         modifier = Modifier
             .fillMaxWidth()
+            .height(LocalDimension.current.sevenExtraLarge)
+            .background(MaterialTheme.colorScheme.primaryContainer)
             .border(
                 width = 1.dp,
                 color = if (isFocused) AliceBlue else GrayBlue,
                 shape = RoundedCornerShape(LocalDimension.current.extraSmall)
             )
+            .padding(vertical = LocalDimension.current.extraSmall)
             .onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
             },
-        textStyle = MaterialTheme.typography.displayMedium,
+        textStyle = MaterialTheme.typography.bodyLarge,
         label = {
             Text(
                 text = label,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = if (isFocused) AliceBlue else MaterialTheme.colorScheme.onPrimary
             )
         },
         trailingIcon = {
             if (!isFocused) { null }
             else if (isPasswordHidden) {
                 PasswordHiddenIcon(
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.mediumLarge)
                         .clickable { isPasswordHidden = false }
                 )
             } else {
                 PasswordShownIcon(
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.mediumLarge)
                         .clickable { isPasswordHidden = true }
@@ -142,7 +148,7 @@ fun PasswordTextField(
 
 @Preview
 @Composable
-fun UsernameTextFieldPreview() {
+fun OnBoardingTextFieldsPreview() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -150,7 +156,7 @@ fun UsernameTextFieldPreview() {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.2f)
+                .fillMaxHeight(0.3f)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

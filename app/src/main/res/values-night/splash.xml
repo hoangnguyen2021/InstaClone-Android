@@ -2,7 +2,7 @@
 <resources>
     <style name="Theme.InstaClone.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#FF000000</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/instagram_logo</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/instagram_logo_mini</item>
         <item name="postSplashScreenTheme">@style/Theme.InstaClone</item>
     </style>
 </resources>

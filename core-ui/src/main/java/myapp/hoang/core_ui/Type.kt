@@ -40,6 +40,17 @@ val MainTypography = Typography(
     )
 )
 
+val proximaNovaFamily = FontFamily(
+    Font(R.font.proximanova_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.proximanova_medium, FontWeight.Medium, FontStyle.Normal),
+)
+
+val arabotoFamily = FontFamily(
+    Font(R.font.araboto_light, FontWeight.Light, FontStyle.Normal),
+    Font(R.font.araboto_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.araboto_medium, FontWeight.Medium, FontStyle.Normal),
+)
+
 val shoikaFontFamily = FontFamily(
     Font(R.font.shoika_medium, FontWeight.Medium, FontStyle.Normal),
     Font(R.font.shoika_medium_italic, FontWeight.Medium, FontStyle.Italic),
@@ -50,12 +61,19 @@ val shoikaFontFamily = FontFamily(
 )
 
 val OnBoardingTypography = Typography(
-    displayMedium = TextStyle(
-        fontFamily = shoikaFontFamily,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+    displayLarge = TextStyle(
+        fontFamily = arabotoFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 15.sp,
+        lineHeight = 22.sp,
         letterSpacing = 0.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.4.sp,
     ),
     bodyLarge = TextStyle(
         fontFamily = shoikaFontFamily,
