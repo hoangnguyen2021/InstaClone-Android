@@ -62,7 +62,7 @@ fun UsernameTextField(
         trailingIcon = if (value.isNotEmpty()) {
             {
                 CancelIcon(
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.medium)
                         .clickable { onValueChange("") }
@@ -185,4 +185,60 @@ fun OnBoardingTextFieldsPreview() {
             }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MobileNumberField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String
+) {
+    var isFocused by remember { mutableStateOf(false) }
+
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            cursorColor = White,
+            selectionColors = TextSelectionColors(Turquoise, Verdigris)
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.sevenExtraLarge)
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .border(
+                width = 1.dp,
+                color = if (isFocused) AliceBlue else GrayBlue,
+                shape = RoundedCornerShape(LocalDimension.current.extraSmall)
+            )
+            .padding(vertical = LocalDimension.current.extraSmall)
+            .onFocusChanged { focusState ->
+                isFocused = focusState.isFocused
+            },
+        textStyle = MaterialTheme.typography.bodyLarge,
+        label = {
+            Text(
+                text = label,
+                color = if (isFocused) AliceBlue else MaterialTheme.colorScheme.onPrimary
+            )
+        },
+        trailingIcon = if (value.isNotEmpty()) {
+            {
+                CancelIcon(
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier
+                        .size(LocalDimension.current.medium)
+                        .clickable { onValueChange("") }
+                )
+            }
+        } else null,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Phone
+        ),
+        singleLine = true,
+        shape = RoundedCornerShape(LocalDimension.current.extraSmall)
+    )
 }

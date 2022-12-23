@@ -213,3 +213,13 @@ fun OnBoardingIconsPreview() {
         }
     }
 }
+
+@Composable
+fun BackIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_arrow_back),
+        contentDescription = "Go back",
+        modifier = modifier,
+        tint = color
+    )
+}

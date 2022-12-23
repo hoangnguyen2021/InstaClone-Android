@@ -61,6 +61,27 @@ val shoikaFontFamily = FontFamily(
 )
 
 val OnBoardingTypography = Typography(
+    titleLarge = TextStyle(
+        fontFamily = arabotoFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        letterSpacing = 0.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.4.sp,
+    ),
+    labelMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        lineHeight = 22.sp,
+        letterSpacing = 0.sp,
+    ),
     displayLarge = TextStyle(
         fontFamily = arabotoFamily,
         fontWeight = FontWeight.Medium,

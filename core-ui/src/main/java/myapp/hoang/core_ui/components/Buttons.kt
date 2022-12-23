@@ -79,6 +79,41 @@ fun CreateAccountButton(
     }
 }
 
+@Composable
+fun EmailMobileNumberSwitchButton(
+    text: String,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.sixExtraLarge),
+        enabled = isEnabled,
+        shape = RoundedCornerShape(LocalDimension.current.extraSmall),
+        colors = ButtonDefaults.outlinedButtonColors(),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+        ),
+        contentPadding = PaddingValues(
+            start = LocalDimension.current.sixExtraLarge,
+            top = LocalDimension.current.extraSmall,
+            end = LocalDimension.current.sixExtraLarge,
+            bottom = LocalDimension.current.extraSmall
+        )
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(vertical = 0.dp)
+        )
+    }
+}
+
+
 @Preview
 @Composable
 fun OnBoardingButtonsPreview() {
@@ -100,6 +135,7 @@ fun OnBoardingButtonsPreview() {
             ) {
                 LoginButton("Log in", {})
                 CreateAccountButton("Create new account", {})
+                EmailMobileNumberSwitchButton("Sign up with email", {})
             }
         }
     }
