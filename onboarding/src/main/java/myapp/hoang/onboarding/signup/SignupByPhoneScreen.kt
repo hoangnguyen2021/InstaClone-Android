@@ -13,14 +13,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
-import myapp.hoang.onboarding.login.LoginScreen
 
 @Composable
-fun SignupScreen(
-    onBackClick: () -> Unit
+fun SignupByPhoneScreen(
+    onBackClick: () -> Unit,
+    onSignUpWithEmailClick: () -> Unit
 ) {
     var mobileNumber by remember { mutableStateOf("") }
 
@@ -63,7 +62,10 @@ fun SignupScreen(
                 text = "Enter the mobile number where you can be contacted. No one will see this on your profile.",
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(end = LocalDimension.current.small)
             )
             Spacer(Modifier.height(LocalDimension.current.extraLarge))
             MobileNumberField(
@@ -76,12 +78,16 @@ fun SignupScreen(
                 text = "You may receive SMS notifications from us for security and login purposes.",
                 color = AliceBlue,
                 style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(Modifier.height(LocalDimension.current.extraLarge))
+            Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             LoginButton("Next", {})
             Spacer(Modifier.height(LocalDimension.current.medium))
-            EmailMobileNumberSwitchButton("Sign up with email", {})
+            EmailMobileNumberSwitchButton(
+                text = "Sign up with email",
+                onClick = onSignUpWithEmailClick
+            )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
@@ -99,12 +105,12 @@ fun SignupScreen(
 
 @Preview
 @Composable
-fun SignupScreenPreview() {
+fun SignupByPhoneScreenPreview() {
     OnBoardingTheme {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            SignupScreen {}
+            SignupByPhoneScreen({}, {})
         }
     }
 }

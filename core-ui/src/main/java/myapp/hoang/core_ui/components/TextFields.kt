@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -37,7 +38,10 @@ fun UsernameTextField(
             textColor = MaterialTheme.colorScheme.onPrimaryContainer,
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             cursorColor = White,
-            selectionColors = TextSelectionColors(Turquoise, Verdigris)
+            selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            focusedIndicatorColor = Transparent,
+            unfocusedIndicatorColor = Transparent,
+            disabledIndicatorColor = Transparent
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -94,7 +98,10 @@ fun PasswordTextField(
             textColor = MaterialTheme.colorScheme.onPrimaryContainer,
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             cursorColor = White,
-            selectionColors = TextSelectionColors(Turquoise, Verdigris)
+            selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            focusedIndicatorColor = Transparent,
+            unfocusedIndicatorColor = Transparent,
+            disabledIndicatorColor = Transparent
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -117,7 +124,7 @@ fun PasswordTextField(
             )
         },
         trailingIcon = {
-            if (!isFocused) { null }
+            if (!isFocused) null
             else if (isPasswordHidden) {
                 PasswordHiddenIcon(
                     color = AliceBlue,
@@ -146,47 +153,6 @@ fun PasswordTextField(
     )
 }
 
-@Preview
-@Composable
-fun OnBoardingTextFieldsPreview() {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.3f)
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .background(
-                        brush = Brush.verticalGradient(
-                            0.0f to Color(0xFF223234),
-                            0.6f to Color(0xFF1C2E3D),
-                        )
-                    )
-                    .padding(
-                        horizontal = LocalDimension.current.small
-                    )
-            ) {
-                UsernameTextField(
-                    value = username,
-                    onValueChange = { username = it },
-                    label = "Username, email or mobile number"
-                )
-                PasswordTextField(
-                    value = password,
-                    onValueChange = { password = it },
-                    label = "Password"
-                )
-            }
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MobileNumberField(
@@ -203,7 +169,10 @@ fun MobileNumberField(
             textColor = MaterialTheme.colorScheme.onPrimaryContainer,
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             cursorColor = White,
-            selectionColors = TextSelectionColors(Turquoise, Verdigris)
+            selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            focusedIndicatorColor = Transparent,
+            unfocusedIndicatorColor = Transparent,
+            disabledIndicatorColor = Transparent
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -228,7 +197,7 @@ fun MobileNumberField(
         trailingIcon = if (value.isNotEmpty()) {
             {
                 CancelIcon(
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.medium)
                         .clickable { onValueChange("") }
@@ -237,6 +206,65 @@ fun MobileNumberField(
         } else null,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Phone
+        ),
+        singleLine = true,
+        shape = RoundedCornerShape(LocalDimension.current.extraSmall)
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EmailTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String
+) {
+    var isFocused by remember { mutableStateOf(false) }
+
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            cursorColor = White,
+            selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            focusedIndicatorColor = Transparent,
+            unfocusedIndicatorColor = Transparent,
+            disabledIndicatorColor = Transparent
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.sevenExtraLarge)
+            .background(MaterialTheme.colorScheme.primaryContainer)
+            .border(
+                width = 1.dp,
+                color = if (isFocused) AliceBlue else GrayBlue,
+                shape = RoundedCornerShape(LocalDimension.current.extraSmall)
+            )
+            .padding(vertical = LocalDimension.current.extraSmall)
+            .onFocusChanged { focusState ->
+                isFocused = focusState.isFocused
+            },
+        textStyle = MaterialTheme.typography.bodyLarge,
+        label = {
+            Text(
+                text = label,
+                color = if (isFocused) AliceBlue else MaterialTheme.colorScheme.onPrimary
+            )
+        },
+        trailingIcon = if (value.isNotEmpty()) {
+            {
+                CancelIcon(
+                    color = AliceBlue,
+                    modifier = Modifier
+                        .size(LocalDimension.current.medium)
+                        .clickable { onValueChange("") }
+                )
+            }
+        } else null,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email
         ),
         singleLine = true,
         shape = RoundedCornerShape(LocalDimension.current.extraSmall)
