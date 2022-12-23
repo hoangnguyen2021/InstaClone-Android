@@ -19,7 +19,9 @@ import myapp.hoang.core_ui.components.PasswordTextField
 import myapp.hoang.core_ui.components.UsernameTextField
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onCreateAccountClick: () -> Unit
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -27,6 +29,7 @@ fun LoginScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
+            .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
                     0.0f to Color(0xFF223234),
@@ -68,7 +71,10 @@ fun LoginScreen() {
             style = MaterialTheme.typography.displayLarge,
         )
         Spacer(Modifier.height(128.dp))
-        CreateAccountButton("Create new account", {})
+        CreateAccountButton(
+            text = "Create new account",
+            onClick = onCreateAccountClick
+        )
         MetaIcon(
             color = AliceBlue,
             modifier = Modifier
@@ -84,7 +90,7 @@ fun LoginScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            LoginScreen()
+            LoginScreen {}
         }
     }
 }

@@ -1,6 +1,7 @@
 package myapp.hoang.onboarding.signup
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,13 +19,16 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.login.LoginScreen
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(
+    onBackClick: () -> Unit
+) {
     var mobileNumber by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
+            .fillMaxSize()
             .background(
                 brush = Brush.verticalGradient(
                     0.0f to Color(0xFF223234),
@@ -42,7 +46,9 @@ fun SignupScreen() {
             Spacer(Modifier.height(LocalDimension.current.large))
             BackIcon(
                 color = White,
-                modifier = Modifier.align(Alignment.Start)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .clickable(onClick = onBackClick)
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
@@ -98,7 +104,7 @@ fun SignupScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            SignupScreen()
+            SignupScreen {}
         }
     }
 }
