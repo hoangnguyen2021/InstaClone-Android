@@ -22,6 +22,7 @@ fun SignupByPhoneScreen(
     onSignUpWithEmailClick: () -> Unit
 ) {
     var mobileNumber by remember { mutableStateOf("") }
+    var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -96,9 +97,19 @@ fun SignupByPhoneScreen(
                 text = "Already have an account?",
                 color = LinkBlue,
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier.clickable { isDialogShown = true }
             )
             Spacer(Modifier.height(LocalDimension.current.large))
+        }
+        if (isDialogShown) {
+            AlreadyHaveAccountDialog(
+                onConfirm = {
+                    isDialogShown = false
+                    onBackClick()
+                },
+                onDismiss = { isDialogShown = false }
+            )
         }
     }
 }
