@@ -15,9 +15,7 @@ import androidx.navigation.navArgument
 import myapp.hoang.core_ui.*
 import myapp.hoang.instaclone.navigation.Screen
 import myapp.hoang.onboarding.login.LoginScreen
-import myapp.hoang.onboarding.signup.ConfirmationCodeScreen
-import myapp.hoang.onboarding.signup.SignupByEmailScreen
-import myapp.hoang.onboarding.signup.SignupByPhoneScreen
+import myapp.hoang.onboarding.signup.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,9 +72,27 @@ class MainActivity : ComponentActivity() {
                                 ConfirmationCodeScreen(
                                     username = username,
                                     onBackClick = { navController.navigateUp() },
-                                    onNextClick = { }
+                                    onNextClick = { navController.navigate(Screen.FullNameScreen.route) },
+                                    onLoginClick = {
+                                        navController.navigateUp()
+                                        navController.navigateUp()
+                                        if (!username.startsWith("+"))
+                                            navController.navigateUp()
+                                    }
                                 )
                             }
+                        }
+                        composable(route = Screen.FullNameScreen.route) {
+                            FullNameScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onNextClick = { navController.navigate(Screen.PasswordScreen.route) }
+                            )
+                        }
+                        composable(route = Screen.PasswordScreen.route) {
+                            PasswordScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onNextClick = {}
+                            )
                         }
                     }
                 }

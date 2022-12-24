@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,17 +12,20 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.*
+import myapp.hoang.core_ui.BackIcon
+import myapp.hoang.core_ui.LinkBlue
+import myapp.hoang.core_ui.LocalDimension
+import myapp.hoang.core_ui.White
+import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
+import myapp.hoang.core_ui.components.OnBoardingFilledButton
+import myapp.hoang.core_ui.components.OnBoardingTextField
 
 @Composable
-fun SignupByEmailScreen(
+fun FullNameScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit,
-    onSignUpWithMobileNumberClick: () -> Unit
+    onNextClick: (String) -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
@@ -44,7 +46,7 @@ fun SignupByEmailScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.fillMaxHeight(0.7f)
+            modifier = Modifier.wrapContentHeight()
         ) {
             Spacer(Modifier.height(LocalDimension.current.large))
             BackIcon(
@@ -55,43 +57,29 @@ fun SignupByEmailScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your email?",
+                text = "What's your name?",
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(Modifier.height(LocalDimension.current.small))
-            Text(
-                text = "Enter the email where you can be contacted. No one will see this on your profile.",
-                color = White,
-                style = MaterialTheme.typography.labelMedium,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small)
-            )
             Spacer(Modifier.height(LocalDimension.current.extraLarge))
             OnBoardingTextField(
-                value = email,
-                onValueChange = { email = it },
-                label = "Email",
-                keyboardType = KeyboardType.Email
+                value = fullName,
+                onValueChange = { fullName = it },
+                label = "Full name",
+                keyboardType = KeyboardType.Text
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = "Next",
-                onClick = { onNextClick(email) }
-            )
-            Spacer(Modifier.height(LocalDimension.current.medium))
-            OnBoardingOutlinedButton(
-                text = "Sign up with mobile number",
-                onClick = onSignUpWithMobileNumberClick
+                onClick = { onNextClick(fullName) }
             )
         }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
+            modifier = Modifier.wrapContentHeight()
         ) {
             Text(
                 text = "Already have an account?",
@@ -111,18 +99,6 @@ fun SignupByEmailScreen(
                 },
                 onDismiss = { isDialogShown = false }
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun SignupByEmailScreenPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SignupByEmailScreen({}, {}, {})
         }
     }
 }

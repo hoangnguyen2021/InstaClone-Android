@@ -81,7 +81,7 @@ fun OnBoardingTextField(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField(
+fun OnBoardingPasswordField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String

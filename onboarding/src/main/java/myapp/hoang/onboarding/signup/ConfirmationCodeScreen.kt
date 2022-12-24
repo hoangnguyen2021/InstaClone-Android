@@ -24,13 +24,20 @@ import myapp.hoang.core_ui.components.bottomsheet.*
 fun ConfirmationCodeScreen(
     username: String,
     onNextClick: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onLoginClick: () -> Unit
 ) {
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     BottomDrawer(
-        drawerContent = { ConfirmationCodeDrawerContent() },
+        drawerContent = {
+            ConfirmationCodeDrawerContent(
+                drawerState = drawerState,
+                scope = scope,
+                onLoginClick = onLoginClick
+            )
+        },
         drawerState = drawerState,
         drawerShape = RoundedCornerShape(
             topStart = LocalDimension.current.extraSmall,
@@ -119,7 +126,11 @@ fun ConfirmationCodeContent(
 }
 
 @Composable
-fun ConfirmationCodeDrawerContent() {
+fun ConfirmationCodeDrawerContent(
+    drawerState: BottomDrawerState,
+    scope: CoroutineScope,
+    onLoginClick: () -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
@@ -151,11 +162,16 @@ fun ConfirmationCodeDrawerContent() {
         Spacer(Modifier.height(LocalDimension.current.large))
         BottomSheetTopButton(
             text = "Resend with confirmation code",
-            onClick = { }
+            onClick = {
+                scope.launch { drawerState.close() }
+            }
         )
         BottomSheetBottomButton(
             text = "Login into existing account",
-            onClick = { }
+            onClick = {
+                scope.launch { drawerState.close() }
+                onLoginClick()
+            }
         )
     }
 }
@@ -167,7 +183,7 @@ fun ConfirmationCodeScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            ConfirmationCodeScreen("", {}, {})
+            ConfirmationCodeScreen("", {}, {}, {})
         }
     }
 }

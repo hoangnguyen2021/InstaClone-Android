@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.CreateAccountButton
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
-import myapp.hoang.core_ui.components.PasswordTextField
+import myapp.hoang.core_ui.components.OnBoardingPasswordField
 import myapp.hoang.core_ui.components.OnBoardingTextField
 
 @Composable
@@ -59,7 +59,7 @@ fun LoginScreen(
             keyboardType = KeyboardType.Text
         )
         Spacer(Modifier.height(LocalDimension.current.small))
-        PasswordTextField(
+        OnBoardingPasswordField(
             value = password,
             onValueChange = { password = it },
             label = "Password"
