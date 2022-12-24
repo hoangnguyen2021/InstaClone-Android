@@ -97,6 +97,12 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.SaveLoginInfoScreen.route) {
                             SaveLoginInfoScreen(
                                 onBackClick = { navController.navigateUp() },
+                                onNextClick = { navController.navigate(Screen.BirthdayScreen.route) }
+                            )
+                        }
+                        composable(route = Screen.BirthdayScreen.route) {
+                            BirthdayScreen(
+                                onBackClick = { navController.navigateUp() },
                                 onNextClick = {}
                             )
                         }

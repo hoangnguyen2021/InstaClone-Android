@@ -1,6 +1,5 @@
 package myapp.hoang.core_ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,94 +10,49 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import myapp.hoang.core.util.DateUtils.days
+import myapp.hoang.core.util.DateUtils.getDateString
+import myapp.hoang.core.util.DateUtils.monthsNames
+import myapp.hoang.core.util.DateUtils.parseDateString
+import myapp.hoang.core.util.DateUtils.years
 import myapp.hoang.core_ui.*
 import java.time.LocalDate
-
-val years = (1900..2022).map { it.toString() }
-val monthsNumber = (1..12).map { it.toString() }
-val days = (1..31).map { it.toString() }
-val monthsNames = listOf(
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-)
-
-val currentMonth = LocalDate.now().monthValue
-val currentDay = LocalDate.now().dayOfMonth
-val currentYear = LocalDate.now().year
 
 @Composable
 fun DatePickerDialog(
     label: String,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    textFieldValue: LocalDate,
+    onTextFieldValueChange: (LocalDate) -> Unit
 ) {
     Dialog(onDismissRequest = onDismiss) {
-        DatePicker(label, onDismiss)
-    }
-}
-
-@Preview
-@Composable
-fun DatePickerDialogPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        brush = onBoardingBackgroundBrush
-                    )
-                    .padding(
-                        horizontal = LocalDimension.current.small
-                    )
-            ) {
-                var isDialogShown by remember { mutableStateOf(false) }
-
-                Button(
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .align(Alignment.Center),
-                    onClick = {
-                        isDialogShown = true
-                    }) {
-                    Text(text = "Date Picker", style = MaterialTheme.typography.bodyLarge)
-                }
-
-                if (isDialogShown) {
-                    DatePickerDialog(label = "Set date") {
-                        isDialogShown = false
-                    }
-                }
-            }
-        }
+        DatePicker(
+            label = label,
+            onDismiss = onDismiss,
+            textFieldValue = textFieldValue,
+            onTextFieldValueChange = onTextFieldValueChange
+        )
     }
 }
 
 @Composable
 fun DatePicker(
     label: String,
-    onDismissRequest: () -> Unit
+    onDismiss: () -> Unit,
+    textFieldValue: LocalDate,
+    onTextFieldValueChange: (LocalDate) -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(LocalDimension.current.small),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
         ),
+        modifier = Modifier
+            .fillMaxWidth(0.8f)
+            .wrapContentHeight()
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -111,37 +65,50 @@ fun DatePicker(
                     horizontal = LocalDimension.current.small
                 )
         ) {
-            var chosenYear by remember { mutableStateOf(currentYear) }
-            var chosenMonth by remember { mutableStateOf(currentMonth) }
-            var chosenDay by remember { mutableStateOf(currentDay) }
+            var chosenYear by remember { mutableStateOf(textFieldValue.year) }
+            var chosenMonth by remember { mutableStateOf(textFieldValue.monthValue) }
+            var chosenDay by remember { mutableStateOf(textFieldValue.dayOfMonth) }
 
             Text(
                 text = label,
+                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .align(Alignment.Start)
-                    .padding(horizontal = LocalDimension.current.medium)
+                    .padding(horizontal = LocalDimension.current.mediumSmall)
             )
             Spacer(modifier = Modifier.height(LocalDimension.current.large))
             DateSelectionSection(
+                monthChosen = chosenMonth,
+                dayChosen = chosenDay,
+                yearChosen = chosenYear,
+                onMonthChosen = { chosenMonth = monthsNames.indexOf(it) + 1 },
                 onYearChosen = { chosenYear = it.toInt() },
-                onMonthChosen = { chosenMonth = monthsNames.indexOf(it) },
                 onDayChosen = { chosenDay = it.toInt() },
             )
             Spacer(modifier = Modifier.height(LocalDimension.current.large))
             Button(
-                shape = RoundedCornerShape(5.dp),
+                shape = RoundedCornerShape(LocalDimension.current.extraSmall),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                ),
+                contentPadding = PaddingValues(horizontal = LocalDimension.current.large) ,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 10.dp),
-                onClick = onDismissRequest
+                    .height(LocalDimension.current.fourExtraLarge)
+                ,
+                onClick = {
+                    onDismiss()
+                    onTextFieldValueChange(LocalDate.of(chosenYear, chosenMonth, chosenDay))
+                }
             ) {
                 Text(
-                    text = "Done",
+                    text = "Set",
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
                 )
             }
@@ -151,8 +118,11 @@ fun DatePicker(
 
 @Composable
 fun DateSelectionSection(
-    onYearChosen: (String) -> Unit,
+    monthChosen: Int,
+    yearChosen: Int,
+    dayChosen: Int,
     onMonthChosen: (String) -> Unit,
+    onYearChosen: (String) -> Unit,
     onDayChosen: (String) -> Unit,
 ) {
     Row(
@@ -164,7 +134,7 @@ fun DateSelectionSection(
     ) {
         InfiniteItemsPicker(
             items = monthsNames,
-            firstIndex = Int.MAX_VALUE / 2 - 4,
+            firstIndex = Int.MAX_VALUE / 2 - 5 + monthChosen,
             onItemSelected = onMonthChosen,
             modifier = Modifier
                 .fillMaxWidth()
@@ -173,7 +143,7 @@ fun DateSelectionSection(
         )
         InfiniteItemsPicker(
             items = days,
-            firstIndex = Int.MAX_VALUE / 2 - 1,
+            firstIndex = Int.MAX_VALUE / 2 - 2 + dayChosen,
             onItemSelected = onDayChosen,
             modifier = Modifier
                 .fillMaxWidth()
@@ -182,7 +152,7 @@ fun DateSelectionSection(
         )
         InfiniteItemsPicker(
             items = years,
-            firstIndex = Int.MAX_VALUE / 2 + 60,
+            firstIndex = Int.MAX_VALUE / 2 - 41 + yearChosen - 1899,
             onItemSelected = onYearChosen,
             modifier = Modifier
                 .fillMaxWidth()
@@ -222,8 +192,9 @@ fun InfiniteItemsPicker(
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
                         text = items[index],
-                        modifier = Modifier.alpha(if (it == secondVisibleItemIndex) 1f else 0.3f),
-                        style = MaterialTheme.typography.bodyLarge
+                        color = MaterialTheme.colorScheme.onSurface,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.alpha(if (it == secondVisibleItemIndex) 1f else 0.2f),
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                 }

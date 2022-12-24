@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color.Companion.Transparent
@@ -16,7 +17,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import myapp.hoang.core.util.DateUtils.getDateString
+import myapp.hoang.core.util.DateUtils.parseDateString
 import myapp.hoang.core_ui.*
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -150,4 +154,69 @@ fun OnBoardingPasswordField(
         maxLines = 1,
         shape = RoundedCornerShape(LocalDimension.current.extraSmall)
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun OnBoardingBirthdayField(
+    value: LocalDate,
+    onValueChange: (LocalDate) -> Unit,
+    label: String = "Birthday"
+) {
+    var isDialogShown by remember { mutableStateOf(false) }
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        TextField(
+            value = getDateString(value),
+            onValueChange = { onValueChange(parseDateString(it)) },
+            label = {
+                Text(
+                    text = label,
+                    color = AliceBlue
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text
+            ),
+            singleLine = true,
+            maxLines = 1,
+            enabled = false,
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                disabledTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                cursorColor = White,
+                selectionColors = TextSelectionColors(Turquoise, Verdigris),
+                focusedIndicatorColor = Transparent,
+                unfocusedIndicatorColor = Transparent,
+                disabledIndicatorColor = Transparent
+            ),
+            textStyle = MaterialTheme.typography.bodyLarge,
+            shape = RoundedCornerShape(LocalDimension.current.extraSmall),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(LocalDimension.current.sevenExtraLarge)
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .border(
+                    width = 1.dp,
+                    color = AliceBlue,
+                    shape = RoundedCornerShape(LocalDimension.current.extraSmall)
+                )
+                .padding(vertical = LocalDimension.current.extraSmall)
+                .clickable { isDialogShown = true }
+        )
+    }
+    if (isDialogShown) {
+        DatePickerDialog(
+            label = "Set date",
+            onDismiss = { isDialogShown = false },
+            textFieldValue = value,
+            onTextFieldValueChange = onValueChange
+        )
+    }
 }

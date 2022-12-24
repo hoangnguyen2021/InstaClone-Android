@@ -153,6 +153,7 @@ fun ConfirmationCodeDrawerContent(
             modifier = Modifier
                 .size(LocalDimension.current.medium)
                 .align(Alignment.Start)
+                .clickable { scope.launch { drawerState.close() } }
         )
         Spacer(Modifier.height(LocalDimension.current.large))
         BottomSheetTopButton(

@@ -15,7 +15,7 @@ import myapp.hoang.core_ui.components.*
 @Composable
 fun SaveLoginInfoScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit
+    onNextClick: () -> Unit
 ) {
     var isDialogShown by remember { mutableStateOf(false) }
 
@@ -69,10 +69,10 @@ fun SaveLoginInfoScreen(
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
                 text = "Not now",
-                onClick = {}
+                onClick = onNextClick
             )
         }
-        AlreadyHaveAccountTextButton(
+        AlreadyHaveAccountClickableText(
             isDialogShown = isDialogShown,
             onIsDialogShownChange = { isDialogShown = it },
             onBackClick = onBackClick

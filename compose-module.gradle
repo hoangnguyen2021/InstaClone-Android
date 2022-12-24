@@ -42,6 +42,8 @@ android {
 }
 
 dependencies {
+    implementation project(':core')
+
     implementation Compose.compiler
     implementation Compose.ui
     debugImplementation Compose.uiTooling

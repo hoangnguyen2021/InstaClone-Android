@@ -10,8 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
-import myapp.hoang.core_ui.components.AlreadyHaveAccountTextButton
+import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingPasswordField
 
@@ -77,7 +76,7 @@ fun PasswordScreen(
                 onClick = { onNextClick(password) }
             )
         }
-        AlreadyHaveAccountTextButton(
+        AlreadyHaveAccountClickableText(
             isDialogShown = isDialogShown,
             onIsDialogShownChange = { isDialogShown = it },
             onBackClick = onBackClick

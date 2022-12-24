@@ -84,7 +84,7 @@ fun SignupByEmailScreen(
                 onClick = onSignUpWithMobileNumberClick
             )
         }
-        AlreadyHaveAccountTextButton(
+        AlreadyHaveAccountClickableText(
             isDialogShown = isDialogShown,
             onIsDialogShownChange = { isDialogShown = it },
             onBackClick = onBackClick
