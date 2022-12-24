@@ -223,3 +223,13 @@ fun BackIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun SwipeIndicatorIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_swipe_indicator),
+        contentDescription = "Swipe indicator",
+        modifier = modifier,
+        tint = color
+    )
+}

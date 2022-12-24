@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import myapp.hoang.core_ui.*
@@ -19,6 +20,7 @@ import myapp.hoang.core_ui.components.*
 @Composable
 fun SignupByEmailScreen(
     onBackClick: () -> Unit,
+    onNextClick: (String) -> Unit,
     onSignUpWithMobileNumberClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
@@ -41,6 +43,7 @@ fun SignupByEmailScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
             modifier = Modifier.fillMaxHeight(0.7f)
         ) {
             Spacer(Modifier.height(LocalDimension.current.large))
@@ -52,7 +55,7 @@ fun SignupByEmailScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your mobile email?",
+                text = "What's your email?",
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -69,20 +72,25 @@ fun SignupByEmailScreen(
                     .padding(end = LocalDimension.current.small)
             )
             Spacer(Modifier.height(LocalDimension.current.extraLarge))
-            EmailTextField(
+            OnBoardingTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = "Email"
+                label = "Email",
+                keyboardType = KeyboardType.Email
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
-            LoginButton("Next", {})
+            OnBoardingFilledButton(
+                text = "Next",
+                onClick = { onNextClick(email) }
+            )
             Spacer(Modifier.height(LocalDimension.current.medium))
-            EmailMobileNumberSwitchButton(
+            OnBoardingOutlinedButton(
                 text = "Sign up with mobile number",
                 onClick = onSignUpWithMobileNumberClick)
         }
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
         ) {
             Text(
                 text = "Already have an account?",
@@ -113,7 +121,7 @@ fun SignupByEmailScreenPreview() {
         Surface(
             modifier = Modifier.fillMaxSize()
         ) {
-            SignupByEmailScreen({}, {})
+            SignupByEmailScreen({}, {}, {})
         }
     }
 }

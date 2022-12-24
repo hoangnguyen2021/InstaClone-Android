@@ -10,13 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.CreateAccountButton
-import myapp.hoang.core_ui.components.LoginButton
+import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.PasswordTextField
-import myapp.hoang.core_ui.components.UsernameTextField
+import myapp.hoang.core_ui.components.OnBoardingTextField
 
 @Composable
 fun LoginScreen(
@@ -51,10 +52,11 @@ fun LoginScreen(
             modifier = Modifier.size(LocalDimension.current.sevenExtraLarge)
         )
         Spacer(Modifier.height(LocalDimension.current.nineExtraLarge))
-        UsernameTextField(
+        OnBoardingTextField(
             value = username,
             onValueChange = { username = it },
-            label = "Username, email or mobile number"
+            label = "Username, email or mobile number",
+            keyboardType = KeyboardType.Text
         )
         Spacer(Modifier.height(LocalDimension.current.small))
         PasswordTextField(
@@ -63,7 +65,7 @@ fun LoginScreen(
             label = "Password"
         )
         Spacer(Modifier.height(LocalDimension.current.small))
-        LoginButton("Log in", {})
+        OnBoardingFilledButton("Log in", {})
         Spacer(Modifier.height(LocalDimension.current.small))
         Text(
             text = "Forgot password?",

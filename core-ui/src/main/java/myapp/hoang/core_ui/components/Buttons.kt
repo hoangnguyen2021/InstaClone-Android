@@ -8,12 +8,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
 
 @Composable
-fun LoginButton(
+fun OnBoardingFilledButton(
     text: String,
     onClick: () -> Unit,
     isEnabled: Boolean = true
@@ -80,7 +82,7 @@ fun CreateAccountButton(
 }
 
 @Composable
-fun EmailMobileNumberSwitchButton(
+fun OnBoardingOutlinedButton(
     text: String,
     onClick: () -> Unit,
     isEnabled: Boolean = true
@@ -113,7 +115,6 @@ fun EmailMobileNumberSwitchButton(
     }
 }
 
-
 @Preview
 @Composable
 fun OnBoardingButtonsPreview() {
@@ -133,11 +134,126 @@ fun OnBoardingButtonsPreview() {
                         horizontal = LocalDimension.current.small
                     )
             ) {
-                LoginButton("Log in", {})
+                OnBoardingFilledButton("Log in", {})
                 CreateAccountButton("Create new account", {})
-                EmailMobileNumberSwitchButton("Sign up with email", {})
+                OnBoardingOutlinedButton("Sign up with email", {})
             }
         }
+    }
+}
+
+
+@Composable
+fun BottomSheetTopButton(
+    text: String,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.fiveExtraLarge),
+        enabled = isEnabled,
+        shape = RoundedCornerShape(
+            topStart = LocalDimension.current.extraSmall,
+            topEnd = LocalDimension.current.extraSmall
+        ),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        contentPadding = PaddingValues(
+            start = LocalDimension.current.medium,
+            top = LocalDimension.current.extraSmall,
+            end = LocalDimension.current.medium,
+            bottom = LocalDimension.current.extraSmall
+        )
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(vertical = 0.dp)
+        )
+    }
+}
+
+@Composable
+fun BottomSheetMiddleButton(
+    text: String,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.fiveExtraLarge),
+        enabled = isEnabled,
+        shape = RectangleShape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        contentPadding = PaddingValues(
+            start = LocalDimension.current.medium,
+            top = LocalDimension.current.extraSmall,
+            end = LocalDimension.current.medium,
+            bottom = LocalDimension.current.extraSmall
+        )
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(vertical = 0.dp)
+        )
+    }
+}
+
+@Composable
+fun BottomSheetBottomButton(
+    text: String,
+    onClick: () -> Unit,
+    isEnabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.fiveExtraLarge),
+        enabled = isEnabled,
+        shape = RoundedCornerShape(
+            bottomStart = LocalDimension.current.extraSmall,
+            bottomEnd = LocalDimension.current.extraSmall
+        ),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        contentPadding = PaddingValues(
+            start = LocalDimension.current.medium,
+            top = LocalDimension.current.extraSmall,
+            end = LocalDimension.current.medium,
+            bottom = LocalDimension.current.extraSmall
+        )
+    ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(vertical = 0.dp)
+        )
     }
 }
 

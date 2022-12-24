@@ -3,5 +3,5 @@ apply {
 }
 
 dependencies {
-
+    "implementation"("androidx.compose.ui:ui-util:1.3.2")
 }

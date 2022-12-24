@@ -1,6 +1,6 @@
 object Compose {
     const val composeVersion = "1.3.2"
-    const val composeMaterial3 = "1.0.1"
+    private const val composeMaterial3 = "1.0.1"
     private const val hiltNavigationVersion = "1.0.0"
     private const val pagingComposeVersion = "1.0.0-rc1"
 

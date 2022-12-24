@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import myapp.hoang.core_ui.*
 import myapp.hoang.instaclone.navigation.Screen
 import myapp.hoang.onboarding.login.LoginScreen
+import myapp.hoang.onboarding.signup.ConfirmationCodeScreen
 import myapp.hoang.onboarding.signup.SignupByEmailScreen
 import myapp.hoang.onboarding.signup.SignupByPhoneScreen
 
@@ -38,16 +41,42 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(route = Screen.SignupByPhoneScreen.route) {
-                            SignupByPhoneScreen (
-                                { navController.navigateUp() },
-                                { navController.navigate(Screen.SignupByEmailScreen.route) }
+                            SignupByPhoneScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onNextClick = {
+                                    navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
+                                },
+                                onSignUpWithEmailClick = {
+                                    navController.navigate(Screen.SignupByEmailScreen.route)
+                                }
                             )
                         }
                         composable(route = Screen.SignupByEmailScreen.route) {
-                            SignupByEmailScreen (
-                                { navController.navigateUp() },
-                                { navController.navigateUp() }
+                            SignupByEmailScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onNextClick = {
+                                    navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
+                                },
+                                onSignUpWithMobileNumberClick = { navController.navigateUp() }
                             )
+                        }
+                        composable(
+                            route = "${Screen.ConfirmationCodeScreen.route}/{username}",
+                            arguments = listOf(
+                                navArgument("username") {
+                                    type = NavType.StringType
+                                    nullable = false
+                                }
+                            )
+                        ) { entry ->
+                            val username = entry.arguments?.getString("username")
+                            if (username != null) {
+                                ConfirmationCodeScreen(
+                                    username = username,
+                                    onBackClick = { navController.navigateUp() },
+                                    onNextClick = { }
+                                )
+                            }
                         }
                     }
                 }
