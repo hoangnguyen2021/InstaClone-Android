@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
+import myapp.hoang.core_ui.components.AlreadyHaveAccountTextButton
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingPasswordField
 
@@ -31,6 +32,7 @@ fun PasswordScreen(
                 brush = onBoardingBackgroundBrush
             )
             .padding(
+                vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
@@ -39,7 +41,6 @@ fun PasswordScreen(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier.wrapContentHeight()
         ) {
-            Spacer(Modifier.height(LocalDimension.current.large))
             BackIcon(
                 color = White,
                 modifier = Modifier
@@ -76,29 +77,10 @@ fun PasswordScreen(
                 onClick = { onNextClick(password) }
             )
         }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
-        ) {
-            Text(
-                text = "Already have an account?",
-                color = LinkBlue,
-                style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.clickable { isDialogShown = true }
-            )
-            Spacer(Modifier.height(LocalDimension.current.large))
-        }
-        if (isDialogShown) {
-            AlreadyHaveAccountDialog(
-                onConfirm = {
-                    isDialogShown = false
-                    onBackClick()
-                    onBackClick()
-                },
-                onDismiss = { isDialogShown = false }
-            )
-        }
+        AlreadyHaveAccountTextButton(
+            isDialogShown = isDialogShown,
+            onIsDialogShownChange = { isDialogShown = it },
+            onBackClick = onBackClick
+        )
     }
 }

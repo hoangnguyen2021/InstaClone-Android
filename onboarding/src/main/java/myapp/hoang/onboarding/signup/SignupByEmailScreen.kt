@@ -84,30 +84,11 @@ fun SignupByEmailScreen(
                 onClick = onSignUpWithMobileNumberClick
             )
         }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
-            Text(
-                text = "Already have an account?",
-                color = LinkBlue,
-                style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.clickable { isDialogShown = true }
-            )
-        }
-        if (isDialogShown) {
-            AlreadyHaveAccountDialog(
-                onConfirm = {
-                    isDialogShown = false
-                    onBackClick()
-                    onBackClick()
-                },
-                onDismiss = { isDialogShown = false }
-            )
-        }
+        AlreadyHaveAccountTextButton(
+            isDialogShown = isDialogShown,
+            onIsDialogShownChange = { isDialogShown = it },
+            onBackClick = onBackClick
+        )
     }
 }
 

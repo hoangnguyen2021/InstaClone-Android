@@ -8,14 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
-import myapp.hoang.core_ui.components.OnBoardingFilledButton
-import myapp.hoang.core_ui.components.OnBoardingOutlinedButton
-import myapp.hoang.core_ui.components.OnBoardingTextField
+import myapp.hoang.core_ui.components.*
 
 @Composable
 fun SaveLoginInfoScreen(
@@ -77,29 +72,10 @@ fun SaveLoginInfoScreen(
                 onClick = {}
             )
         }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
-            Text(
-                text = "Already have an account?",
-                color = LinkBlue,
-                style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.clickable { isDialogShown = true }
-            )
-        }
-        if (isDialogShown) {
-            AlreadyHaveAccountDialog(
-                onConfirm = {
-                    isDialogShown = false
-                    onBackClick()
-                    onBackClick()
-                },
-                onDismiss = { isDialogShown = false }
-            )
-        }
+        AlreadyHaveAccountTextButton(
+            isDialogShown = isDialogShown,
+            onIsDialogShownChange = { isDialogShown = it },
+            onBackClick = onBackClick
+        )
     }
 }

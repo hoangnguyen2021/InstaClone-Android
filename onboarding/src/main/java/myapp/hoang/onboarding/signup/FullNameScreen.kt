@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
+import myapp.hoang.core_ui.components.AlreadyHaveAccountTextButton
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingTextField
 
@@ -68,29 +68,10 @@ fun FullNameScreen(
                 onClick = { onNextClick(fullName) }
             )
         }
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-        ) {
-            Text(
-                text = "Already have an account?",
-                color = LinkBlue,
-                style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.clickable { isDialogShown = true }
-            )
-        }
-        if (isDialogShown) {
-            AlreadyHaveAccountDialog(
-                onConfirm = {
-                    isDialogShown = false
-                    onBackClick()
-                    onBackClick()
-                },
-                onDismiss = { isDialogShown = false }
-            )
-        }
+        AlreadyHaveAccountTextButton(
+            isDialogShown = isDialogShown,
+            onIsDialogShownChange = { isDialogShown = it },
+            onBackClick = onBackClick
+        )
     }
 }
