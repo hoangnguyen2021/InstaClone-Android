@@ -8,14 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import myapp.hoang.core_ui.BackIcon
-import myapp.hoang.core_ui.LinkBlue
-import myapp.hoang.core_ui.LocalDimension
-import myapp.hoang.core_ui.White
+import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingTextField
@@ -33,12 +28,7 @@ fun FullNameScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    0.0f to Color(0xFF223234),
-                    0.6f to Color(0xFF1C2E3D),
-                )
-            )
+            .background(brush = onBoardingBackgroundBrush)
             .padding(
                 horizontal = LocalDimension.current.mediumSmall
             )

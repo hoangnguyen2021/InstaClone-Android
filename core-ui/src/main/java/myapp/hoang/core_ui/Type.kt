@@ -81,6 +81,13 @@ val OnBoardingTypography = Typography(
         lineHeight = 20.sp,
         letterSpacing = 0.sp,
     ),
+    labelLarge = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        lineHeight = 25.sp,
+        letterSpacing = 0.sp,
+    ),
     displayLarge = TextStyle(
         fontFamily = arabotoFamily,
         fontWeight = FontWeight.Medium,
