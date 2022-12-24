@@ -91,6 +91,12 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.PasswordScreen.route) {
                             PasswordScreen(
                                 onBackClick = { navController.navigateUp() },
+                                onNextClick = { navController.navigate(Screen.SaveLoginInfoScreen.route) }
+                            )
+                        }
+                        composable(route = Screen.SaveLoginInfoScreen.route) {
+                            SaveLoginInfoScreen(
+                                onBackClick = { navController.navigateUp() },
                                 onNextClick = {}
                             )
                         }

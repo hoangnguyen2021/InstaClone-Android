@@ -29,19 +29,19 @@ fun SignupByEmailScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = onBoardingBackgroundBrush
-            )
+            .background(brush = onBoardingBackgroundBrush)
             .padding(
+                vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.fillMaxHeight(0.7f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
-            Spacer(Modifier.height(LocalDimension.current.large))
             BackIcon(
                 color = White,
                 modifier = Modifier
@@ -84,9 +84,11 @@ fun SignupByEmailScreen(
                 onClick = onSignUpWithMobileNumberClick
             )
         }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             Text(
                 text = "Already have an account?",
@@ -95,7 +97,6 @@ fun SignupByEmailScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.clickable { isDialogShown = true }
             )
-            Spacer(Modifier.height(LocalDimension.current.large))
         }
         if (isDialogShown) {
             AlreadyHaveAccountDialog(

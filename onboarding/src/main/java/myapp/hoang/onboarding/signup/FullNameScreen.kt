@@ -30,15 +30,17 @@ fun FullNameScreen(
             .fillMaxSize()
             .background(brush = onBoardingBackgroundBrush)
             .padding(
+                vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
-            Spacer(Modifier.height(LocalDimension.current.large))
             BackIcon(
                 color = White,
                 modifier = Modifier
@@ -66,10 +68,11 @@ fun FullNameScreen(
                 onClick = { onNextClick(fullName) }
             )
         }
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             Text(
                 text = "Already have an account?",
@@ -78,7 +81,6 @@ fun FullNameScreen(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.clickable { isDialogShown = true }
             )
-            Spacer(Modifier.height(LocalDimension.current.large))
         }
         if (isDialogShown) {
             AlreadyHaveAccountDialog(

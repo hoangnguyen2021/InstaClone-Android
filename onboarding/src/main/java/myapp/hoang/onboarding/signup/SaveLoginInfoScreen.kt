@@ -4,24 +4,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.*
+import myapp.hoang.core_ui.components.AlreadyHaveAccountDialog
+import myapp.hoang.core_ui.components.OnBoardingFilledButton
+import myapp.hoang.core_ui.components.OnBoardingOutlinedButton
+import myapp.hoang.core_ui.components.OnBoardingTextField
 
 @Composable
-fun SignupByPhoneScreen(
+fun SaveLoginInfoScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit,
-    onSignUpWithEmailClick: () -> Unit
+    onNextClick: (String) -> Unit
 ) {
-    var mobileNumber by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
@@ -50,7 +50,7 @@ fun SignupByPhoneScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your mobile number?",
+                text = "Save your login info?",
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -58,7 +58,7 @@ fun SignupByPhoneScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "Enter the mobile number where you can be contacted. No one will see this on your profile.",
+                text = "We'll save the login info for <name>, so you won't need to enter it next time you log in",
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
@@ -66,30 +66,15 @@ fun SignupByPhoneScreen(
                     .align(Alignment.Start)
                     .padding(end = LocalDimension.current.small)
             )
-            Spacer(Modifier.height(LocalDimension.current.extraLarge))
-            OnBoardingTextField(
-                value = mobileNumber,
-                onValueChange = { mobileNumber = it },
-                label = "Mobile number",
-                keyboardType = KeyboardType.Phone
-            )
-            Spacer(Modifier.height(LocalDimension.current.extraSmall))
-            Text(
-                text = "You may receive SMS notifications from us for security and login purposes.",
-                color = AliceBlue,
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Start,
-                modifier = Modifier.align(Alignment.Start)
-            )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
-                onClick = { onNextClick("+1$mobileNumber") }
+                text = "Save",
+                onClick = {}
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
-                text = "Sign up with email",
-                onClick = onSignUpWithEmailClick
+                text = "Not now",
+                onClick = {}
             )
         }
         Box(
@@ -111,21 +96,10 @@ fun SignupByPhoneScreen(
                 onConfirm = {
                     isDialogShown = false
                     onBackClick()
+                    onBackClick()
                 },
                 onDismiss = { isDialogShown = false }
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun SignupByPhoneScreenPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SignupByPhoneScreen({}, {}, {})
         }
     }
 }

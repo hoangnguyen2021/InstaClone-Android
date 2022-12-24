@@ -71,9 +71,11 @@ fun ConfirmationCodeContent(
         modifier = Modifier
             .fillMaxSize()
             .background(brush = onBoardingBackgroundBrush)
-            .padding(horizontal = LocalDimension.current.mediumSmall)
+            .padding(
+                vertical = LocalDimension.current.large,
+                horizontal = LocalDimension.current.mediumSmall
+            )
     ) {
-        Spacer(Modifier.height(LocalDimension.current.large))
         BackIcon(
             color = White,
             modifier = Modifier
@@ -166,17 +168,5 @@ fun ConfirmationCodeDrawerContent(
                 onLoginClick()
             }
         )
-    }
-}
-
-@Preview
-@Composable
-fun ConfirmationCodeScreenPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            ConfirmationCodeScreen("", {}, {}, {})
-        }
     }
 }
