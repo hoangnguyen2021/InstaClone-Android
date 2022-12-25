@@ -13,7 +13,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
@@ -32,9 +31,8 @@ fun ConfirmationCodeScreen(
 
     BottomDrawer(
         drawerContent = {
-            ConfirmationCodeDrawerContent(
-                drawerState = drawerState,
-                scope = scope,
+            ConfirmationCodeDrawer(
+                onCloseDrawer = { scope.launch { drawerState.close() } },
                 onLoginClick = onLoginClick
             )
         },
@@ -49,8 +47,7 @@ fun ConfirmationCodeScreen(
             username = username,
             onNextClick = onNextClick,
             onBackClick = onBackClick,
-            drawerState = drawerState,
-            scope = scope
+            onExpandDrawer = { scope.launch { drawerState.expand() } }
         )
     }
 }
@@ -60,8 +57,7 @@ fun ConfirmationCodeContent(
     username: String,
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
-    drawerState: BottomDrawerState,
-    scope: CoroutineScope
+    onExpandDrawer: () -> Unit
 ) {
     var confirmationCode by remember { mutableStateOf("") }
 
@@ -84,7 +80,7 @@ fun ConfirmationCodeContent(
         )
         Spacer(Modifier.height(LocalDimension.current.mediumSmall))
         Text(
-            text = stringResource(R.string.confirmation_code_title),
+            text = stringResource(R.string.confirmation_code_title_1),
             color = White,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Start,
@@ -115,15 +111,14 @@ fun ConfirmationCodeContent(
         Spacer(Modifier.height(LocalDimension.current.medium))
         OnBoardingOutlinedButton(
             text = stringResource(R.string.confirmation_code_button_1),
-            onClick = { scope.launch { drawerState.expand() } }
+            onClick = onExpandDrawer
         )
     }
 }
 
 @Composable
-fun ConfirmationCodeDrawerContent(
-    drawerState: BottomDrawerState,
-    scope: CoroutineScope,
+fun ConfirmationCodeDrawer(
+    onCloseDrawer: () -> Unit,
     onLoginClick: () -> Unit
 ) {
     Column(
@@ -146,19 +141,17 @@ fun ConfirmationCodeDrawerContent(
             modifier = Modifier
                 .size(LocalDimension.current.medium)
                 .align(Alignment.Start)
-                .clickable { scope.launch { drawerState.close() } }
+                .clickable(onClick = onCloseDrawer)
         )
         Spacer(Modifier.height(LocalDimension.current.large))
         BottomSheetTopButton(
             text = stringResource(R.string.confirmation_code_button_2),
-            onClick = {
-                scope.launch { drawerState.close() }
-            }
+            onClick = onCloseDrawer
         )
         BottomSheetBottomButton(
             text = stringResource(R.string.confirmation_code_button_3),
             onClick = {
-                scope.launch { drawerState.close() }
+                onCloseDrawer()
                 onLoginClick()
             }
         )

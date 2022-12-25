@@ -3,6 +3,7 @@ object Compose {
     private const val composeMaterial3 = "1.0.1"
     private const val hiltNavigationVersion = "1.0.0"
     private const val pagingComposeVersion = "1.0.0-rc1"
+    private const val coilComposeVersion = "2.2.2"
 
     const val animation = "androidx.compose.animation:animation:$composeVersion"
     const val compiler = "androidx.compose.compiler:compiler:$composeVersion"
@@ -17,4 +18,6 @@ object Compose {
     const val activityCompose = "androidx.activity:activity-compose:${Activity.version}"
     const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Lifecycle.version}"
     const val pagingCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
+
+    const val coil = "io.coil-kt:coil-compose:$coilComposeVersion"
 }

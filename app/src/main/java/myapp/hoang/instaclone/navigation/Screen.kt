@@ -11,6 +11,7 @@ sealed class Screen(val route: String) {
     object BirthdayScreen : Screen("birthday")
     object UsernameScreen : Screen("username")
     object PolicyScreen : Screen("policy")
+    object ProfilePictureScreen : Screen("profile-picture")
 
     fun withArgs(vararg args: String): String {
         return buildString {

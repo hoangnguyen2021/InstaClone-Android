@@ -115,6 +115,12 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.PolicyScreen.route) {
                             PolicyScreen(
                                 onBackClick = { navController.navigateUp() },
+                                onNextClick = { navController.navigate(Screen.ProfilePictureScreen.route) }
+                            )
+                        }
+                        composable(route = Screen.ProfilePictureScreen.route) {
+                            ProfilePictureScreen(
+                                onBackClick = { navController.navigateUp() },
                                 onNextClick = {}
                             )
                         }

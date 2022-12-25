@@ -14,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import myapp.hoang.core.util.DateUtils
 import myapp.hoang.core.util.DateUtils.getToday
@@ -33,9 +32,8 @@ fun BirthdayScreen(
 
     BottomDrawer(
         drawerContent = {
-            BirthdayDrawerContent(
-                drawerState = drawerState,
-                scope = scope
+            BirthdayDrawer(
+                onCloseDrawer = { scope.launch { drawerState.close() } }
             )
         },
         drawerState = drawerState,
@@ -48,8 +46,7 @@ fun BirthdayScreen(
         BirthdayContent(
             onBackClick = onBackClick,
             onNextClick = onNextClick,
-            drawerState = drawerState,
-            scope = scope
+            onExpandDrawer = { scope.launch { drawerState.expand() } }
         )
     }
 }
@@ -58,8 +55,7 @@ fun BirthdayScreen(
 fun BirthdayContent(
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
-    drawerState: BottomDrawerState,
-    scope: CoroutineScope
+    onExpandDrawer: () -> Unit
 ) {
     var birthday by remember { mutableStateOf(getToday()) }
     val age by remember { derivedStateOf { DateUtils.calculateAge(birthday) } }
@@ -91,7 +87,7 @@ fun BirthdayContent(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = stringResource(R.string.birthday_title),
+                text = stringResource(R.string.birthday_title_1),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -104,7 +100,7 @@ fun BirthdayContent(
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(end = LocalDimension.current.small),
-                onClick = { scope.launch { drawerState.expand() } }
+                onClick = onExpandDrawer
             )
             Spacer(Modifier.height(LocalDimension.current.extraLarge))
             OnBoardingBirthdayField(
@@ -127,9 +123,8 @@ fun BirthdayContent(
 }
 
 @Composable
-fun BirthdayDrawerContent(
-    drawerState: BottomDrawerState,
-    scope: CoroutineScope
+fun BirthdayDrawer(
+    onCloseDrawer: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -156,11 +151,11 @@ fun BirthdayDrawerContent(
             modifier = Modifier
                 .size(LocalDimension.current.medium)
                 .align(Alignment.Start)
-                .clickable { scope.launch { drawerState.close() } }
+                .clickable(onClick = onCloseDrawer)
         )
         Spacer(Modifier.height(LocalDimension.current.medium))
         Text(
-            text = "Birthdays",
+            text = stringResource(id = R.string.birthday_title_2),
             color = White,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Start,

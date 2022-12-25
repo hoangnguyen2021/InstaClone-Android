@@ -22,9 +22,8 @@ import myapp.hoang.onboarding.R
 @Composable
 fun PolicyScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit
+    onNextClick: () -> Unit
 ) {
-    var username by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
@@ -84,7 +83,7 @@ fun PolicyScreen(
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = "I agree",
-                onClick = { onNextClick(username) }
+                onClick = { onNextClick() }
             )
         }
         AlreadyHaveAccountClickableText(

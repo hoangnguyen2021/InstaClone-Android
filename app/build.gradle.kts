@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -53,6 +54,10 @@ dependencies {
     implementation(project(Module.coreUi))
     implementation(project(Module.onBoarding))
 
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appCompat)
+    implementation(AndroidX.coreSplashScreen)
+
     implementation(Compose.animation)
     implementation(Compose.compiler)
     implementation(Compose.ui)
@@ -65,12 +70,10 @@ dependencies {
     implementation(Compose.viewModelCompose)
     implementation(Compose.activityCompose)
 
+    implementation(Kotlin.kotlinxSerialization)
+
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
-
-    implementation(AndroidX.coreKtx)
-    implementation(AndroidX.appCompat)
-    implementation(AndroidX.coreSplashScreen)
 
     implementation(Google.material)
 
@@ -82,6 +85,12 @@ dependencies {
     kapt(Room.roomCompiler)
     implementation(Room.roomKtx)
     implementation(Room.roomRuntime)
+
+    implementation(Ktor.clientCore)
+    implementation(Ktor.clientAndroid)
+    implementation(Ktor.clientSerialization)
+    implementation(Ktor.clientLogging)
+    implementation(Ktor.serializationKotlinxJson)
 
     testImplementation(Testing.junit4)
     testImplementation(Testing.junitAndroidExt)
