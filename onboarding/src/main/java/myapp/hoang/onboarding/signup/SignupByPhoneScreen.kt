@@ -9,11 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
+import myapp.hoang.onboarding.R
 
 @Composable
 fun SignupByPhoneScreen(
@@ -50,7 +52,7 @@ fun SignupByPhoneScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your mobile number?",
+                text = stringResource(R.string.signup_by_phone_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -58,7 +60,7 @@ fun SignupByPhoneScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "Enter the mobile number where you can be contacted. No one will see this on your profile.",
+                text = stringResource(R.string.signup_by_phone_label_1),
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
@@ -75,7 +77,7 @@ fun SignupByPhoneScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.extraSmall))
             Text(
-                text = "You may receive SMS notifications from us for security and login purposes.",
+                text = stringResource(R.string.signup_by_phone_label_2),
                 color = AliceBlue,
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Start,
@@ -83,12 +85,12 @@ fun SignupByPhoneScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
+                text = stringResource(R.string.next),
                 onClick = { onNextClick("+1$mobileNumber") }
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
-                text = "Sign up with email",
+                text = stringResource(R.string.signup_by_phone_button),
                 onClick = onSignUpWithEmailClick
             )
         }

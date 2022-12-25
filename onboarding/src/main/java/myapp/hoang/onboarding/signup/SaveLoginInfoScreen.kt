@@ -8,9 +8,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
+import myapp.hoang.onboarding.R
 
 @Composable
 fun SaveLoginInfoScreen(
@@ -45,7 +47,7 @@ fun SaveLoginInfoScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "Save your login info?",
+                text = stringResource(R.string.save_login_info_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -53,7 +55,7 @@ fun SaveLoginInfoScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "We'll save the login info for <name>, so you won't need to enter it next time you log in",
+                text = stringResource(R.string.save_login_info_label_1),
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
@@ -63,12 +65,12 @@ fun SaveLoginInfoScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Save",
+                text = stringResource(R.string.save_login_info_button_1),
                 onClick = onNextClick
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
-                text = "Not now",
+                text = stringResource(R.string.save_login_info_button_2),
                 onClick = onNextClick
             )
         }

@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="next">Next</string>
+
+    <string name="signup_by_phone_title">What\'s your mobile number?</string>
+    <string name="signup_by_phone_label_1">Enter the mobile number where you can be contacted. No one will see this on your profile.</string>
+    <string name="signup_by_phone_label_2">You may receive SMS notifications from us for security and login purposes.</string>
+    <string name="signup_by_phone_button">Sign up with email</string>
+
+    <string name="signup_by_email_title">What\'s your email?</string>
+    <string name="signup_by_email_label_1">Enter the email where you can be contacted. No one will see this on your profile.</string>
+    <string name="signup_by_email_button">Sign up with mobile number</string>
+
+    <string name="confirmation_code_title">Enter the confirmation code</string>
+    <string name="confirmation_code_label_1">To confirm your account, enter the 6-digit code we sent to\u0020</string>
+    <string name="confirmation_code_button_1">I didn\'t get the code</string>
+    <string name="confirmation_code_button_2">Resend with confirmation code</string>
+    <string name="confirmation_code_button_3">Login into existing account</string>
+
+    <string name="full_name_title">What\'s your name?</string>
+
+    <string name="password_title">Create a password</string>
+    <string name="password_label_1">Create a password with at least 6 letters and numbers. It should be something others can\'t guess.</string>
+
+    <string name="save_login_info_title">Save your login info?</string>
+    <string name="save_login_info_label_1">We\'ll save the login info for …, so you won\'t need to enter it next time you log in.</string>
+    <string name="save_login_info_button_1">Save</string>
+    <string name="save_login_info_button_2">Not now</string>
+
+    <string name="birthday_title">What\'s your birthday?</string>
+    <string name="birthday_label_1">Use your own birthday, even if this account is for a business, a pet or something else. No one will see this on your profile.</string>
+    <string name="birthday_label_2">Why do I need to provide my birthday?</string>
+    <string name="birthday_body_1">Providing your birthday improves the features and ads you see, and helps to keep the Instagram community safe. You can find your birthday in your personal information account settings.</string>
+
     <string name="learn_more">Learn more</string>
     <string name="policy_title">Agree to Instagram\'s terms and policies</string>
     <string name="policy_body_1">People who use our service may have uploaded your contact information to Instagram.</string>

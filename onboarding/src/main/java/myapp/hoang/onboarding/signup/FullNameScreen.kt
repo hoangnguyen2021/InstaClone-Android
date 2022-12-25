@@ -8,12 +8,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingTextField
+import myapp.hoang.onboarding.R
 
 @Composable
 fun FullNameScreen(
@@ -49,7 +51,7 @@ fun FullNameScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your name?",
+                text = stringResource(R.string.full_name_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,

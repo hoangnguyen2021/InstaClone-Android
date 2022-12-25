@@ -8,17 +8,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
+import myapp.hoang.onboarding.R
 
 @Composable
 fun ConfirmationCodeScreen(
@@ -84,7 +84,7 @@ fun ConfirmationCodeContent(
         )
         Spacer(Modifier.height(LocalDimension.current.mediumSmall))
         Text(
-            text = "Enter the confirmation code",
+            text = stringResource(R.string.confirmation_code_title),
             color = White,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Start,
@@ -92,7 +92,7 @@ fun ConfirmationCodeContent(
         )
         Spacer(Modifier.height(LocalDimension.current.small))
         Text(
-            text = "To confirm your account, enter the 6-digit code we sent to $username.",
+            text = stringResource(R.string.confirmation_code_label_1) + "$username.",
             color = White,
             style = MaterialTheme.typography.labelMedium,
             textAlign = TextAlign.Start,
@@ -109,12 +109,12 @@ fun ConfirmationCodeContent(
         )
         Spacer(Modifier.height(LocalDimension.current.mediumLarge))
         OnBoardingFilledButton(
-            text = "Next",
+            text = stringResource(R.string.next),
             onClick = onNextClick
         )
         Spacer(Modifier.height(LocalDimension.current.medium))
         OnBoardingOutlinedButton(
-            text = "I didn't get the code",
+            text = stringResource(R.string.confirmation_code_button_1),
             onClick = { scope.launch { drawerState.expand() } }
         )
     }
@@ -132,15 +132,8 @@ fun ConfirmationCodeDrawerContent(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.75f)
-            .background(
-                brush = Brush.verticalGradient(
-                    0.0f to Color(0xFF213536),
-                    0.6f to Color(0xFF1C2E3D),
-                )
-            )
-            .padding(
-                horizontal = LocalDimension.current.mediumSmall
-            )
+            .background(brush = onBoardingDrawerBrush)
+            .padding(horizontal = LocalDimension.current.mediumSmall)
     ) {
         SwipeIndicatorIcon(
             color = Color(0xFFCBD2DA),
@@ -157,13 +150,13 @@ fun ConfirmationCodeDrawerContent(
         )
         Spacer(Modifier.height(LocalDimension.current.large))
         BottomSheetTopButton(
-            text = "Resend with confirmation code",
+            text = stringResource(R.string.confirmation_code_button_2),
             onClick = {
                 scope.launch { drawerState.close() }
             }
         )
         BottomSheetBottomButton(
-            text = "Login into existing account",
+            text = stringResource(R.string.confirmation_code_button_3),
             onClick = {
                 scope.launch { drawerState.close() }
                 onLoginClick()

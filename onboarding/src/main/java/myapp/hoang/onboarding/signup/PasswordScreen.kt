@@ -8,11 +8,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingPasswordField
+import myapp.hoang.onboarding.R
 
 @Composable
 fun PasswordScreen(
@@ -48,7 +50,7 @@ fun PasswordScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "Create a password",
+                text = stringResource(R.string.password_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -56,7 +58,7 @@ fun PasswordScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "Create a password with at least 6 letters and numbers. It should be something others can't guess.",
+                text = stringResource(R.string.password_label_1),
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
@@ -72,7 +74,7 @@ fun PasswordScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
+                text = stringResource(R.string.next),
                 onClick = { onNextClick(password) }
             )
         }

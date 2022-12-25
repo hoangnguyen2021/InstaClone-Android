@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +21,7 @@ import myapp.hoang.core.util.DateUtils.getToday
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
+import myapp.hoang.onboarding.R
 
 @Composable
 fun BirthdayScreen(
@@ -89,7 +91,7 @@ fun BirthdayContent(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your birthday?",
+                text = stringResource(R.string.birthday_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -97,8 +99,8 @@ fun BirthdayContent(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             PartiallyClickableText(
-                unclickableText = "Use your own birthday, even if this account is for a business, a pet or something else. No one will see this on your profile.",
-                clickableText = "Why do I need to provide my birthday?",
+                unclickableText = stringResource(R.string.birthday_label_1),
+                clickableText = stringResource(R.string.birthday_label_2),
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(end = LocalDimension.current.small),
@@ -112,7 +114,7 @@ fun BirthdayContent(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
+                text = stringResource(R.string.next),
                 onClick = onNextClick
             )
         }
@@ -166,8 +168,8 @@ fun BirthdayDrawerContent(
         )
         Spacer(Modifier.height(LocalDimension.current.extraSmall))
         PartiallyClickableText(
-            unclickableText = "Providing your birthday improves the features and ads you see, and helps to keep the Instagram community safe. You can find your birthday in your personal information account settings.",
-            clickableText = "Learn more",
+            unclickableText = stringResource(R.string.birthday_body_1),
+            clickableText = stringResource(R.string.learn_more),
             modifier = Modifier
                 .align(Alignment.Start)
                 .padding(end = LocalDimension.current.small),

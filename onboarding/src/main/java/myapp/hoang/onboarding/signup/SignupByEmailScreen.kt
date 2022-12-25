@@ -9,11 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
+import myapp.hoang.onboarding.R
 
 @Composable
 fun SignupByEmailScreen(
@@ -50,7 +52,7 @@ fun SignupByEmailScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "What's your email?",
+                text = stringResource(R.string.signup_by_email_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -58,7 +60,7 @@ fun SignupByEmailScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "Enter the email where you can be contacted. No one will see this on your profile.",
+                text = stringResource(R.string.signup_by_email_label_1),
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
@@ -75,12 +77,12 @@ fun SignupByEmailScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
+                text = stringResource(R.string.next),
                 onClick = { onNextClick(email) }
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
-                text = "Sign up with mobile number",
+                text = stringResource(R.string.signup_by_email_button),
                 onClick = onSignUpWithMobileNumberClick
             )
         }
