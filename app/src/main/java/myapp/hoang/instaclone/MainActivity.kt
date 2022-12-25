@@ -103,6 +103,18 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.BirthdayScreen.route) {
                             BirthdayScreen(
                                 onBackClick = { navController.navigateUp() },
+                                onNextClick = { navController.navigate(Screen.UsernameScreen.route) }
+                            )
+                        }
+                        composable(route = Screen.UsernameScreen.route) {
+                            UsernameScreen(
+                                onBackClick = { navController.navigateUp() },
+                                onNextClick = { navController.navigate(Screen.PolicyScreen.route) }
+                            )
+                        }
+                        composable(route = Screen.PolicyScreen.route) {
+                            PolicyScreen(
+                                onBackClick = { navController.navigateUp() },
                                 onNextClick = {}
                             )
                         }

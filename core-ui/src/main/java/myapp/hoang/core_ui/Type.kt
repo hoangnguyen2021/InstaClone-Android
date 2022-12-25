@@ -62,10 +62,10 @@ val shoikaFontFamily = FontFamily(
 val OnBoardingTypography = Typography(
     titleLarge = TextStyle(
         fontFamily = arabotoFamily,
-        fontWeight = FontWeight.Medium,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp,
-        lineHeight = 30.sp,
-        letterSpacing = 0.4.sp
+        lineHeight = 34.sp,
+        letterSpacing = 0.6.sp
     ),
     labelSmall = TextStyle(
         fontFamily = FontFamily.SansSerif,

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="learn_more">Learn more</string>
+    <string name="policy_title">Agree to Instagram\'s terms and policies</string>
+    <string name="policy_body_1">People who use our service may have uploaded your contact information to Instagram.</string>
+    <string name="policy_body_2_1">By tapping\u0020</string>
+    <string name="policy_body_2_2">I agree</string>
+    <string name="policy_body_2_3">, you agree to create an account and to Instagram\'s\u0020</string>
+    <string name="policy_body_2_4">Terms</string>
+    <string name="policy_body_2_5">,\u0020</string>
+    <string name="policy_body_2_6">Privacy Policy</string>
+    <string name="policy_body_2_7">\u0020and\u0020</string>
+    <string name="policy_body_2_8">Cookies Policy</string>
+    <string name="policy_body_2_9">.</string>
+    <string name="policy_body_3_1">The\u0020</string>
+    <string name="policy_body_3_2">Privacy Policy</string>
+    <string name="policy_body_3_3">\u0020describes the ways we can use the information we collect when you create an account. For example, we use this information to provide, personalize and improve our products, including ads.</string>
+</resources>

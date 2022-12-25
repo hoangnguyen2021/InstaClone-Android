@@ -24,7 +24,7 @@ import myapp.hoang.core_ui.components.bottomsheet.*
 @Composable
 fun BirthdayScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit
+    onNextClick: () -> Unit
 ) {
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -45,6 +45,7 @@ fun BirthdayScreen(
     ) {
         BirthdayContent(
             onBackClick = onBackClick,
+            onNextClick = onNextClick,
             drawerState = drawerState,
             scope = scope
         )
@@ -54,6 +55,7 @@ fun BirthdayScreen(
 @Composable
 fun BirthdayContent(
     onBackClick: () -> Unit,
+    onNextClick: () -> Unit,
     drawerState: BottomDrawerState,
     scope: CoroutineScope
 ) {
@@ -111,7 +113,7 @@ fun BirthdayContent(
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = "Next",
-                onClick = {}
+                onClick = onNextClick
             )
         }
         AlreadyHaveAccountClickableText(
