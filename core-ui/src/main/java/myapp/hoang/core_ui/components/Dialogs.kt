@@ -13,7 +13,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import myapp.hoang.core_ui.*
+import java.time.LocalDate
 
 @Composable
 fun AlreadyHaveAccountDialog(
@@ -108,5 +110,22 @@ fun AlreadyHaveAccountDialogPreview() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun DatePickerDialog(
+    label: String,
+    onDismiss: () -> Unit,
+    textFieldValue: LocalDate,
+    onTextFieldValueChange: (LocalDate) -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        DatePicker(
+            label = label,
+            onDismiss = onDismiss,
+            textFieldValue = textFieldValue,
+            onTextFieldValueChange = onTextFieldValueChange
+        )
     }
 }

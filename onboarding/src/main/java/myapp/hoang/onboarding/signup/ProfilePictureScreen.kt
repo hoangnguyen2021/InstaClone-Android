@@ -83,7 +83,10 @@ fun ProfilePictureScreen(
     val cameraPermissionState = rememberPermissionState(
         permission = Manifest.permission.CAMERA,
         onPermissionResult = { isGranted ->
-            if (isGranted) takePictureLauncher.launch(null)
+            if (isGranted) {
+                currentTmpUri = FileUtils.createTmpFileUri(context)
+                takePictureLauncher.launch(currentTmpUri)
+            }
         }
     )
 

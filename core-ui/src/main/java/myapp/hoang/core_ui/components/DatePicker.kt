@@ -11,29 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import myapp.hoang.core.util.DateUtils.days
 import myapp.hoang.core.util.DateUtils.monthsNames
 import myapp.hoang.core.util.DateUtils.years
 import myapp.hoang.core_ui.*
 import java.time.LocalDate
-
-@Composable
-fun DatePickerDialog(
-    label: String,
-    onDismiss: () -> Unit,
-    textFieldValue: LocalDate,
-    onTextFieldValueChange: (LocalDate) -> Unit
-) {
-    Dialog(onDismissRequest = onDismiss) {
-        DatePicker(
-            label = label,
-            onDismiss = onDismiss,
-            textFieldValue = textFieldValue,
-            onTextFieldValueChange = onTextFieldValueChange
-        )
-    }
-}
 
 @Composable
 fun DatePicker(
@@ -150,7 +132,7 @@ fun DateSelectionSection(
         )
         FiniteItemsPicker(
             items = listOf("") + years + listOf(""),
-            firstIndex = 0,
+            firstIndex = 122,
             onItemSelected = onYearChosen,
             modifier = Modifier
                 .fillMaxWidth()
