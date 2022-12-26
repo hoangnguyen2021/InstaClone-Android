@@ -13,9 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import myapp.hoang.core.util.DateUtils.days
-import myapp.hoang.core.util.DateUtils.getDateString
 import myapp.hoang.core.util.DateUtils.monthsNames
-import myapp.hoang.core.util.DateUtils.parseDateString
 import myapp.hoang.core.util.DateUtils.years
 import myapp.hoang.core_ui.*
 import java.time.LocalDate
@@ -150,9 +148,9 @@ fun DateSelectionSection(
                 .height(LocalDimension.current.tenExtraLarge)
                 .weight(1f)
         )
-        InfiniteItemsPicker(
-            items = years,
-            firstIndex = Int.MAX_VALUE / 2 - 41 + yearChosen - 1899,
+        FiniteItemsPicker(
+            items = listOf("") + years + listOf(""),
+            firstIndex = 0,
             onItemSelected = onYearChosen,
             modifier = Modifier
                 .fillMaxWidth()
@@ -195,6 +193,47 @@ fun InfiniteItemsPicker(
                         color = MaterialTheme.colorScheme.onSurface,
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.alpha(if (it == secondVisibleItemIndex) 1f else 0.2f),
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+            },
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Composable
+fun FiniteItemsPicker(
+    items: List<String>,
+    firstIndex: Int,
+    modifier: Modifier = Modifier,
+    onItemSelected: (String) -> Unit,
+) {
+    val listState = rememberLazyListState(firstIndex)
+    val secondVisibleItemIndex by remember { derivedStateOf { listState.firstVisibleItemIndex + 1 } }
+    var currentValue by remember { mutableStateOf("") }
+
+    LaunchedEffect(key1 = !listState.isScrollInProgress) {
+        onItemSelected(currentValue)
+        listState.animateScrollToItem(index = listState.firstVisibleItemIndex)
+    }
+
+    Box(modifier = modifier) {
+        LazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            state = listState,
+            content = {
+                items(count = items.size) { index ->
+                    if (index == secondVisibleItemIndex) {
+                        currentValue = items[index]
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
+                        text = items[index],
+                        color = MaterialTheme.colorScheme.onSurface,
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.alpha(if (index == secondVisibleItemIndex) 1f else 0.2f),
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                 }
