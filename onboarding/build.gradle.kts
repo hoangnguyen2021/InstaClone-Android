@@ -4,4 +4,6 @@ apply {
 
 dependencies {
     "implementation"(project(Module.coreUi))
+
+    "implementation"(Canhub.androidImageCropper)
 }

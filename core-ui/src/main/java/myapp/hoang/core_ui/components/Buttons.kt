@@ -1,15 +1,12 @@
 package myapp.hoang.core_ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
@@ -55,10 +52,10 @@ fun CreateAccountButton(
 ) {
     OutlinedButton(
         onClick = onClick,
+        enabled = isEnabled,
         modifier = Modifier
             .fillMaxWidth()
             .height(LocalDimension.current.fourExtraLarge),
-        enabled = isEnabled,
         shape = RoundedCornerShape(LocalDimension.current.extraSmall),
         colors = ButtonDefaults.outlinedButtonColors(),
         border = BorderStroke(
@@ -72,6 +69,36 @@ fun CreateAccountButton(
             bottom = LocalDimension.current.extraSmall
         )
     ) {
+        Text(
+            text = text,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            style = MaterialTheme.typography.displayLarge,
+            modifier = Modifier.padding(vertical = 0.dp)
+        )
+    }
+}
+
+@Composable
+fun OnBoardingEditButton(
+    text: String,
+    onClick: () -> Unit
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = Modifier
+            .wrapContentWidth()
+            .height(LocalDimension.current.twoExtraLarge),
+        shape = RoundedCornerShape(LocalDimension.current.extraSmall),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+        ),
+        contentPadding = PaddingValues(
+            horizontal = LocalDimension.current.medium
+        )
+    ) {
+        EditIcon(color = White)
+        Spacer(modifier = Modifier.width(LocalDimension.current.small))
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
@@ -114,34 +141,6 @@ fun OnBoardingOutlinedButton(
         )
     }
 }
-
-@Preview
-@Composable
-fun OnBoardingButtonsPreview() {
-    OnBoardingTheme {
-        Surface(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.3f)
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .background(
-                        brush = onBoardingBackgroundBrush
-                    )
-                    .padding(
-                        horizontal = LocalDimension.current.small
-                    )
-            ) {
-                OnBoardingFilledButton("Log in", {})
-                CreateAccountButton("Create new account", {})
-                OnBoardingOutlinedButton("Sign up with email", {})
-            }
-        }
-    }
-}
-
 
 @Composable
 fun BottomSheetTopButton(

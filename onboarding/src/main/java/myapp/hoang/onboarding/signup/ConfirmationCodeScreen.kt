@@ -41,7 +41,8 @@ fun ConfirmationCodeScreen(
             topStart = LocalDimension.current.extraSmall,
             topEnd = LocalDimension.current.extraSmall
         ),
-        scrimColor = Black.copy(alpha = 0.7f)
+        scrimColor = Black.copy(alpha = 0.7f),
+        gesturesEnabled = drawerState.isOpen
     ) {
         ConfirmationCodeContent(
             username = username,

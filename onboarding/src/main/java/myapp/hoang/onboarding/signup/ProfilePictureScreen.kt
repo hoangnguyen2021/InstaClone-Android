@@ -7,40 +7,33 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.launch
+import myapp.hoang.core.util.FileUtils
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawer
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerValue
 import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
 import myapp.hoang.onboarding.R
-import java.io.File
 
-
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
@@ -49,27 +42,40 @@ fun ProfilePictureScreen(
     onNextClick: () -> Unit
 ) {
     val context = LocalContext.current
+
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    // can be a URI or Bitmap
-    var imageData by remember { mutableStateOf<Any?>(null) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
     var currentTmpUri by remember { mutableStateOf<Uri?>(null) }
 
-    val galleryLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) imageData = uri
-        }
+    val pickImageLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri -> if (uri != null) imageUri = uri }
+        )
     val takePictureLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { isSuccessful ->
-            if (isSuccessful) imageData = currentTmpUri
-        }
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.TakePicture(),
+            onResult = { isSuccessful -> if (isSuccessful) imageUri = currentTmpUri }
+        )
+    val cropImageLauncher =
+        rememberLauncherForActivityResult(
+            contract = CropImageContract(),
+            onResult = { cropResult ->
+                if (cropResult.isSuccessful) imageUri = cropResult.uriContent
+            }
+        )
 
     val readImagesPermissionState = rememberPermissionState(
-        permission = Manifest.permission.READ_MEDIA_IMAGES,
+        permission =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            Manifest.permission.READ_MEDIA_IMAGES
+        else
+            Manifest.permission.READ_EXTERNAL_STORAGE,
         onPermissionResult = { isGranted ->
             if (isGranted)
-                galleryLauncher.launch(
+                pickImageLauncher.launch(
                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                 )
         }
@@ -84,10 +90,11 @@ fun ProfilePictureScreen(
     BottomDrawer(
         drawerContent = {
             ProfilePictureDrawer(
+                imageUri = imageUri,
                 onCloseDrawer = { scope.launch { drawerState.close() } },
                 onChooseFromGallery = {
                     if (readImagesPermissionState.status.isGranted) {
-                        galleryLauncher.launch(
+                        pickImageLauncher.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     } else {
@@ -96,22 +103,13 @@ fun ProfilePictureScreen(
                 },
                 onTakePhoto = {
                     if (cameraPermissionState.status.isGranted) {
-                        val tmpFile = File
-                            .createTempFile("tmp_image_file", ".png", context.cacheDir)
-                            .apply {
-                                createNewFile()
-                                deleteOnExit()
-                            }
-                        currentTmpUri = FileProvider.getUriForFile(
-                            context,
-                            "${context.packageName}.provider",
-                            tmpFile
-                        )
+                        currentTmpUri = FileUtils.createTmpFileUri(context)
                         takePictureLauncher.launch(currentTmpUri)
                     } else {
                         cameraPermissionState.launchPermissionRequest()
                     }
-                }
+                },
+                onRemovePhoto = { imageUri = null }
             )
         },
         drawerState = drawerState,
@@ -119,11 +117,13 @@ fun ProfilePictureScreen(
             topStart = LocalDimension.current.extraSmall,
             topEnd = LocalDimension.current.extraSmall
         ),
-        scrimColor = Black.copy(alpha = 0.7f)
+        scrimColor = Black.copy(alpha = 0.7f),
+        gesturesEnabled = drawerState.isOpen
     ) {
         Scaffold(
             bottomBar = {
                 BottomBar(
+                    imageUri = imageUri,
                     onAddPicture = { scope.launch { drawerState.expand() } },
                     onNextClick = onNextClick
                 )
@@ -131,9 +131,22 @@ fun ProfilePictureScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             ProfilePictureContent(
-                imageUri = imageData,
+                imageUri = imageUri,
                 onBackClick = onBackClick,
-                onNextClick = onNextClick
+                onCrop = {
+                    cropImageLauncher.launch(
+                        CropImageContractOptions(
+                            uri = imageUri,
+                            cropImageOptions = CropImageOptions(
+                                aspectRatioX = 1,
+                                aspectRatioY = 1,
+                                fixAspectRatio = true,
+                                multiTouchEnabled = true,
+                                activityBackgroundColor = android.graphics.Color.BLACK
+                            )
+                        )
+                    )
+                }
             )
         }
     }
@@ -141,9 +154,9 @@ fun ProfilePictureScreen(
 
 @Composable
 fun ProfilePictureContent(
-    imageUri: Any?,
+    imageUri: Uri?,
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onCrop: () -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -184,29 +197,20 @@ fun ProfilePictureContent(
                 .padding(end = LocalDimension.current.small)
         )
         Spacer(Modifier.height(LocalDimension.current.large))
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageUri)
-                .crossfade(true)
-                .build(),
-            error = painterResource(id = R.drawable.profile_pic_placeholder),
-            contentDescription = "Profile picture",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth(0.75f)
-                .aspectRatio(1f)
-                .border(
-                    BorderStroke(5.dp, LightGray),
-                    CircleShape
-                )
-                .padding(LocalDimension.current.twoExtraSmall)
-                .clip(CircleShape)
-        )
+        OnBoardingProfilePicture(imageUri = imageUri)
+        if (imageUri != null) {
+            Spacer(Modifier.height(LocalDimension.current.large))
+            OnBoardingEditButton(
+                text = "Edit",
+                onClick = onCrop
+            )
+        }
     }
 }
 
 @Composable
 fun BottomBar(
+    imageUri: Uri?,
     onAddPicture: () -> Unit,
     onNextClick: () -> Unit
 ) {
@@ -233,13 +237,17 @@ fun BottomBar(
                 )
         ) {
             OnBoardingFilledButton(
-                text = stringResource(R.string.profile_pic_button_1),
-                onClick = onAddPicture
+                text = stringResource(
+                    if (imageUri == null) R.string.profile_pic_button_1 else R.string.profile_pic_button_3
+                ),
+                onClick = if (imageUri == null) onAddPicture else onNextClick
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             OnBoardingOutlinedButton(
-                text = stringResource(R.string.profile_pic_button_2),
-                onClick = onNextClick
+                text = stringResource(
+                    if (imageUri == null) R.string.profile_pic_button_2 else R.string.profile_pic_button_4
+                ),
+                onClick = if (imageUri == null) onNextClick else onAddPicture
             )
         }
     }
@@ -247,9 +255,11 @@ fun BottomBar(
 
 @Composable
 fun ProfilePictureDrawer(
+    imageUri: Uri?,
     onCloseDrawer: () -> Unit,
     onChooseFromGallery: () -> Unit,
-    onTakePhoto: () -> Unit
+    onTakePhoto: () -> Unit,
+    onRemovePhoto: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -283,18 +293,35 @@ fun ProfilePictureDrawer(
         )
         Spacer(Modifier.height(LocalDimension.current.large))
         BottomSheetTopButton(
-            text = stringResource(R.string.profile_pic_button_3),
+            text = stringResource(R.string.profile_pic_button_5),
             onClick = {
                 onCloseDrawer()
                 onChooseFromGallery()
             }
         )
-        BottomSheetBottomButton(
-            text = stringResource(R.string.profile_pic_button_4),
-            onClick = {
-                onCloseDrawer()
-                onTakePhoto()
-            }
-        )
+        if (imageUri == null) {
+            BottomSheetBottomButton(
+                text = stringResource(R.string.profile_pic_button_6),
+                onClick = {
+                    onCloseDrawer()
+                    onTakePhoto()
+                }
+            )
+        } else {
+            BottomSheetMiddleButton(
+                text = stringResource(R.string.profile_pic_button_6),
+                onClick = {
+                    onCloseDrawer()
+                    onTakePhoto()
+                }
+            )
+            BottomSheetBottomButton(
+                text = stringResource(R.string.profile_pic_button_7),
+                onClick = {
+                    onCloseDrawer()
+                    onRemovePhoto()
+                }
+            )
+        }
     }
 }

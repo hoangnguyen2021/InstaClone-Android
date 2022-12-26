@@ -233,3 +233,13 @@ fun SwipeIndicatorIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun EditIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_crop),
+        contentDescription = "Crop",
+        modifier = modifier,
+        tint = color
+    )
+}

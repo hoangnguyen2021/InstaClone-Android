@@ -54,6 +54,9 @@
     <string name="profile_pic_label_1">Add a profile picture so your friends know it\'s you. Everyone will be able to see your picture.</string>
     <string name="profile_pic_button_1">Add picture</string>
     <string name="profile_pic_button_2">Skip</string>
-    <string name="profile_pic_button_3">Choose from Gallery</string>
-    <string name="profile_pic_button_4">Take photo</string>
+    <string name="profile_pic_button_3">Done</string>
+    <string name="profile_pic_button_4">Change picture</string>
+    <string name="profile_pic_button_5">Choose from Gallery</string>
+    <string name="profile_pic_button_6">Take photo</string>
+    <string name="profile_pic_button_7">Remove profile picture</string>
 </resources>

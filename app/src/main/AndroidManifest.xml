@@ -28,6 +28,9 @@
                 android:value="" />
         </activity>
 
+        <activity android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="myapp.hoang.instaclone.provider"
