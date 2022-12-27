@@ -20,7 +20,7 @@ import myapp.hoang.onboarding.R
 @Composable
 fun SignupByPhoneScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit,
+    onNextClick: (Long, String) -> Unit,
     onSignUpWithEmailClick: () -> Unit
 ) {
     var mobileNumber by remember { mutableStateOf("") }
@@ -86,7 +86,7 @@ fun SignupByPhoneScreen(
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
-                onClick = { onNextClick("+1$mobileNumber") }
+                onClick = { onNextClick(mobileNumber.toLong(), "+1$mobileNumber") }
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
@@ -99,17 +99,5 @@ fun SignupByPhoneScreen(
             onIsDialogShownChange = { isDialogShown = it },
             onBackClick = onBackClick
         )
-    }
-}
-
-@Preview
-@Composable
-fun SignupByPhoneScreenPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SignupByPhoneScreen({}, {}, {})
-        }
     }
 }

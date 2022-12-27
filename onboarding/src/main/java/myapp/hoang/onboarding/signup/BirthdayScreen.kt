@@ -21,14 +21,18 @@ import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
 import myapp.hoang.onboarding.R
+import java.time.LocalDate
 
 @Composable
 fun BirthdayScreen(
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (LocalDate) -> Unit
 ) {
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    var birthday by remember { mutableStateOf(getToday()) }
+    val age by remember { derivedStateOf { DateUtils.calculateAge(birthday) } }
 
     BottomDrawer(
         drawerContent = {
@@ -45,8 +49,11 @@ fun BirthdayScreen(
         gesturesEnabled = drawerState.isOpen
     ) {
         BirthdayContent(
+            birthday = birthday,
+            age = age,
+            onBirthdayChange = { birthday = it },
             onBackClick = onBackClick,
-            onNextClick = onNextClick,
+            onNextClick = { onNextClick(birthday) },
             onExpandDrawer = { scope.launch { drawerState.expand() } }
         )
     }
@@ -54,12 +61,13 @@ fun BirthdayScreen(
 
 @Composable
 fun BirthdayContent(
+    birthday: LocalDate,
+    age: Int,
+    onBirthdayChange: (LocalDate) -> Unit,
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
     onExpandDrawer: () -> Unit
 ) {
-    var birthday by remember { mutableStateOf(getToday()) }
-    val age by remember { derivedStateOf { DateUtils.calculateAge(birthday) } }
     var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
@@ -106,7 +114,7 @@ fun BirthdayContent(
             Spacer(Modifier.height(LocalDimension.current.extraLarge))
             OnBoardingBirthdayField(
                 value = birthday,
-                onValueChange = { birthday = it },
+                onValueChange = { onBirthdayChange(it) },
                 label = "Birthday ($age years old)"
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))

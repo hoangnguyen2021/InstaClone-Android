@@ -39,7 +39,7 @@ import myapp.hoang.onboarding.R
 @Composable
 fun ProfilePictureScreen(
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (String) -> Unit
 ) {
     val context = LocalContext.current
 
@@ -128,7 +128,7 @@ fun ProfilePictureScreen(
                 BottomBar(
                     imageUri = imageUri,
                     onAddPicture = { scope.launch { drawerState.expand() } },
-                    onNextClick = onNextClick
+                    onNextClick = { onNextClick(imageUri.toString()) }
                 )
             },
             modifier = Modifier.fillMaxSize()

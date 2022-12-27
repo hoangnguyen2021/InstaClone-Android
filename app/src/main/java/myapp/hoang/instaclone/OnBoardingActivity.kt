@@ -7,17 +7,20 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import dagger.hilt.android.AndroidEntryPoint
 import myapp.hoang.core_ui.*
 import myapp.hoang.instaclone.navigation.Screen
 import myapp.hoang.onboarding.login.LoginScreen
 import myapp.hoang.onboarding.signup.*
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class OnBoardingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,6 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             OnBoardingTheme {
                 val navController = rememberNavController()
+                val viewModel = hiltViewModel<OnBoardingViewModel>()
 
                 Surface(
                     modifier = Modifier.fillMaxSize()
@@ -41,8 +45,13 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.SignupByPhoneScreen.route) {
                             SignupByPhoneScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = {
-                                    navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
+                                onNextClick = { mobileNumberLong, mobileNumberString ->
+                                    viewModel.setMobileNumber(mobileNumberLong)
+                                    navController.navigate(
+                                        Screen.ConfirmationCodeScreen.withArgs(
+                                            mobileNumberString
+                                        )
+                                    )
                                 },
                                 onSignUpWithEmailClick = {
                                     navController.navigate(Screen.SignupByEmailScreen.route)
@@ -53,6 +62,7 @@ class MainActivity : ComponentActivity() {
                             SignupByEmailScreen(
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
+                                    viewModel.setEmail(it)
                                     navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
                                 },
                                 onSignUpWithMobileNumberClick = { navController.navigateUp() }
@@ -72,7 +82,10 @@ class MainActivity : ComponentActivity() {
                                 ConfirmationCodeScreen(
                                     username = username,
                                     onBackClick = { navController.navigateUp() },
-                                    onNextClick = { navController.navigate(Screen.FullNameScreen.route) },
+                                    onNextClick = {
+                                        viewModel.setIsMobileNumberVerified(true)
+                                        navController.navigate(Screen.FullNameScreen.route)
+                                    },
                                     onLoginClick = {
                                         navController.navigateUp()
                                         navController.navigateUp()
@@ -85,7 +98,10 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.FullNameScreen.route) {
                             FullNameScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = { navController.navigate(Screen.PasswordScreen.route) }
+                                onNextClick = {
+                                    viewModel.setFullName(it)
+                                    navController.navigate(Screen.PasswordScreen.route)
+                                }
                             )
                         }
                         composable(route = Screen.PasswordScreen.route) {
@@ -103,25 +119,36 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.BirthdayScreen.route) {
                             BirthdayScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = { navController.navigate(Screen.UsernameScreen.route) }
+                                onNextClick = {
+                                    viewModel.setBirthday(it)
+                                    navController.navigate(Screen.UsernameScreen.route)
+                                }
                             )
                         }
                         composable(route = Screen.UsernameScreen.route) {
                             UsernameScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = { navController.navigate(Screen.PolicyScreen.route) }
+                                onNextClick = {
+                                    viewModel.setUsername(it)
+                                    navController.navigate(Screen.PolicyScreen.route)
+                                }
                             )
                         }
                         composable(route = Screen.PolicyScreen.route) {
                             PolicyScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = { navController.navigate(Screen.ProfilePictureScreen.route) }
+                                onNextClick = {
+                                    viewModel.setAgreedToPolicy(true)
+                                    navController.navigate(Screen.ProfilePictureScreen.route)
+                                }
                             )
                         }
                         composable(route = Screen.ProfilePictureScreen.route) {
                             ProfilePictureScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = {}
+                                onNextClick = {
+                                    viewModel.setProfilePicUrl(it)
+                                }
                             )
                         }
                     }

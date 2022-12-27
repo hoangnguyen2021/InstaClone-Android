@@ -17,7 +17,7 @@ import myapp.hoang.core_ui.components.OnBoardingTextField
 @Composable
 fun UsernameScreen(
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (String) -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
@@ -73,7 +73,7 @@ fun UsernameScreen(
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = "Next",
-                onClick = { onNextClick() }
+                onClick = { onNextClick(username) }
             )
         }
         AlreadyHaveAccountClickableText(
