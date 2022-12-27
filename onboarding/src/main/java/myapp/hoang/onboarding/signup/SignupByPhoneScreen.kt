@@ -4,15 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import myapp.hoang.core.util.Validator
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
@@ -23,8 +23,11 @@ fun SignupByPhoneScreen(
     onNextClick: (Long, String) -> Unit,
     onSignUpWithEmailClick: () -> Unit
 ) {
+    val context = LocalContext.current
     var mobileNumber by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
+    var errorSupportingText by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,20 +76,32 @@ fun SignupByPhoneScreen(
                 value = mobileNumber,
                 onValueChange = { mobileNumber = it },
                 label = "Mobile number",
-                keyboardType = KeyboardType.Phone
+                keyboardType = KeyboardType.Phone,
+                isError = isError
             )
             Spacer(Modifier.height(LocalDimension.current.extraSmall))
             Text(
-                text = stringResource(R.string.signup_by_phone_label_2),
-                color = AliceBlue,
+                text = if (isError) errorSupportingText
+                else stringResource(R.string.signup_by_phone_label_2),
+                color = if (isError) MaterialTheme.colorScheme.error else AliceBlue,
                 style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Start,
                 modifier = Modifier.align(Alignment.Start)
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
-                onClick = { onNextClick(mobileNumber.toLong(), "+1$mobileNumber") }
+                onClick = {
+                    if (mobileNumber.isEmpty() || mobileNumber.isBlank()) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.signup_by_phone_error_1)
+                    } else if (!Validator.validateMobileNumber(mobileNumber)) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.signup_by_phone_error_2)
+                    } else {
+                        isError = false
+                        onNextClick(mobileNumber.toLong(), "+1$mobileNumber")
+                    }
+                }
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(

@@ -56,7 +56,7 @@ dependencies {
     implementation Compose.activityCompose
     implementation Compose.coil
 
-    implementation Accompanist.permissions
+    implementation Google.accompanistPermissions
 
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid

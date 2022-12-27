@@ -15,6 +15,7 @@ import myapp.hoang.core_ui.*
 fun OnBoardingFilledButton(
     text: String,
     onClick: () -> Unit,
+    isLoading: Boolean = false,
     isEnabled: Boolean = true
 ) {
     Button(
@@ -35,12 +36,16 @@ fun OnBoardingFilledButton(
             bottom = LocalDimension.current.extraSmall
         )
     ) {
-        Text(
-            text = text,
-            color = MaterialTheme.colorScheme.onTertiaryContainer,
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(vertical = 0.dp)
-        )
+        if (isLoading) {
+            OnBoardingProgressIndicator()
+        } else {
+            Text(
+                text = text,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(vertical = 0.dp)
+            )
+        }
     }
 }
 

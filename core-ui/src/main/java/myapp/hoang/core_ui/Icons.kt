@@ -243,3 +243,13 @@ fun EditIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun ErrorIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_error),
+        contentDescription = "Error",
+        modifier = modifier,
+        tint = color
+    )
+}

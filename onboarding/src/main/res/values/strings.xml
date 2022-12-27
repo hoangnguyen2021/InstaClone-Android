@@ -6,6 +6,8 @@
     <string name="signup_by_phone_label_1">Enter the mobile number where you can be contacted. No one will see this on your profile.</string>
     <string name="signup_by_phone_label_2">You may receive SMS notifications from us for security and login purposes.</string>
     <string name="signup_by_phone_button">Sign up with email</string>
+    <string name="signup_by_phone_error_1">Mobile number required.</string>
+    <string name="signup_by_phone_error_2">Looks like your mobile number may be incorrect. Try entering your full number, including the country code.</string>
 
     <string name="signup_by_email_title">What\'s your email?</string>
     <string name="signup_by_email_label_1">Enter the email where you can be contacted. No one will see this on your profile.</string>

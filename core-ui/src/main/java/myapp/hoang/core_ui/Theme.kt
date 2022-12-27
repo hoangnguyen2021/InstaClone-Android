@@ -83,7 +83,9 @@ private val OnboardingColorScheme = lightColorScheme(
     onBackground = WeldonBlue,
     surface = Black,
     onSurface = White,
-    outline = LightBlue
+    outline = LightBlue,
+    error = ErrorRed,
+    onError = ErrorBlackRed
 )
 
 @Composable

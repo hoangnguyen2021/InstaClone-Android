@@ -28,7 +28,8 @@ fun OnBoardingTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    keyboardType: KeyboardType = KeyboardType.Text
+    keyboardType: KeyboardType = KeyboardType.Text,
+    isError: Boolean = false
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -40,9 +41,12 @@ fun OnBoardingTextField(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             cursorColor = White,
             selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            errorTrailingIconColor = MaterialTheme.colorScheme.error,
+            errorLabelColor = MaterialTheme.colorScheme.onError,
             focusedIndicatorColor = Transparent,
             unfocusedIndicatorColor = Transparent,
-            disabledIndicatorColor = Transparent
+            disabledIndicatorColor = Transparent,
+            errorIndicatorColor = Transparent
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -50,7 +54,9 @@ fun OnBoardingTextField(
             .background(MaterialTheme.colorScheme.primaryContainer)
             .border(
                 width = 1.dp,
-                color = if (isFocused) AliceBlue else GrayBlue,
+                color = if (isError) MaterialTheme.colorScheme.error
+                else if (isFocused) AliceBlue
+                else GrayBlue,
                 shape = RoundedCornerShape(LocalDimension.current.extraSmall)
             )
             .padding(vertical = LocalDimension.current.extraSmall)
@@ -61,22 +67,27 @@ fun OnBoardingTextField(
         label = {
             Text(
                 text = label,
-                color = if (isFocused) AliceBlue else MaterialTheme.colorScheme.onPrimary
+                color = if (isError) MaterialTheme.colorScheme.error
+                else if (isFocused) AliceBlue
+                else MaterialTheme.colorScheme.onPrimary
             )
         },
-        trailingIcon = if (value.isNotEmpty()) {
-            {
+        trailingIcon = {
+            if (isError) {
+                ErrorIcon(color = MaterialTheme.colorScheme.error)
+            } else if (value.isNotEmpty()) {
                 CancelIcon(
                     color = AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.medium)
                         .clickable { onValueChange("") }
                 )
-            }
-        } else null,
+            } else null
+        },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType
         ),
+        isError = isError,
         singleLine = true,
         maxLines = 1,
         shape = RoundedCornerShape(LocalDimension.current.extraSmall)
