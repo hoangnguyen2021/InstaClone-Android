@@ -1,4 +1,4 @@
-package myapp.hoang.onboarding.di
+package myapp.hoang.instaclone.di
 
 import dagger.Module
 import dagger.Provides
@@ -12,11 +12,13 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import myapp.hoang.core.config.NetworkConfig.HOST
+import myapp.hoang.onboarding.signup.services.KtorSignupService
+import myapp.hoang.onboarding.signup.services.SignupService
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SignupModule {
+object NetworkModule {
     @Provides
     @Singleton
     fun provideHttpClient(): HttpClient {
@@ -37,5 +39,11 @@ object SignupModule {
                 level = LogLevel.HEADERS
             }
         }
+    }
+
+    @Provides
+    @Singleton
+    fun provideSignupService(httpClient: HttpClient): SignupService {
+        return KtorSignupService(httpClient)
     }
 }

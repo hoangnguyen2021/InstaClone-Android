@@ -5,11 +5,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingViewModel @Inject constructor(): ViewModel()  {
+class OnBoardingViewModel @Inject constructor(
+    private val signupRepository: SignupRepository
+): ViewModel()  {
     private val _signupForm = MutableStateFlow(SignupForm())
     val signupForm = _signupForm.asStateFlow()
 
