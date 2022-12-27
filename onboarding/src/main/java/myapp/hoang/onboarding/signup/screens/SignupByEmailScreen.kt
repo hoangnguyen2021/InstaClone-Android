@@ -1,9 +1,10 @@
-package myapp.hoang.onboarding.signup
+package myapp.hoang.onboarding.signup.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -11,18 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
-import myapp.hoang.core_ui.components.OnBoardingFilledButton
-import myapp.hoang.core_ui.components.OnBoardingTextField
+import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
 
 @Composable
-fun FullNameScreen(
+fun SignupByEmailScreen(
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit
+    onNextClick: (String) -> Unit,
+    onSignUpWithMobileNumberClick: () -> Unit
 ) {
-    var fullName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
@@ -51,23 +52,38 @@ fun FullNameScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = stringResource(R.string.full_name_title),
+                text = stringResource(R.string.signup_by_email_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.align(Alignment.Start)
             )
+            Spacer(Modifier.height(LocalDimension.current.small))
+            Text(
+                text = stringResource(R.string.signup_by_email_label_1),
+                color = White,
+                style = MaterialTheme.typography.labelMedium,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(end = LocalDimension.current.small)
+            )
             Spacer(Modifier.height(LocalDimension.current.extraLarge))
             OnBoardingTextField(
-                value = fullName,
-                onValueChange = { fullName = it },
-                label = "Full name",
-                keyboardType = KeyboardType.Text
+                value = email,
+                onValueChange = { email = it },
+                label = "Email",
+                keyboardType = KeyboardType.Email
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
-                onClick = { onNextClick(fullName) }
+                text = stringResource(R.string.next),
+                onClick = { onNextClick(email) }
+            )
+            Spacer(Modifier.height(LocalDimension.current.medium))
+            OnBoardingOutlinedButton(
+                text = stringResource(R.string.signup_by_email_button),
+                onClick = onSignUpWithMobileNumberClick
             )
         }
         AlreadyHaveAccountClickableText(
@@ -75,5 +91,17 @@ fun FullNameScreen(
             onIsDialogShownChange = { isDialogShown = it },
             onBackClick = onBackClick
         )
+    }
+}
+
+@Preview
+@Composable
+fun SignupByEmailScreenPreview() {
+    OnBoardingTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            SignupByEmailScreen({}, {}, {})
+        }
     }
 }

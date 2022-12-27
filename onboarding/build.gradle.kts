@@ -5,5 +5,15 @@ apply {
 dependencies {
     "implementation"(project(Module.coreUi))
 
+    "implementation"(Kotlin.kotlinxSerialization)
+
+    "implementation"(Ktor.clientCore)
+    "implementation"(Ktor.clientAndroid)
+    "implementation"(Ktor.clientContentNegotiation)
+    "implementation"(Ktor.clientLogging)
+    "implementation"(Ktor.serializationKotlinxJson)
+
+    "implementation"(Twilio.javaSdk)
+
     "implementation"(Canhub.androidImageCropper)
 }

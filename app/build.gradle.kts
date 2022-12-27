@@ -88,7 +88,7 @@ dependencies {
 
     implementation(Ktor.clientCore)
     implementation(Ktor.clientAndroid)
-    implementation(Ktor.clientSerialization)
+    implementation(Ktor.clientContentNegotiation)
     implementation(Ktor.clientLogging)
     implementation(Ktor.serializationKotlinxJson)
 

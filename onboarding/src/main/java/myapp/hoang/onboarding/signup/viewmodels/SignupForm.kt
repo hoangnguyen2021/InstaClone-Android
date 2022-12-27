@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone
+package myapp.hoang.onboarding.signup.viewmodels
 
 import java.time.LocalDate
 

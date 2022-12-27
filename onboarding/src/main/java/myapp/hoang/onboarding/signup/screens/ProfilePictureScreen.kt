@@ -1,4 +1,4 @@
-package myapp.hoang.onboarding.signup
+package myapp.hoang.onboarding.signup.screens
 
 import android.Manifest
 import android.annotation.SuppressLint

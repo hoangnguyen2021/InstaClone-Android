@@ -1,4 +1,4 @@
-package myapp.hoang.onboarding.signup
+package myapp.hoang.onboarding.signup.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,16 +9,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.*
+import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
+import myapp.hoang.core_ui.components.OnBoardingFilledButton
+import myapp.hoang.core_ui.components.OnBoardingTextField
 import myapp.hoang.onboarding.R
 
 @Composable
-fun SaveLoginInfoScreen(
+fun FullNameScreen(
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (String) -> Unit
 ) {
+    var fullName by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
 
     Column(
@@ -47,31 +51,23 @@ fun SaveLoginInfoScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = stringResource(R.string.save_login_info_title),
+                text = stringResource(R.string.full_name_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
                 modifier = Modifier.align(Alignment.Start)
             )
-            Spacer(Modifier.height(LocalDimension.current.small))
-            Text(
-                text = stringResource(R.string.save_login_info_label_1),
-                color = White,
-                style = MaterialTheme.typography.labelMedium,
-                textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small)
+            Spacer(Modifier.height(LocalDimension.current.extraLarge))
+            OnBoardingTextField(
+                value = fullName,
+                onValueChange = { fullName = it },
+                label = "Full name",
+                keyboardType = KeyboardType.Text
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = stringResource(R.string.save_login_info_button_1),
-                onClick = onNextClick
-            )
-            Spacer(Modifier.height(LocalDimension.current.medium))
-            OnBoardingOutlinedButton(
-                text = stringResource(R.string.save_login_info_button_2),
-                onClick = onNextClick
+                text = "Next",
+                onClick = { onNextClick(fullName) }
             )
         }
         AlreadyHaveAccountClickableText(

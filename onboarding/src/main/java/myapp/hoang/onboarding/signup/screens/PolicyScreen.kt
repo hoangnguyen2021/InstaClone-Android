@@ -1,4 +1,4 @@
-package myapp.hoang.onboarding.signup
+package myapp.hoang.onboarding.signup.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

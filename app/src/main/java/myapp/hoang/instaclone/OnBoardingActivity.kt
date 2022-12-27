@@ -17,7 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import myapp.hoang.core_ui.*
 import myapp.hoang.instaclone.navigation.Screen
 import myapp.hoang.onboarding.login.LoginScreen
-import myapp.hoang.onboarding.signup.*
+import myapp.hoang.onboarding.signup.screens.*
+import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
 @AndroidEntryPoint
 class OnBoardingActivity : ComponentActivity() {

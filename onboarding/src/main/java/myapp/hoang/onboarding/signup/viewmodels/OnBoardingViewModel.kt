@@ -1,6 +1,5 @@
-package myapp.hoang.instaclone
+package myapp.hoang.onboarding.signup.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -84,6 +83,5 @@ class OnBoardingViewModel @Inject constructor(): ViewModel()  {
                 profilePicUrl = profilePicUrl
             )
         }
-        Log.d("MYTAG", signupForm.value.toString())
     }
 }
