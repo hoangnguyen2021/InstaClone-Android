@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="myapp.hoang.instaclone">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".InstaCloneApplication"
         android:allowBackup="true"
@@ -13,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InstaClone.Splash"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".OnBoardingActivity"
@@ -30,8 +34,9 @@
         </activity>
 
         <!-- Created at runtime -->
-        <activity android:name="com.canhub.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

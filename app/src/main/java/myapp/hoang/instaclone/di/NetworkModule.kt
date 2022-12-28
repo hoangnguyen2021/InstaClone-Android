@@ -25,19 +25,19 @@ object NetworkModule {
         return HttpClient(Android) {
             defaultRequest {
                 url {
-                    protocol = URLProtocol.HTTPS
+                    protocol = URLProtocol.HTTP
                     host = HOST
                     port = 8080
                 }
-                url("")
             }
             install(ContentNegotiation) {
                 json()
             }
             install(Logging) {
-                logger = Logger.DEFAULT
-                level = LogLevel.HEADERS
+                logger = Logger.ANDROID
+                level = LogLevel.ALL
             }
+            expectSuccess = true
         }
     }
 

@@ -1,10 +1,13 @@
 package myapp.hoang.onboarding.signup.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import java.time.LocalDate
 import javax.inject.Inject
@@ -12,9 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
     private val signupRepository: SignupRepository
-): ViewModel()  {
+) : ViewModel() {
     private val _signupForm = MutableStateFlow(SignupForm())
     val signupForm = _signupForm.asStateFlow()
+
+    private val _toastEvent = MutableStateFlow<String?>(null)
+    val toastEvent = _toastEvent.asStateFlow()
+
+    private var sendVerificationJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
         _signupForm.update {
@@ -85,6 +93,18 @@ class OnBoardingViewModel @Inject constructor(
             it.copy(
                 profilePicUrl = profilePicUrl
             )
+        }
+    }
+
+    fun sendVerificationCode(mobileNumber: String) {
+        sendVerificationJob?.cancel()
+        sendVerificationJob = viewModelScope.launch {
+            try {
+                signupRepository.sendVerificationCode(mobileNumber)
+                _toastEvent.value = "Verification code sent"
+            } catch (e: Exception) {
+                _toastEvent.value = e.toString()
+            }
         }
     }
 }

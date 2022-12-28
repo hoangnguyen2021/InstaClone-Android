@@ -1,13 +1,21 @@
 package myapp.hoang.instaclone
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,6 +38,17 @@ class OnBoardingActivity : ComponentActivity() {
             OnBoardingTheme {
                 val navController = rememberNavController()
                 val viewModel = hiltViewModel<OnBoardingViewModel>()
+                val lifecycleOwner = LocalLifecycleOwner.current
+                val toastFlow = remember(viewModel.toastEvent, lifecycleOwner) {
+                    viewModel.toastEvent.flowWithLifecycle(
+                        lifecycleOwner.lifecycle,
+                        Lifecycle.State.STARTED
+                    )
+                }
+                val toastState: String? by toastFlow.collectAsState(initial = null)
+                if (toastState != null) {
+                    Toast.makeText(LocalContext.current, toastState, Toast.LENGTH_SHORT).show()
+                }
 
                 Surface(
                     modifier = Modifier.fillMaxSize()
@@ -48,6 +67,7 @@ class OnBoardingActivity : ComponentActivity() {
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = { mobileNumberLong, mobileNumberString ->
                                     viewModel.setMobileNumber(mobileNumberLong)
+                                    viewModel.sendVerificationCode(mobileNumberLong.toString())
                                     navController.navigate(
                                         Screen.ConfirmationCodeScreen.withArgs(
                                             mobileNumberString
