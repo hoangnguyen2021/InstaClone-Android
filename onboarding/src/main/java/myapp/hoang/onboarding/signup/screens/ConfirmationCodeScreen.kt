@@ -9,25 +9,67 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
+import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import myapp.hoang.onboarding.signup.viewmodels.SignupForm
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun ConfirmationCodeScreen(
-    username: String,
-    onNextClick: () -> Unit,
+    viewModel: OnBoardingViewModel = hiltViewModel(),
+    type: String,
+    onNextClick: (String, String) -> Unit,
     onBackClick: () -> Unit,
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    onNextScreen: () -> Unit
 ) {
+    val context = LocalContext.current
+
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+    var confirmationCode by remember { mutableStateOf("") }
+    var isError by remember { mutableStateOf(false) }
+    var errorSupportingText by remember { mutableStateOf("") }
+
+    val signupForm by viewModel.signupForm.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
+        initialValue = UiEvent.NoEvent,
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
+    LaunchedEffect(key1 = uiEvent) {
+        when (uiEvent) {
+            is UiEvent.NextScreen -> {
+                onNextScreen()
+            }
+            is UiEvent.ShowErrorSupportingText -> {
+                isError = true
+                errorSupportingText =
+                    (uiEvent as UiEvent.ShowErrorSupportingText).message.asString(context)
+            }
+            is UiEvent.HideErrorSupportingText -> {
+                isError = false
+                errorSupportingText = ""
+            }
+            else -> {}
+        }
+    }
 
     BottomDrawer(
         drawerContent = {
@@ -45,8 +87,14 @@ fun ConfirmationCodeScreen(
         gesturesEnabled = drawerState.isOpen
     ) {
         ConfirmationCodeContent(
-            username = username,
-            onNextClick = onNextClick,
+            type = type,
+            signupForm = signupForm,
+            confirmationCode = confirmationCode,
+            onConfirmationCodeChange = { confirmationCode = it },
+            isError = isError,
+            errorSupportingText = errorSupportingText,
+            isLoading = isLoading,
+            onNextClick = { onNextClick(type.substring(2), confirmationCode) },
             onBackClick = onBackClick,
             onExpandDrawer = { scope.launch { drawerState.expand() } }
         )
@@ -55,13 +103,17 @@ fun ConfirmationCodeScreen(
 
 @Composable
 fun ConfirmationCodeContent(
-    username: String,
+    type: String,
+    signupForm: SignupForm,
+    confirmationCode: String,
+    onConfirmationCodeChange: (String) -> Unit,
+    isError: Boolean,
+    errorSupportingText: String,
+    isLoading: Boolean,
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
     onExpandDrawer: () -> Unit
 ) {
-    var confirmationCode by remember { mutableStateOf("") }
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
@@ -89,7 +141,8 @@ fun ConfirmationCodeContent(
         )
         Spacer(Modifier.height(LocalDimension.current.small))
         Text(
-            text = stringResource(R.string.confirmation_code_label_1) + "$username.",
+            text = stringResource(R.string.confirmation_code_label_1) +
+                    "${if (type == "phone") signupForm.mobileNumber else signupForm.email}.",
             color = White,
             style = MaterialTheme.typography.labelMedium,
             textAlign = TextAlign.Start,
@@ -100,14 +153,25 @@ fun ConfirmationCodeContent(
         Spacer(Modifier.height(LocalDimension.current.extraLarge))
         OnBoardingTextField(
             value = confirmationCode,
-            onValueChange = { confirmationCode = it },
+            onValueChange = { onConfirmationCodeChange(it) },
             label = "Confirmation code",
-            keyboardType = KeyboardType.Number
+            keyboardType = KeyboardType.Number,
+            isError = isError,
         )
+        if (isError && errorSupportingText.isNotEmpty()) {
+            Spacer(Modifier.height(LocalDimension.current.extraSmall))
+            Text(
+                text = errorSupportingText,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.align(Alignment.Start)
+            )
+        }
         Spacer(Modifier.height(LocalDimension.current.mediumLarge))
         OnBoardingFilledButton(
             text = stringResource(R.string.next),
-            onClick = onNextClick
+            onClick = onNextClick,
+            isLoading = isLoading
         )
         Spacer(Modifier.height(LocalDimension.current.medium))
         OnBoardingOutlinedButton(

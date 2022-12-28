@@ -1,21 +1,13 @@
 package myapp.hoang.instaclone
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,6 +22,7 @@ import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
 @AndroidEntryPoint
 class OnBoardingActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,17 +31,6 @@ class OnBoardingActivity : ComponentActivity() {
             OnBoardingTheme {
                 val navController = rememberNavController()
                 val viewModel = hiltViewModel<OnBoardingViewModel>()
-                val lifecycleOwner = LocalLifecycleOwner.current
-                val toastFlow = remember(viewModel.toastEvent, lifecycleOwner) {
-                    viewModel.toastEvent.flowWithLifecycle(
-                        lifecycleOwner.lifecycle,
-                        Lifecycle.State.STARTED
-                    )
-                }
-                val toastState: String? by toastFlow.collectAsState(initial = null)
-                if (toastState != null) {
-                    Toast.makeText(LocalContext.current, toastState, Toast.LENGTH_SHORT).show()
-                }
 
                 Surface(
                     modifier = Modifier.fillMaxSize()
@@ -64,54 +46,59 @@ class OnBoardingActivity : ComponentActivity() {
                         }
                         composable(route = Screen.SignupByPhoneScreen.route) {
                             SignupByPhoneScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = { mobileNumberLong, mobileNumberString ->
-                                    viewModel.setMobileNumber(mobileNumberLong)
-                                    viewModel.sendVerificationCode(mobileNumberLong.toString())
-                                    navController.navigate(
-                                        Screen.ConfirmationCodeScreen.withArgs(
-                                            mobileNumberString
-                                        )
-                                    )
+                                onNextClick = {
+                                    viewModel.setMobileNumber(it.toLong())
+                                    viewModel.sendVerificationCode(it)
                                 },
                                 onSignUpWithEmailClick = {
                                     navController.navigate(Screen.SignupByEmailScreen.route)
+                                },
+                                onNextScreen = {
+                                    navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
                                 }
                             )
                         }
                         composable(route = Screen.SignupByEmailScreen.route) {
                             SignupByEmailScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
                                     viewModel.setEmail(it)
-                                    navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
                                 },
-                                onSignUpWithMobileNumberClick = { navController.navigateUp() }
+                                onSignUpWithMobileNumberClick = { navController.navigateUp() },
+                                onNextScreen = {
+                                    navController.navigate(Screen.ConfirmationCodeScreen.withArgs(it))
+                                }
                             )
                         }
                         composable(
-                            route = "${Screen.ConfirmationCodeScreen.route}/{username}",
+                            route = "${Screen.ConfirmationCodeScreen.route}/{type}",
                             arguments = listOf(
-                                navArgument("username") {
+                                navArgument("type") {
                                     type = NavType.StringType
                                     nullable = false
                                 }
                             )
                         ) { entry ->
-                            val username = entry.arguments?.getString("username")
-                            if (username != null) {
+                            val type = entry.arguments?.getString("type")
+                            if (type == "phone" || type == "email") {
                                 ConfirmationCodeScreen(
-                                    username = username,
+                                    viewModel = viewModel,
+                                    type = type,
                                     onBackClick = { navController.navigateUp() },
-                                    onNextClick = {
-                                        viewModel.setIsMobileNumberVerified(true)
-                                        navController.navigate(Screen.FullNameScreen.route)
+                                    onNextClick = { mobileNumber, code ->
+                                        if (type == "phone") viewModel.checkVerificationCode(mobileNumber, code)
                                     },
                                     onLoginClick = {
                                         navController.navigateUp()
                                         navController.navigateUp()
-                                        if (!username.startsWith("+"))
-                                            navController.navigateUp()
+                                        if (type == "email") navController.navigateUp()
+                                    },
+                                    onNextScreen = {
+                                        viewModel.setIsMobileNumberVerified(true)
+                                        navController.navigate(Screen.FullNameScreen.route)
                                     }
                                 )
                             }

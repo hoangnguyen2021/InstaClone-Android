@@ -17,6 +17,7 @@ object Compose {
     const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion"
     const val activityCompose = "androidx.activity:activity-compose:${Activity.version}"
     const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Lifecycle.version}"
+    const val lifecycleRuntimeCompose = "androidx.lifecycle:lifecycle-runtime-compose:${Lifecycle.lifecycleRuntimeComposeVersion}"
     const val pagingCompose = "androidx.paging:paging-compose:$pagingComposeVersion"
 
     const val coil = "io.coil-kt:coil-compose:$coilComposeVersion"

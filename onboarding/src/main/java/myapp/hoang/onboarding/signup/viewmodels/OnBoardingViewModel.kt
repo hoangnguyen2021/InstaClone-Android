@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import myapp.hoang.core_ui.utils.UiEvent
+import myapp.hoang.core_ui.utils.UiText
+import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import java.time.LocalDate
 import javax.inject.Inject
@@ -19,10 +21,14 @@ class OnBoardingViewModel @Inject constructor(
     private val _signupForm = MutableStateFlow(SignupForm())
     val signupForm = _signupForm.asStateFlow()
 
-    private val _toastEvent = MutableStateFlow<String?>(null)
-    val toastEvent = _toastEvent.asStateFlow()
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
+
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     private var sendVerificationJob: Job? = null
+    private var checkVerificationJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
         _signupForm.update {
@@ -97,13 +103,38 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     fun sendVerificationCode(mobileNumber: String) {
+        _isLoading.value = true
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
             try {
-                signupRepository.sendVerificationCode(mobileNumber)
-                _toastEvent.value = "Verification code sent"
+                //signupRepository.sendVerificationCode(mobileNumber)
+                _isLoading.value = false
+                _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
-                _toastEvent.value = e.toString()
+                _isLoading.value = false
+                _uiEvent.send(
+                    UiEvent.ShowToast(UiText.StringResource(R.string.error_send_confirmation_code))
+                )
+            }
+        }
+    }
+
+    fun checkVerificationCode(mobileNumber: String, code: String) {
+        _isLoading.value = true
+        checkVerificationJob?.cancel()
+        checkVerificationJob = viewModelScope.launch {
+            try {
+                //signupRepository.checkVerificationCode(mobileNumber, code)
+                _isLoading.value = false
+                _uiEvent.send(UiEvent.HideErrorSupportingText)
+                _uiEvent.send(UiEvent.NextScreen)
+            } catch (e: Exception) {
+                _isLoading.value = false
+                _uiEvent.send(
+                    UiEvent.ShowErrorSupportingText(
+                        UiText.StringResource(R.string.error_check_confirmation_code)
+                    )
+                )
             }
         }
     }

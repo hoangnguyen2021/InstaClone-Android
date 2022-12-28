@@ -69,6 +69,7 @@ dependencies {
     implementation(Compose.runtime)
     implementation(Compose.navigation)
     implementation(Compose.viewModelCompose)
+    implementation(Compose.lifecycleRuntimeCompose)
     implementation(Compose.activityCompose)
 
     implementation(Kotlin.kotlinxSerialization)

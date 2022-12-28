@@ -3,11 +3,10 @@
     <string name="next">Next</string>
 
     <string name="signup_by_phone_title">What\'s your mobile number?</string>
-    <string name="signup_by_phone_label_1">Enter the mobile number where you can be contacted. No one will see this on your profile.</string>
-    <string name="signup_by_phone_label_2">You may receive SMS notifications from us for security and login purposes.</string>
+    <string name="signup_by_phone_label_1">Mobile number</string>
+    <string name="signup_by_phone_label_2">Enter the mobile number where you can be contacted. No one will see this on your profile.</string>
+    <string name="signup_by_phone_label_3">You may receive SMS notifications from us for security and login purposes.</string>
     <string name="signup_by_phone_button">Sign up with email</string>
-    <string name="signup_by_phone_error_1">Mobile number required.</string>
-    <string name="signup_by_phone_error_2">Looks like your mobile number may be incorrect. Try entering your full number, including the country code.</string>
 
     <string name="signup_by_email_title">What\'s your email?</string>
     <string name="signup_by_email_label_1">Enter the email where you can be contacted. No one will see this on your profile.</string>
@@ -61,4 +60,11 @@
     <string name="profile_pic_button_5">Choose from Gallery</string>
     <string name="profile_pic_button_6">Take photo</string>
     <string name="profile_pic_button_7">Remove profile picture</string>
+
+    <string name="error_signup_by_phone_1">Mobile number required.</string>
+    <string name="error_signup_by_phone_2">Looks like your mobile number may be incorrect. Try entering your full number, including the country code.</string>
+    <string name="error_signup_by_email_1">Email required.</string>
+    <string name="error_signup_by_email_2">Enter a valid email address.</string>
+    <string name="error_send_confirmation_code">Failed to send confirmation code</string>
+    <string name="error_check_confirmation_code">That code isn\'t valid. You can request a new one.</string>
 </resources>

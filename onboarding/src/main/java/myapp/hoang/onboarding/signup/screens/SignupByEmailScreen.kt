@@ -1,30 +1,66 @@
 package myapp.hoang.onboarding.signup.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import myapp.hoang.core.util.Validator
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
+import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SignupByEmailScreen(
+    viewModel: OnBoardingViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: (String) -> Unit,
-    onSignUpWithMobileNumberClick: () -> Unit
+    onSignUpWithMobileNumberClick: () -> Unit,
+    onNextScreen: (String) -> Unit
 ) {
+    val context = LocalContext.current
+
     var email by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
+    var errorSupportingText by remember { mutableStateOf("") }
+
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
+        initialValue = UiEvent.NoEvent,
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
+    LaunchedEffect(key1 = uiEvent) {
+        when (uiEvent) {
+            is UiEvent.ShowToast ->
+                Toast.makeText(
+                    context,
+                    (uiEvent as UiEvent.ShowToast).message.asString(context),
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            is UiEvent.NextScreen -> {
+                onNextScreen("email")
+            }
+            else -> {}
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -73,12 +109,33 @@ fun SignupByEmailScreen(
                 value = email,
                 onValueChange = { email = it },
                 label = "Email",
-                keyboardType = KeyboardType.Email
+                keyboardType = KeyboardType.Email,
+                isError = isError
             )
+            if (isError) {
+                Spacer(Modifier.height(LocalDimension.current.extraSmall))
+                Text(
+                    text = errorSupportingText,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+            }
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
-                onClick = { onNextClick(email) }
+                onClick = {
+                    if (email.isEmpty() || email.isBlank()) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.error_signup_by_email_1)
+                    } else if (!Validator.validateEmailAddress(email)) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.error_signup_by_email_2)
+                    } else {
+                        isError = false
+                        onNextClick(email)
+                    }
+                }
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(
@@ -91,17 +148,5 @@ fun SignupByEmailScreen(
             onIsDialogShownChange = { isDialogShown = it },
             onBackClick = onBackClick
         )
-    }
-}
-
-@Preview
-@Composable
-fun SignupByEmailScreenPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            SignupByEmailScreen({}, {}, {})
-        }
     }
 }

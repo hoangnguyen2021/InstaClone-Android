@@ -4,4 +4,5 @@ apply {
 
 dependencies {
     "implementation"(Google.libphonenumber)
+    "implementation"(Jmail.jmail)
 }
