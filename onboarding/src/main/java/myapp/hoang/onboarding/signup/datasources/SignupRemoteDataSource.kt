@@ -4,6 +4,7 @@ import myapp.hoang.onboarding.signup.services.models.VerificationCheckResponse
 import myapp.hoang.onboarding.signup.services.models.VerificationResponse
 
 interface SignupRemoteDataSource {
-    suspend fun sendVerificationCode(mobileNumber: String): VerificationResponse
-    suspend fun checkVerificationCode(mobileNumber: String, code: String): VerificationCheckResponse
+    suspend fun sendVerificationCode(recipient: String): VerificationResponse
+    suspend fun checkVerificationCode(recipient: String, confirmationCode: String)
+            : VerificationCheckResponse
 }

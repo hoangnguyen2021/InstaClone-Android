@@ -94,7 +94,12 @@ fun ConfirmationCodeScreen(
             isError = isError,
             errorSupportingText = errorSupportingText,
             isLoading = isLoading,
-            onNextClick = { onNextClick(type.substring(2), confirmationCode) },
+            onNextClick = {
+                onNextClick(
+                    if (type == "phone") signupForm.mobileNumber.toString() else signupForm.email.toString(),
+                    confirmationCode
+                )
+            },
             onBackClick = onBackClick,
             onExpandDrawer = { scope.launch { drawerState.expand() } }
         )

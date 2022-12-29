@@ -1,4 +1,4 @@
-package myapp.hoang.core.util
+package myapp.hoang.core.utils
 
 import android.content.Context
 import android.net.Uri

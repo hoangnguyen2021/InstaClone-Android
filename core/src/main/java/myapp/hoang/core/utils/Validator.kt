@@ -1,4 +1,4 @@
-package myapp.hoang.core.util
+package myapp.hoang.core.utils
 
 import androidx.core.text.isDigitsOnly
 import com.google.i18n.phonenumbers.PhoneNumberUtil

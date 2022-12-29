@@ -1,5 +1,6 @@
 package myapp.hoang.onboarding.signup.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -102,16 +103,17 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun sendVerificationCode(mobileNumber: String) {
+    fun sendConfirmationCode(recipient: String) {
         _isLoading.value = true
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
             try {
-                //signupRepository.sendVerificationCode(mobileNumber)
+                signupRepository.sendVerificationCode(recipient)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
                 _isLoading.value = false
+                Log.d("MYTAG", e.toString())
                 _uiEvent.send(
                     UiEvent.ShowToast(UiText.StringResource(R.string.error_send_confirmation_code))
                 )
@@ -119,12 +121,12 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun checkVerificationCode(mobileNumber: String, code: String) {
+    fun checkConfirmationCode(recipient: String, confirmationCode: String) {
         _isLoading.value = true
         checkVerificationJob?.cancel()
         checkVerificationJob = viewModelScope.launch {
             try {
-                //signupRepository.checkVerificationCode(mobileNumber, code)
+                signupRepository.checkVerificationCode(recipient, confirmationCode)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.HideErrorSupportingText)
                 _uiEvent.send(UiEvent.NextScreen)

@@ -50,7 +50,7 @@ class OnBoardingActivity : ComponentActivity() {
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
                                     viewModel.setMobileNumber(it.toLong())
-                                    viewModel.sendVerificationCode(it)
+                                    viewModel.sendConfirmationCode(it)
                                 },
                                 onSignUpWithEmailClick = {
                                     navController.navigate(Screen.SignupByEmailScreen.route)
@@ -66,6 +66,7 @@ class OnBoardingActivity : ComponentActivity() {
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
                                     viewModel.setEmail(it)
+                                    viewModel.sendConfirmationCode(it)
                                 },
                                 onSignUpWithMobileNumberClick = { navController.navigateUp() },
                                 onNextScreen = {
@@ -88,8 +89,8 @@ class OnBoardingActivity : ComponentActivity() {
                                     viewModel = viewModel,
                                     type = type,
                                     onBackClick = { navController.navigateUp() },
-                                    onNextClick = { mobileNumber, code ->
-                                        if (type == "phone") viewModel.checkVerificationCode(mobileNumber, code)
+                                    onNextClick = { recipient, code ->
+                                        viewModel.checkConfirmationCode(recipient, code)
                                     },
                                     onLoginClick = {
                                         navController.navigateUp()

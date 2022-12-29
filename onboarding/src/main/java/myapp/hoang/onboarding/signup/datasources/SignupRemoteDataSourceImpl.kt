@@ -11,18 +11,18 @@ class SignupRemoteDataSourceImpl @Inject constructor(
     private val signupService: SignupService,
     private val dispatcherProvider: DispatcherProvider
 ): SignupRemoteDataSource {
-    override suspend fun sendVerificationCode(mobileNumber: String): VerificationResponse {
+    override suspend fun sendVerificationCode(recipient: String): VerificationResponse {
         return withContext(dispatcherProvider.io) {
-            signupService.sendVerificationCode(mobileNumber)
+            signupService.sendVerificationCode(recipient)
         }
     }
 
     override suspend fun checkVerificationCode(
-        mobileNumber: String,
-        code: String
+        recipient: String,
+        confirmationCode: String
     ): VerificationCheckResponse {
         return withContext(dispatcherProvider.io) {
-            signupService.checkVerificationCode(mobileNumber, code)
+            signupService.checkVerificationCode(recipient, confirmationCode)
         }
     }
 

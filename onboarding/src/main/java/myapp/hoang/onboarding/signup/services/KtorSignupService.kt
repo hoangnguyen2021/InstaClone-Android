@@ -11,19 +11,22 @@ import javax.inject.Inject
 
 class KtorSignupService @Inject constructor(
     private val client: HttpClient
-): SignupService {
-    override suspend fun sendVerificationCode(mobileNumber: String): VerificationResponse {
+) : SignupService {
+    override suspend fun sendVerificationCode(recipient: String): VerificationResponse {
         return client.get {
             url(ROUTE_SEND_VERIFICATION_CODE)
-            parameter("mobile-number", mobileNumber)
+            parameter("recipient", recipient)
         }.body()
     }
 
-    override suspend fun checkVerificationCode(mobileNumber: String, code: String): VerificationCheckResponse {
+    override suspend fun checkVerificationCode(
+        recipient: String,
+        confirmationCode: String
+    ): VerificationCheckResponse {
         return client.get {
             url(ROUTE_CHECK_VERIFICATION_CODE)
-            parameter("mobile-number", mobileNumber)
-            parameter("code", code)
+            parameter("recipient", recipient)
+            parameter("verification-code", confirmationCode)
         }.body()
     }
 }

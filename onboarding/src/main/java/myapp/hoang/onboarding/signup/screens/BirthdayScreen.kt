@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import myapp.hoang.core.util.DateUtils
-import myapp.hoang.core.util.DateUtils.getToday
+import myapp.hoang.core.utils.DateUtils
+import myapp.hoang.core.utils.DateUtils.getToday
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
