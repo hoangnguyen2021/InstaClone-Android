@@ -12,7 +12,7 @@ import javax.inject.Inject
 class KtorSignupService @Inject constructor(
     private val client: HttpClient
 ) : SignupService {
-    override suspend fun sendVerificationCode(recipient: String): VerificationResponse {
+    override suspend fun sendVerificationCode(recipient: String): String {
         return client.get {
             url(ROUTE_SEND_VERIFICATION_CODE)
             parameter("recipient", recipient)
@@ -22,7 +22,7 @@ class KtorSignupService @Inject constructor(
     override suspend fun checkVerificationCode(
         recipient: String,
         confirmationCode: String
-    ): VerificationCheckResponse {
+    ): String {
         return client.get {
             url(ROUTE_CHECK_VERIFICATION_CODE)
             parameter("recipient", recipient)

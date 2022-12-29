@@ -98,7 +98,8 @@ class OnBoardingActivity : ComponentActivity() {
                                         if (type == "email") navController.navigateUp()
                                     },
                                     onNextScreen = {
-                                        viewModel.setIsMobileNumberVerified(true)
+                                        if (type == "phone") viewModel.setIsMobileNumberVerified(true)
+                                        else viewModel.setIsEmailVerified(true)
                                         navController.navigate(Screen.FullNameScreen.route)
                                     }
                                 )

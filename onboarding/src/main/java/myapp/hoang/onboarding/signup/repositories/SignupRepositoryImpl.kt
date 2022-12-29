@@ -8,14 +8,14 @@ import javax.inject.Inject
 class SignupRepositoryImpl @Inject constructor(
     private val signupRemoteDataSource: SignupRemoteDataSource
 ) : SignupRepository {
-    override suspend fun sendVerificationCode(recipient: String): VerificationResponse {
+    override suspend fun sendVerificationCode(recipient: String): String {
         return signupRemoteDataSource.sendVerificationCode(recipient)
     }
 
     override suspend fun checkVerificationCode(
         recipient: String,
         confirmationCode: String
-    ): VerificationCheckResponse {
+    ): String {
         return signupRemoteDataSource.checkVerificationCode(recipient, confirmationCode)
     }
 }
