@@ -16,9 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
@@ -32,27 +36,39 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawer
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerValue
 import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
+import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalPermissionsApi::class,
+    ExperimentalLifecycleComposeApi::class
+)
 @Composable
 fun ProfilePictureScreen(
+    viewModel: OnBoardingViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: (String) -> Unit
+    onNextClick: (Uri?) -> Unit,
+    onNextScreen: () -> Unit
 ) {
     val context = LocalContext.current
-
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var currentTmpUri by remember { mutableStateOf<Uri?>(null) }
 
+    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
+        initialValue = UiEvent.NoEvent,
+        lifecycleOwner = LocalLifecycleOwner.current
+    )
+
     val pickImageLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.PickVisualMedia(),
-            onResult = { uri -> if (uri != null) imageUri = uri }
+            onResult = { uri -> uri?.let { imageUri = it } }
         )
     val takePictureLauncher =
         rememberLauncherForActivityResult(
@@ -89,6 +105,15 @@ fun ProfilePictureScreen(
             }
         }
     )
+
+    LaunchedEffect(key1 = uiEvent) {
+        when (uiEvent) {
+            is UiEvent.NextScreen -> {
+                onNextScreen()
+            }
+            else -> {}
+        }
+    }
 
     BottomDrawer(
         drawerContent = {
@@ -128,7 +153,7 @@ fun ProfilePictureScreen(
                 BottomBar(
                     imageUri = imageUri,
                     onAddPicture = { scope.launch { drawerState.expand() } },
-                    onNextClick = { onNextClick(imageUri.toString()) }
+                    onNextClick = onNextClick
                 )
             },
             modifier = Modifier.fillMaxSize()
@@ -215,7 +240,7 @@ fun ProfilePictureContent(
 fun BottomBar(
     imageUri: Uri?,
     onAddPicture: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (Uri?) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -239,19 +264,31 @@ fun BottomBar(
                     horizontal = LocalDimension.current.mediumSmall
                 )
         ) {
-            OnBoardingFilledButton(
-                text = stringResource(
-                    if (imageUri == null) R.string.profile_pic_button_1 else R.string.profile_pic_button_3
-                ),
-                onClick = if (imageUri == null) onAddPicture else onNextClick
-            )
+            if (imageUri == null) {
+                OnBoardingFilledButton(
+                    text = stringResource(
+                        R.string.profile_pic_button_1
+                    ),
+                    onClick = onAddPicture
+                )
+            } else {
+                OnBoardingFilledButton(
+                    text = stringResource(R.string.profile_pic_button_3),
+                    onClick = { onNextClick(imageUri) }
+                )
+            }
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
-            OnBoardingOutlinedButton(
-                text = stringResource(
-                    if (imageUri == null) R.string.profile_pic_button_2 else R.string.profile_pic_button_4
-                ),
-                onClick = if (imageUri == null) onNextClick else onAddPicture
-            )
+            if (imageUri == null) {
+                OnBoardingOutlinedButton(
+                    text = stringResource(R.string.profile_pic_button_2),
+                    onClick = { onNextClick(null) }
+                )
+            } else {
+                OnBoardingOutlinedButton(
+                    text = stringResource(R.string.profile_pic_button_4),
+                    onClick = onAddPicture
+                )
+            }
         }
     }
 }

@@ -11,5 +11,5 @@ data class SignupForm(
     var birthday: LocalDate? = null,
     var username: String? = null,
     var agreedToPolicy: Boolean = false,
-    var profilePicUrl: String? = null
+    var profilePicPath: String? = null
 )

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="instaclone">InstaClone</string>
+
     <string name="next">Next</string>
 
     <string name="signup_by_phone_title">What\'s your mobile number?</string>
@@ -60,6 +62,8 @@
     <string name="profile_pic_button_5">Choose from Gallery</string>
     <string name="profile_pic_button_6">Take photo</string>
     <string name="profile_pic_button_7">Remove profile picture</string>
+
+    <string name="welcome_text_1">Welcome to InstaClone,\u0020</string>
 
     <string name="error_signup_by_phone_1">Mobile number required.</string>
     <string name="error_signup_by_phone_2">Looks like your mobile number may be incorrect. Try entering your full number, including the country code.</string>

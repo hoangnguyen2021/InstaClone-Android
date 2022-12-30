@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +37,30 @@ fun OnBoardingProfilePicture(
             .aspectRatio(1f)
             .border(
                 BorderStroke(5.dp, LightGray),
+                CircleShape
+            )
+            .padding(LocalDimension.current.twoExtraSmall)
+            .clip(CircleShape)
+    )
+}
+
+@Composable
+fun OnBoardingProfilePicture2(
+    imageUri: Any?
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(imageUri)
+            .crossfade(true)
+            .build(),
+        error = painterResource(id = R.drawable.profile_pic_placeholder),
+        contentDescription = "Profile picture",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxWidth(0.5f)
+            .aspectRatio(1f)
+            .border(
+                BorderStroke(0.5.dp, MaterialTheme.colorScheme.onSecondary),
                 CircleShape
             )
             .padding(LocalDimension.current.twoExtraSmall)

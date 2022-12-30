@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
@@ -14,11 +15,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
+import myapp.hoang.core.utils.FileUtils
 import myapp.hoang.core_ui.*
 import myapp.hoang.instaclone.navigation.Screen
 import myapp.hoang.onboarding.login.LoginScreen
 import myapp.hoang.onboarding.signup.screens.*
 import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import java.io.File
 
 @AndroidEntryPoint
 class OnBoardingActivity : ComponentActivity() {
@@ -31,6 +34,7 @@ class OnBoardingActivity : ComponentActivity() {
             OnBoardingTheme {
                 val navController = rememberNavController()
                 val viewModel = hiltViewModel<OnBoardingViewModel>()
+                val context = LocalContext.current
 
                 Surface(
                     modifier = Modifier.fillMaxSize()
@@ -155,11 +159,21 @@ class OnBoardingActivity : ComponentActivity() {
                         }
                         composable(route = Screen.ProfilePictureScreen.route) {
                             ProfilePictureScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = {
-                                    viewModel.setProfilePicUrl(it)
+                                onNextClick = { uri ->
+                                    uri?.let {
+                                        val imageFile = File(FileUtils.getUriFilePath(context, it))
+                                        viewModel.uploadProfilePic(imageFile)
+                                    }
+                                },
+                                onNextScreen = {
+                                    navController.navigate(Screen.WelcomeScreen.route)
                                 }
                             )
+                        }
+                        composable(route = Screen.WelcomeScreen.route) {
+                            WelcomeScreen(viewModel = viewModel)
                         }
                     }
                 }

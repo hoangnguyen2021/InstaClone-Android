@@ -59,6 +59,10 @@ val shoikaFontFamily = FontFamily(
     Font(R.font.shoika_light_italic, FontWeight.Light, FontStyle.Italic),
 )
 
+val billabongFamily = FontFamily(
+    Font(R.font.billabong, FontWeight.Normal, FontStyle.Normal)
+)
+
 val OnBoardingTypography = Typography(
     titleLarge = TextStyle(
         fontFamily = arabotoFamily,

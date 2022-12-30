@@ -1,5 +1,6 @@
 package myapp.hoang.onboarding.signup.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,16 +11,22 @@ import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.core_ui.utils.UiText
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
+import java.io.File
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
-    private val signupRepository: SignupRepository
+    private val signupRepository: SignupRepository,
+    private val imageUploadRepository: ImageUploadRepository
 ) : ViewModel() {
     private val _signupForm = MutableStateFlow(SignupForm())
     val signupForm = _signupForm.asStateFlow()
+
+    private val _profilePic = MutableStateFlow<ByteArray?>(null)
+    val profilePic = _profilePic.asStateFlow()
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading = _isLoading.asStateFlow()
@@ -29,6 +36,8 @@ class OnBoardingViewModel @Inject constructor(
 
     private var sendVerificationJob: Job? = null
     private var checkVerificationJob: Job? = null
+    private var uploadProfilePicJob: Job? = null
+    private var getProfilePicJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
         _signupForm.update {
@@ -94,10 +103,10 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun setProfilePicUrl(profilePicUrl: String) {
+    fun setProfilePicPath(profilePicPath: String) {
         _signupForm.update {
             it.copy(
-                profilePicUrl = profilePicUrl
+                profilePicPath = profilePicPath
             )
         }
     }
@@ -107,7 +116,7 @@ class OnBoardingViewModel @Inject constructor(
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
             try {
-                signupRepository.sendVerificationCode(recipient)
+                //signupRepository.sendVerificationCode(recipient)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
@@ -124,7 +133,7 @@ class OnBoardingViewModel @Inject constructor(
         checkVerificationJob?.cancel()
         checkVerificationJob = viewModelScope.launch {
             try {
-                signupRepository.checkVerificationCode(recipient, confirmationCode)
+                //signupRepository.checkVerificationCode(recipient, confirmationCode)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.HideErrorSupportingText)
                 _uiEvent.send(UiEvent.NextScreen)
@@ -135,6 +144,35 @@ class OnBoardingViewModel @Inject constructor(
                         UiText.StringResource(R.string.error_check_confirmation_code)
                     )
                 )
+            }
+        }
+    }
+
+    fun uploadProfilePic(imageFile: File) {
+        _isLoading.value = true
+        uploadProfilePicJob?.cancel()
+        uploadProfilePicJob = viewModelScope.launch {
+            try {
+                val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
+                setProfilePicPath(profilePicPath)
+                _isLoading.value = false
+                _uiEvent.send(UiEvent.NextScreen)
+            } catch (e: Exception) {
+                _isLoading.value = false
+                Log.d("MYTAG", e.toString())
+            }
+        }
+    }
+
+    fun getProfilePic(profilePicPath: String) {
+        _isLoading.value = true
+        getProfilePicJob?.cancel()
+        getProfilePicJob = viewModelScope.launch {
+            try {
+                _profilePic.value = imageUploadRepository.getProfilePic(profilePicPath)
+            } catch (e: Exception) {
+                _isLoading.value = false
+                Log.d("MYTAG", e.toString())
             }
         }
     }

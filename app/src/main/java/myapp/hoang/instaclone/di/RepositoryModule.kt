@@ -5,8 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import myapp.hoang.onboarding.signup.datasources.SignupRemoteDataSource
+import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
+import myapp.hoang.onboarding.signup.repositories.ImageUploadRepositoryImpl
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import myapp.hoang.onboarding.signup.repositories.SignupRepositoryImpl
+import myapp.hoang.onboarding.signup.services.ImageUploadService
 import javax.inject.Singleton
 
 @Module
@@ -16,5 +19,11 @@ object RepositoryModule {
     @Singleton
     fun provideSignupRepository(signupRemoteDataSource: SignupRemoteDataSource): SignupRepository {
         return SignupRepositoryImpl(signupRemoteDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageUploadRepository(imageUploadService: ImageUploadService): ImageUploadRepository {
+        return ImageUploadRepositoryImpl(imageUploadService)
     }
 }

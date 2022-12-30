@@ -15,4 +15,8 @@ object FileUtils {
 
         return getUriForFile(context, tmpFile)
     }
+
+    fun getUriFilePath(context: Context, uri: Uri, uniqueName: Boolean = false): String {
+        return getFilePathFromUri(context, uri, uniqueName)
+    }
 }
