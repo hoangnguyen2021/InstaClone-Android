@@ -60,6 +60,7 @@ fun ProfilePictureScreen(
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var currentTmpUri by remember { mutableStateOf<Uri?>(null) }
 
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
     val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
         initialValue = UiEvent.NoEvent,
         lifecycleOwner = LocalLifecycleOwner.current
@@ -152,6 +153,7 @@ fun ProfilePictureScreen(
             bottomBar = {
                 BottomBar(
                     imageUri = imageUri,
+                    isLoading = isLoading,
                     onAddPicture = { scope.launch { drawerState.expand() } },
                     onNextClick = onNextClick
                 )
@@ -239,6 +241,7 @@ fun ProfilePictureContent(
 @Composable
 fun BottomBar(
     imageUri: Uri?,
+    isLoading: Boolean,
     onAddPicture: () -> Unit,
     onNextClick: (Uri?) -> Unit
 ) {
@@ -269,12 +272,14 @@ fun BottomBar(
                     text = stringResource(
                         R.string.profile_pic_button_1
                     ),
-                    onClick = onAddPicture
+                    onClick = onAddPicture,
+                    isLoading = isLoading
                 )
             } else {
                 OnBoardingFilledButton(
                     text = stringResource(R.string.profile_pic_button_3),
-                    onClick = { onNextClick(imageUri) }
+                    onClick = { onNextClick(imageUri) },
+                    isLoading = isLoading
                 )
             }
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))

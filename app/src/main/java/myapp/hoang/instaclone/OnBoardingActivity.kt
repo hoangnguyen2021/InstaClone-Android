@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.datetime.toKotlinLocalDate
 import myapp.hoang.core.utils.FileUtils
 import myapp.hoang.core_ui.*
 import myapp.hoang.instaclone.navigation.Screen
@@ -121,7 +122,10 @@ class OnBoardingActivity : ComponentActivity() {
                         composable(route = Screen.PasswordScreen.route) {
                             PasswordScreen(
                                 onBackClick = { navController.navigateUp() },
-                                onNextClick = { navController.navigate(Screen.SaveLoginInfoScreen.route) }
+                                onNextClick = {
+                                    viewModel.setPassword(it)
+                                    navController.navigate(Screen.SaveLoginInfoScreen.route)
+                                }
                             )
                         }
                         composable(route = Screen.SaveLoginInfoScreen.route) {
@@ -134,7 +138,7 @@ class OnBoardingActivity : ComponentActivity() {
                             BirthdayScreen(
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
-                                    viewModel.setBirthday(it)
+                                    viewModel.setBirthday(it.toKotlinLocalDate())
                                     navController.navigate(Screen.UsernameScreen.route)
                                 }
                             )
@@ -164,7 +168,7 @@ class OnBoardingActivity : ComponentActivity() {
                                 onNextClick = { uri ->
                                     uri?.let {
                                         val imageFile = File(FileUtils.getUriFilePath(context, it))
-                                        viewModel.uploadProfilePic(imageFile)
+                                        viewModel.uploadProfilePicAndSignUp(imageFile)
                                     }
                                 },
                                 onNextScreen = {

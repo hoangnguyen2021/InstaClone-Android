@@ -35,6 +35,7 @@ android {
 dependencies {
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
+    implementation Kotlin.kotlinxDateTime
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt

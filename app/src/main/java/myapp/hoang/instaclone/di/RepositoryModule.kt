@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.onboarding.signup.datasources.SignupRemoteDataSource
 import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
 import myapp.hoang.onboarding.signup.repositories.ImageUploadRepositoryImpl
@@ -23,7 +24,10 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideImageUploadRepository(imageUploadService: ImageUploadService): ImageUploadRepository {
-        return ImageUploadRepositoryImpl(imageUploadService)
+    fun provideImageUploadRepository(
+        imageUploadService: ImageUploadService,
+        dispatcherProvider: DispatcherProvider
+    ): ImageUploadRepository {
+        return ImageUploadRepositoryImpl(imageUploadService, dispatcherProvider)
     }
 }

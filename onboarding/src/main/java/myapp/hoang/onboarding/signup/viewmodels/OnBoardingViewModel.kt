@@ -8,13 +8,13 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
 import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.core_ui.utils.UiText
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import java.io.File
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,7 +36,7 @@ class OnBoardingViewModel @Inject constructor(
 
     private var sendVerificationJob: Job? = null
     private var checkVerificationJob: Job? = null
-    private var uploadProfilePicJob: Job? = null
+    private var uploadProfilePicAndSignUpJob: Job? = null
     private var getProfilePicJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
@@ -95,6 +95,14 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
+    fun setPassword(password: String) {
+        _signupForm.update {
+            it.copy(
+                password = password
+            )
+        }
+    }
+
     fun setAgreedToPolicy(agreedToPolicy: Boolean) {
         _signupForm.update {
             it.copy(
@@ -148,13 +156,14 @@ class OnBoardingViewModel @Inject constructor(
         }
     }
 
-    fun uploadProfilePic(imageFile: File) {
+    fun uploadProfilePicAndSignUp(imageFile: File) {
         _isLoading.value = true
-        uploadProfilePicJob?.cancel()
-        uploadProfilePicJob = viewModelScope.launch {
+        uploadProfilePicAndSignUpJob?.cancel()
+        uploadProfilePicAndSignUpJob = viewModelScope.launch {
             try {
                 val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
                 setProfilePicPath(profilePicPath)
+                signupRepository.signUp(signupForm.value)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
@@ -172,7 +181,6 @@ class OnBoardingViewModel @Inject constructor(
                 _profilePic.value = imageUploadRepository.getProfilePic(profilePicPath)
             } catch (e: Exception) {
                 _isLoading.value = false
-                Log.d("MYTAG", e.toString())
             }
         }
     }

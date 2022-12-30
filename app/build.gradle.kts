@@ -73,6 +73,7 @@ dependencies {
     implementation(Compose.activityCompose)
 
     implementation(Kotlin.kotlinxSerialization)
+    implementation(Kotlin.kotlinxDateTime)
 
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)

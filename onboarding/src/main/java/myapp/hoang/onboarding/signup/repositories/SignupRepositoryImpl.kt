@@ -1,8 +1,7 @@
 package myapp.hoang.onboarding.signup.repositories
 
 import myapp.hoang.onboarding.signup.datasources.SignupRemoteDataSource
-import myapp.hoang.onboarding.signup.services.models.VerificationCheckResponse
-import myapp.hoang.onboarding.signup.services.models.VerificationResponse
+import myapp.hoang.onboarding.signup.viewmodels.SignupForm
 import javax.inject.Inject
 
 class SignupRepositoryImpl @Inject constructor(
@@ -17,5 +16,9 @@ class SignupRepositoryImpl @Inject constructor(
         confirmationCode: String
     ): String {
         return signupRemoteDataSource.checkVerificationCode(recipient, confirmationCode)
+    }
+
+    override suspend fun signUp(signupForm: SignupForm): String {
+        return signupRemoteDataSource.signUp(signupForm)
     }
 }

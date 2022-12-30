@@ -3,8 +3,7 @@ package myapp.hoang.onboarding.signup.datasources
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.onboarding.signup.services.SignupService
-import myapp.hoang.onboarding.signup.services.models.VerificationCheckResponse
-import myapp.hoang.onboarding.signup.services.models.VerificationResponse
+import myapp.hoang.onboarding.signup.viewmodels.SignupForm
 import javax.inject.Inject
 
 class SignupRemoteDataSourceImpl @Inject constructor(
@@ -26,4 +25,9 @@ class SignupRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun signUp(signupForm: SignupForm): String {
+        return withContext(dispatcherProvider.io) {
+            signupService.signUp(signupForm)
+        }
+    }
 }
