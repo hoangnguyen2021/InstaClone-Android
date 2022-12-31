@@ -130,6 +130,7 @@ class OnBoardingActivity : ComponentActivity() {
                         }
                         composable(route = Screen.SaveLoginInfoScreen.route) {
                             SaveLoginInfoScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = { navController.navigate(Screen.BirthdayScreen.route) }
                             )

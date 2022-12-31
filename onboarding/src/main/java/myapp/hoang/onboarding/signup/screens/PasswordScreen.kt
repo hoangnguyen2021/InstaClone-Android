@@ -35,9 +35,7 @@ fun PasswordScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = onBoardingBackgroundBrush
-            )
+            .background(brush = onBoardingBackgroundBrush)
             .padding(
                 vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
@@ -46,7 +44,9 @@ fun PasswordScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             BackIcon(
                 color = White,

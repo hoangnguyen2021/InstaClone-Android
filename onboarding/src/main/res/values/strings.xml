@@ -27,7 +27,8 @@
     <string name="password_label_1">Create a password with at least 6 letters and numbers. It should be something others can\'t guess.</string>
 
     <string name="save_login_info_title">Save your login info?</string>
-    <string name="save_login_info_label_1">We\'ll save the login info for …, so you won\'t need to enter it next time you log in.</string>
+    <string name="save_login_info_label_1">We\'ll save the login info for\u0020</string>
+    <string name="save_login_info_label_2">, so you won\'t need to enter it next time you log in.</string>
     <string name="save_login_info_button_1">Save</string>
     <string name="save_login_info_button_2">Not now</string>
 
@@ -36,6 +37,9 @@
     <string name="birthday_label_1">Use your own birthday, even if this account is for a business, a pet or something else. No one will see this on your profile.</string>
     <string name="birthday_label_2">Why do I need to provide my birthday?</string>
     <string name="birthday_body_1">Providing your birthday improves the features and ads you see, and helps to keep the Instagram community safe. You can find your birthday in your personal information account settings.</string>
+
+    <string name="username_title">Create a username</string>
+    <string name="username_label_1">Add a username or user our suggestion. You can change this at any time.</string>
 
     <string name="learn_more">Learn more</string>
     <string name="policy_title">Agree to Instagram\'s terms and policies</string>
@@ -72,5 +76,7 @@
     <string name="error_send_confirmation_code">Failed to send confirmation code</string>
     <string name="error_check_confirmation_code">That code isn\'t valid. You can request a new one.</string>
     <string name="error_password_1">Password cannot be empty.</string>
-    <string name="error_password_2">Password must be at least 6 characters long, contain no whitespace, and contain at least 1 lowercase letter and 1 digit.</string>
+    <string name="error_password_2">Password must be 6 – 20 characters long, contain no whitespace, and contain at least 1 lowercase letter and 1 digit.</string>
+    <string name="error_full_name_1">Full name cannot be empty.</string>
+    <string name="error_username_1">Username cannot be empty.</string>
 </resources>

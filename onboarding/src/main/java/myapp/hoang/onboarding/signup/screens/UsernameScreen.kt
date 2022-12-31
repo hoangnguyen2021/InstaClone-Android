@@ -8,28 +8,33 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingTextField
+import myapp.hoang.onboarding.R
 
 @Composable
 fun UsernameScreen(
     onBackClick: () -> Unit,
     onNextClick: (String) -> Unit
 ) {
+    val context = LocalContext.current
+
     var username by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
+    var errorSupportingText by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = onBoardingBackgroundBrush
-            )
+            .background(brush = onBoardingBackgroundBrush)
             .padding(
                 vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
@@ -38,7 +43,9 @@ fun UsernameScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             BackIcon(
                 color = White,
@@ -48,7 +55,7 @@ fun UsernameScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.mediumSmall))
             Text(
-                text = "Create a username",
+                text = stringResource(R.string.username_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
@@ -56,7 +63,7 @@ fun UsernameScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "Add a username or user our suggestion. You can change this at any time.",
+                text = stringResource(R.string.username_label_1),
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,
@@ -68,12 +75,21 @@ fun UsernameScreen(
             OnBoardingTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = "Username"
+                label = "Username",
+                isError = isError
             )
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
-                onClick = { onNextClick(username) }
+                text = stringResource(R.string.next),
+                onClick = {
+                    if (username.isEmpty() || username.isBlank()) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.error_username_1)
+                    } else {
+                        isError = false
+                        onNextClick(username)
+                    }
+                }
             )
         }
         AlreadyHaveAccountClickableText(

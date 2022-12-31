@@ -10,16 +10,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SaveLoginInfoScreen(
+    viewModel: OnBoardingViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: () -> Unit
 ) {
     var isDialogShown by remember { mutableStateOf(false) }
+
+    val signupForm by viewModel.signupForm.collectAsStateWithLifecycle()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,7 +63,7 @@ fun SaveLoginInfoScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = stringResource(R.string.save_login_info_label_1),
+                text = "${stringResource(R.string.save_login_info_label_1)}${signupForm.fullName}${stringResource(R.string.save_login_info_label_2)}",
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,

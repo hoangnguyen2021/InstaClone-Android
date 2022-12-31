@@ -112,7 +112,7 @@ fun SignupByEmailScreen(
                 keyboardType = KeyboardType.Email,
                 isError = isError
             )
-            if (isError) {
+            if (isError && errorSupportingText.isNotEmpty()) {
                 Spacer(Modifier.height(LocalDimension.current.extraSmall))
                 Text(
                     text = errorSupportingText,

@@ -34,7 +34,7 @@ object Validator {
 
         val passwordData = PasswordData(password)
         val passwordValidator = PasswordValidator(
-            LengthRule(6),
+            LengthRule(6, 20),
             WhitespaceRule(),
             CharacterRule(EnglishCharacterData.LowerCase),
             CharacterRule(EnglishCharacterData.Digit),

@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -22,8 +23,12 @@ fun FullNameScreen(
     onBackClick: () -> Unit,
     onNextClick: (String) -> Unit
 ) {
+    val context = LocalContext.current
+
     var fullName by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
+    var errorSupportingText by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,12 +67,29 @@ fun FullNameScreen(
                 value = fullName,
                 onValueChange = { fullName = it },
                 label = "Full name",
-                keyboardType = KeyboardType.Text
+                isError = isError
             )
+            if (isError && errorSupportingText.isNotEmpty()) {
+                Spacer(Modifier.height(LocalDimension.current.extraSmall))
+                Text(
+                    text = errorSupportingText,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+            }
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
-                text = "Next",
-                onClick = { onNextClick(fullName) }
+                text = stringResource(R.string.next),
+                onClick = {
+                    if (fullName.isEmpty() || fullName.isBlank()) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.error_full_name_1)
+                    } else {
+                        isError = false
+                        onNextClick(fullName)
+                    }
+                }
             )
         }
         AlreadyHaveAccountClickableText(

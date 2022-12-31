@@ -124,7 +124,7 @@ class OnBoardingViewModel @Inject constructor(
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
             try {
-                //signupRepository.sendVerificationCode(recipient)
+                signupRepository.sendVerificationCode(recipient)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
@@ -141,7 +141,7 @@ class OnBoardingViewModel @Inject constructor(
         checkVerificationJob?.cancel()
         checkVerificationJob = viewModelScope.launch {
             try {
-                //signupRepository.checkVerificationCode(recipient, confirmationCode)
+                signupRepository.checkVerificationCode(recipient, confirmationCode)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.HideErrorSupportingText)
                 _uiEvent.send(UiEvent.NextScreen)
