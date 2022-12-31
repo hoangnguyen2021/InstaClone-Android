@@ -99,7 +99,8 @@ fun OnBoardingTextField(
 fun OnBoardingPasswordField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String
+    label: String,
+    isError: Boolean = false
 ) {
     var isFocused by remember { mutableStateOf(false) }
     var isPasswordHidden by remember { mutableStateOf(true) }
@@ -112,9 +113,12 @@ fun OnBoardingPasswordField(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             cursorColor = White,
             selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            errorTrailingIconColor = MaterialTheme.colorScheme.error,
+            errorLabelColor = MaterialTheme.colorScheme.onError,
             focusedIndicatorColor = Transparent,
             unfocusedIndicatorColor = Transparent,
-            disabledIndicatorColor = Transparent
+            disabledIndicatorColor = Transparent,
+            errorIndicatorColor = Transparent
         ),
         modifier = Modifier
             .fillMaxWidth()
@@ -122,7 +126,9 @@ fun OnBoardingPasswordField(
             .background(MaterialTheme.colorScheme.primaryContainer)
             .border(
                 width = 1.dp,
-                color = if (isFocused) AliceBlue else GrayBlue,
+                color = if (isError) MaterialTheme.colorScheme.error
+                else if (isFocused) AliceBlue
+                else GrayBlue,
                 shape = RoundedCornerShape(LocalDimension.current.extraSmall)
             )
             .padding(vertical = LocalDimension.current.extraSmall)
@@ -133,21 +139,23 @@ fun OnBoardingPasswordField(
         label = {
             Text(
                 text = label,
-                color = if (isFocused) AliceBlue else MaterialTheme.colorScheme.onPrimary
+                color = if (isError) MaterialTheme.colorScheme.error
+                else if (isFocused) AliceBlue
+                else MaterialTheme.colorScheme.onPrimary
             )
         },
         trailingIcon = {
             if (!isFocused) null
             else if (isPasswordHidden) {
                 PasswordHiddenIcon(
-                    color = AliceBlue,
+                    color = if (isError) MaterialTheme.colorScheme.error else AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.mediumLarge)
                         .clickable { isPasswordHidden = false }
                 )
             } else {
                 PasswordShownIcon(
-                    color = AliceBlue,
+                    color = if (isError) MaterialTheme.colorScheme.error else AliceBlue,
                     modifier = Modifier
                         .size(LocalDimension.current.mediumLarge)
                         .clickable { isPasswordHidden = true }
@@ -156,11 +164,11 @@ fun OnBoardingPasswordField(
         },
         visualTransformation = if (isPasswordHidden)
             PasswordVisualTransformation()
-        else
-            VisualTransformation.None,
+        else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
         ),
+        isError = isError,
         singleLine = true,
         maxLines = 1,
         shape = RoundedCornerShape(LocalDimension.current.extraSmall)

@@ -8,8 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import myapp.hoang.core.utils.Validator
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
@@ -21,8 +23,12 @@ fun PasswordScreen(
     onBackClick: () -> Unit,
     onNextClick: (String) -> Unit
 ) {
+    val context = LocalContext.current
+
     var password by remember { mutableStateOf("") }
     var isDialogShown by remember { mutableStateOf(false) }
+    var isError by remember { mutableStateOf(false) }
+    var errorSupportingText by remember { mutableStateOf("") }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,12 +76,33 @@ fun PasswordScreen(
             OnBoardingPasswordField(
                 value = password,
                 onValueChange = { password = it },
-                label = "Password"
+                label = "Password",
+                isError = isError
             )
+            if (isError && errorSupportingText.isNotEmpty()) {
+                Spacer(Modifier.height(LocalDimension.current.extraSmall))
+                Text(
+                    text = errorSupportingText,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+            }
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
-                onClick = { onNextClick(password) }
+                onClick = {
+                    if (password.isEmpty() || password.isBlank()) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.error_password_1)
+                    } else if (!Validator.validatePassword(password)) {
+                        isError = true
+                        errorSupportingText = context.getString(R.string.error_password_2)
+                    } else {
+                        isError = false
+                        onNextClick(password)
+                    }
+                }
             )
         }
         AlreadyHaveAccountClickableText(

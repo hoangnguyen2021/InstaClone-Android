@@ -5,4 +5,5 @@ apply {
 dependencies {
     "implementation"(Google.libphonenumber)
     "implementation"(Jmail.jmail)
+    "implementation"(Passay.passay)
 }

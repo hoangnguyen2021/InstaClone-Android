@@ -71,4 +71,6 @@
     <string name="error_signup_by_email_2">Enter a valid email address.</string>
     <string name="error_send_confirmation_code">Failed to send confirmation code</string>
     <string name="error_check_confirmation_code">That code isn\'t valid. You can request a new one.</string>
+    <string name="error_password_1">Password cannot be empty.</string>
+    <string name="error_password_2">Password must be at least 6 characters long, contain no whitespace, and contain at least 1 lowercase letter and 1 digit.</string>
 </resources>
