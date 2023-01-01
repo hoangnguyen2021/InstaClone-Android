@@ -39,18 +39,18 @@ val MainTypography = Typography(
     )
 )
 
-val proximaNovaFamily = FontFamily(
+val ProximaNovaFamily = FontFamily(
     Font(R.font.proximanova_regular, FontWeight.Normal, FontStyle.Normal),
     Font(R.font.proximanova_medium, FontWeight.Medium, FontStyle.Normal),
 )
 
-val arabotoFamily = FontFamily(
+val ArabotoFamily = FontFamily(
     Font(R.font.araboto_light, FontWeight.Light, FontStyle.Normal),
     Font(R.font.araboto_regular, FontWeight.Normal, FontStyle.Normal),
     Font(R.font.araboto_medium, FontWeight.Medium, FontStyle.Normal),
 )
 
-val shoikaFontFamily = FontFamily(
+val ShoikaFontFamily = FontFamily(
     Font(R.font.shoika_medium, FontWeight.Medium, FontStyle.Normal),
     Font(R.font.shoika_medium_italic, FontWeight.Medium, FontStyle.Italic),
     Font(R.font.shoika_regular, FontWeight.Normal, FontStyle.Normal),
@@ -59,16 +59,16 @@ val shoikaFontFamily = FontFamily(
     Font(R.font.shoika_light_italic, FontWeight.Light, FontStyle.Italic),
 )
 
-val billabongFamily = FontFamily(
+val BillabongFamily = FontFamily(
     Font(R.font.billabong, FontWeight.Normal, FontStyle.Normal)
 )
 
 val OnBoardingTypography = Typography(
     titleLarge = TextStyle(
-        fontFamily = arabotoFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 24.sp,
-        lineHeight = 34.sp,
+        fontFamily = ShoikaFontFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 22.sp,
+        lineHeight = 30.sp,
         letterSpacing = 0.6.sp
     ),
     labelSmall = TextStyle(
@@ -93,7 +93,7 @@ val OnBoardingTypography = Typography(
         letterSpacing = 0.sp,
     ),
     displayLarge = TextStyle(
-        fontFamily = arabotoFamily,
+        fontFamily = ArabotoFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 15.sp,
         lineHeight = 20.sp,
@@ -102,12 +102,12 @@ val OnBoardingTypography = Typography(
     bodySmall = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
+        fontSize = 13.sp,
         lineHeight = 15.sp,
         letterSpacing = 0.4.sp,
     ),
     bodyLarge = TextStyle(
-        fontFamily = shoikaFontFamily,
+        fontFamily = ShoikaFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 21.sp,

@@ -124,7 +124,7 @@ class OnBoardingViewModel @Inject constructor(
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
             try {
-                signupRepository.sendVerificationCode(recipient)
+                //signupRepository.sendVerificationCode(recipient)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
@@ -141,7 +141,7 @@ class OnBoardingViewModel @Inject constructor(
         checkVerificationJob?.cancel()
         checkVerificationJob = viewModelScope.launch {
             try {
-                signupRepository.checkVerificationCode(recipient, confirmationCode)
+                //signupRepository.checkVerificationCode(recipient, confirmationCode)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.HideErrorSupportingText)
                 _uiEvent.send(UiEvent.NextScreen)
@@ -161,9 +161,9 @@ class OnBoardingViewModel @Inject constructor(
         uploadProfilePicAndSignUpJob?.cancel()
         uploadProfilePicAndSignUpJob = viewModelScope.launch {
             try {
-                val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
-                setProfilePicPath(profilePicPath)
-                signupRepository.signUp(signupForm.value)
+                //val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
+                //setProfilePicPath(profilePicPath)
+                //signupRepository.signUp(signupForm.value)
                 _isLoading.value = false
                 _uiEvent.send(UiEvent.NextScreen)
             } catch (e: Exception) {
@@ -178,7 +178,7 @@ class OnBoardingViewModel @Inject constructor(
         getProfilePicJob?.cancel()
         getProfilePicJob = viewModelScope.launch {
             try {
-                _profilePic.value = imageUploadRepository.getProfilePic(profilePicPath)
+                //_profilePic.value = imageUploadRepository.getProfilePic(profilePicPath)
             } catch (e: Exception) {
                 _isLoading.value = false
             }

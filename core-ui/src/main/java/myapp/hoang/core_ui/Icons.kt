@@ -13,90 +13,104 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun NewPostIcon() {
+fun NewPostIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_new_post),
-        contentDescription = "New Post"
+        contentDescription = "New Post",
+        tint = color,
+        modifier = modifier
     )
 }
 
 @Composable
-fun HeartIcon() {
+fun HeartIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_heart_notifications),
-        contentDescription = "Notifications"
+        contentDescription = "Notifications",
+        tint = color,
+        modifier = modifier
     )
 }
 
 @Composable
-fun MessageIcon() {
+fun MessageIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_messenger),
-        contentDescription = "Messages"
+        contentDescription = "Messages",
+        tint = color,
+        modifier = modifier
     )
 }
 
 @Composable
-fun HomeUnselectedIcon() {
+fun HomeIcon(
+    isSelected: Boolean,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_home_outline),
-        contentDescription = "Home"
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_home_fill
+            else R.drawable.ic_home_outline
+        ),
+        contentDescription = "Home",
+        tint = color,
+        modifier = modifier
     )
 }
 
 @Composable
-fun HomeSelectedIcon() {
+fun SearchIcon(
+    isSelected: Boolean,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_home_fill),
-        contentDescription = "Home"
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_search_fill
+            else R.drawable.ic_search_outline
+        ),
+        contentDescription = "Search",
+        tint = color,
+        modifier = modifier
     )
 }
 
 @Composable
-fun SearchUnselectedIcon() {
+fun ReelsIcon(
+    isSelected: Boolean,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_search_outline),
-        contentDescription = "Search"
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_reels_fill
+            else R.drawable.ic_reels_outline
+        ),
+        contentDescription = "Reels",
+        tint = color,
+        modifier = modifier
     )
 }
 
 @Composable
-fun SearchSelectedIcon() {
+fun ShopIcon(
+    isSelected: Boolean,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_search_fill),
-        contentDescription = "Search"
-    )
-}
-
-@Composable
-fun ReelsUnselectedIcon() {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_reels_outline),
-        contentDescription = "Reels"
-    )
-}
-
-@Composable
-fun ReelsSelectedIcon() {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_reels_fill),
-        contentDescription = "Reels"
-    )
-}
-
-@Composable
-fun ShopUnselectedIcon() {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_shop_outline),
-        contentDescription = "Shop"
-    )
-}
-
-@Composable
-fun ShopSelectedIcon() {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_shop_fill),
-        contentDescription = "Shop"
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_shop_fill
+            else R.drawable.ic_shop_outline
+        ),
+        contentDescription = "Shop",
+        tint = color,
+        modifier = modifier
     )
 }
 
@@ -186,9 +200,10 @@ fun MetaIcon(color: Color, modifier: Modifier = Modifier) {
 @Composable
 fun OnBoardingIconsPreview() {
     OnBoardingTheme {
-        Surface(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.3f)
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.3f)
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

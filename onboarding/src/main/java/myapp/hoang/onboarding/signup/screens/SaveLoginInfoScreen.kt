@@ -9,7 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -63,7 +67,13 @@ fun SaveLoginInfoScreen(
             )
             Spacer(Modifier.height(LocalDimension.current.small))
             Text(
-                text = "${stringResource(R.string.save_login_info_label_1)}${signupForm.fullName}${stringResource(R.string.save_login_info_label_2)}",
+                text = buildAnnotatedString {
+                    append(stringResource(R.string.save_login_info_label_1))
+                    withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
+                        append(signupForm.fullName ?: "")
+                    }
+                    append(stringResource(R.string.save_login_info_label_2))
+                },
                 color = White,
                 style = MaterialTheme.typography.labelMedium,
                 textAlign = TextAlign.Start,

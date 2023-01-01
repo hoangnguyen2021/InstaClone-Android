@@ -162,7 +162,7 @@ fun BirthdayDrawer(
                 .align(Alignment.Start)
                 .clickable(onClick = onCloseDrawer)
         )
-        Spacer(Modifier.height(LocalDimension.current.medium))
+        Spacer(Modifier.height(LocalDimension.current.large))
         Text(
             text = stringResource(id = R.string.birthday_title_2),
             color = White,
@@ -170,7 +170,7 @@ fun BirthdayDrawer(
             textAlign = TextAlign.Start,
             modifier = Modifier.align(Alignment.Start)
         )
-        Spacer(Modifier.height(LocalDimension.current.extraSmall))
+        Spacer(Modifier.height(LocalDimension.current.mediumSmall))
         PartiallyClickableText(
             unclickableText = stringResource(R.string.birthday_body_1),
             clickableText = stringResource(R.string.learn_more),

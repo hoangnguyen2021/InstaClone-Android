@@ -78,6 +78,15 @@ fun UsernameScreen(
                 label = "Username",
                 isError = isError
             )
+            if (isError && errorSupportingText.isNotEmpty()) {
+                Spacer(Modifier.height(LocalDimension.current.extraSmall))
+                Text(
+                    text = errorSupportingText,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+            }
             Spacer(Modifier.height(LocalDimension.current.mediumLarge))
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),

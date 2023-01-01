@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import myapp.hoang.core_ui.Black
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.InstaCloneBrand
 import myapp.hoang.core_ui.components.OnBoardingProfilePicture2
@@ -45,7 +46,10 @@ fun WelcomeScreen(
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        InstaCloneBrand(modifier = Modifier.wrapContentSize())
+        InstaCloneBrand(
+            color = Black,
+            modifier = Modifier.wrapContentWidth()
+        )
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
