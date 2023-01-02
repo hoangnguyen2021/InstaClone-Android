@@ -25,7 +25,7 @@ fun NewPostIcon(color: Color, modifier: Modifier = Modifier) {
 @Composable
 fun HeartIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_heart_notifications),
+        painter = painterResource(id = R.drawable.ic_heart),
         contentDescription = "Notifications",
         tint = color,
         modifier = modifier
@@ -127,6 +127,16 @@ fun UnsaveIcon() {
     Icon(
         painter = painterResource(id = R.drawable.ic_save_fill),
         contentDescription = "Unsave"
+    )
+}
+
+@Composable
+fun PlusIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_plus),
+        contentDescription = "Add",
+        tint = color,
+        modifier = modifier
     )
 }
 

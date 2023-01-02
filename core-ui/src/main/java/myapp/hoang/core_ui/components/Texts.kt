@@ -8,9 +8,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import myapp.hoang.core_ui.Black
 import myapp.hoang.core_ui.R
-import myapp.hoang.core_ui.BillabongFamily
+import myapp.hoang.core_ui.InstagramFamily
 
 @Composable
 fun InstaCloneBrand(
@@ -18,12 +17,12 @@ fun InstaCloneBrand(
     modifier: Modifier = Modifier
 ) {
     Text(
-        text = stringResource(R.string.instaclone),
+        text = " " + stringResource(R.string.instaclone) + " ",
         style = TextStyle(
-            fontFamily = BillabongFamily,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 36.sp,
-            letterSpacing = 0.6.sp
+            fontFamily = InstagramFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 26.sp,
+            letterSpacing = 0.sp
         ),
         color = color,
         maxLines = 1,

@@ -59,8 +59,8 @@ val ShoikaFontFamily = FontFamily(
     Font(R.font.shoika_light_italic, FontWeight.Light, FontStyle.Italic),
 )
 
-val BillabongFamily = FontFamily(
-    Font(R.font.billabong, FontWeight.Normal, FontStyle.Normal)
+val InstagramFamily = FontFamily(
+    Font(R.font.instagram_regular, FontWeight.Normal, FontStyle.Normal)
 )
 
 val OnBoardingTypography = Typography(

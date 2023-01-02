@@ -1,9 +1,15 @@
 package myapp.hoang.core_ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import myapp.hoang.core_ui.*
 
 @Composable
@@ -122,6 +128,30 @@ fun ShopIconButton(
         ShopIcon(
             isSelected = isSelected,
             color = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Composable
+fun AddStoryIconButton(
+    onClick: () -> Unit
+) {
+    OutlinedIconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        ),
+        shape = CircleShape,
+        border = BorderStroke(
+            width = LocalDimension.current.twoExtraSmall,
+            color = MaterialTheme.colorScheme.primary
+        ),
+        modifier = Modifier.fillMaxSize()
+    ) {
+        PlusIcon(
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            modifier = Modifier.size(LocalDimension.current.small)
         )
     }
 }

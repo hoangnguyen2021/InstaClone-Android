@@ -3,10 +3,7 @@ package myapp.hoang.core_ui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -18,8 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import myapp.hoang.core_ui.LightGray
-import myapp.hoang.core_ui.LocalDimension
+import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.R
 
 @Composable
@@ -84,6 +80,26 @@ fun BottomAppBarProfilePic(
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .size(LocalDimension.current.extraLarge)
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+    )
+}
+
+@Composable
+fun StoryProfilePic(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(R.drawable.profile_pic_placeholder)
+            .crossfade(true)
+            .build(),
+        contentDescription = "Profile pic",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .size(LocalDimension.current.sevenExtraLarge)
             .aspectRatio(1f)
             .clip(CircleShape)
             .clickable(onClick = onClick)

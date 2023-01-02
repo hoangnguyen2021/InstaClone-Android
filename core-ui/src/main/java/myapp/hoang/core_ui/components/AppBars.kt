@@ -8,6 +8,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.LocalDimension
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,7 +21,8 @@ fun InstaCloneTopAppBar() {
                 modifier = Modifier
                     .wrapContentWidth()
                     .fillMaxHeight()
-                    .padding(vertical = LocalDimension.current.extraSmall)
+                    .padding(vertical = LocalDimension.current.small)
+                    .offset(x = (-10).dp)
             )
         },
         actions = {
@@ -36,7 +38,7 @@ fun InstaCloneTopAppBar() {
         },
         modifier = Modifier
             .fillMaxWidth()
-            .height(LocalDimension.current.fiveExtraLarge)
+            .height(LocalDimension.current.sixExtraLarge)
     )
 }
 
