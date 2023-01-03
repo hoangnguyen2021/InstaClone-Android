@@ -6,4 +6,5 @@ object Google {
     const val material = "com.google.android.material:material:$materialVersion"
     const val libphonenumber = "com.googlecode.libphonenumber:libphonenumber:$libphonenumberVersion"
     val accompanistPermissions = "com.google.accompanist:accompanist-permissions:$accompanistVersion"
+    val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion"
 }

@@ -75,6 +75,8 @@ dependencies {
     implementation(Kotlin.kotlinxSerialization)
     implementation(Kotlin.kotlinxDateTime)
 
+    implementation(Google.accompanistSystemUiController)
+
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
 
