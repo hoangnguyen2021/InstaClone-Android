@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.navigation
+package myapp.hoang.core.navigation
 
 sealed class MainScreen(val route: String) {
     object FeedScreen : MainScreen("feed")

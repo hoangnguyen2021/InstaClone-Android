@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.components
+package myapp.hoang.core_ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

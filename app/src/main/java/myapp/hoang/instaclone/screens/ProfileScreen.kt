@@ -1,19 +1,14 @@
 package myapp.hoang.instaclone.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.LocalDimension
-import myapp.hoang.core_ui.SwipeIndicatorIcon
 import myapp.hoang.core_ui.components.FeedDivider
 import myapp.hoang.core_ui.components.MenuIconButton
 import myapp.hoang.core_ui.components.NewPostIconButton
-import myapp.hoang.instaclone.components.ProfileUsername
+import myapp.hoang.core_ui.components.ProfileUsername
 
 @Composable
 fun ProfileScreen(

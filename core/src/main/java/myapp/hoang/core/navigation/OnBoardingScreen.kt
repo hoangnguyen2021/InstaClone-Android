@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.navigation
+package myapp.hoang.core.navigation
 
 sealed class OnBoardingScreen(val route: String) {
     object LoginScreen : OnBoardingScreen("login")

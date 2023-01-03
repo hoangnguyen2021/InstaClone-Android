@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.datetime.toKotlinLocalDate
 import myapp.hoang.core.utils.FileUtils
 import myapp.hoang.core_ui.*
-import myapp.hoang.instaclone.navigation.OnBoardingScreen
+import myapp.hoang.core.navigation.OnBoardingScreen
 import myapp.hoang.onboarding.login.LoginScreen
 import myapp.hoang.onboarding.signup.screens.*
 import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel

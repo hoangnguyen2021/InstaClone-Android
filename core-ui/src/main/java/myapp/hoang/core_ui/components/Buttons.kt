@@ -7,7 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
 
@@ -291,18 +290,6 @@ fun PrimaryButton(
     }
 }
 
-@Preview
-@Composable
-fun PrimaryButtonPreview() {
-    InstaCloneTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
-            Row(horizontalArrangement = Arrangement.Center) {
-                PrimaryButton("Follow", {})
-            }
-        }
-    }
-}
-
 @Composable
 fun SecondaryButton(
     text: String,
@@ -331,17 +318,5 @@ fun SecondaryButton(
             color = MaterialTheme.colorScheme.onSecondary,
             modifier = Modifier.padding(vertical = 0.dp)
         )
-    }
-}
-
-@Preview
-@Composable
-fun SecondaryButtonPreview() {
-    InstaCloneTheme {
-        Surface(modifier = Modifier.fillMaxWidth()) {
-            Row(horizontalArrangement = Arrangement.Center) {
-                SecondaryButton("Message", {})
-            }
-        }
     }
 }

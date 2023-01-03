@@ -26,9 +26,9 @@ import myapp.hoang.core_ui.components.bottomsheet.BottomDrawer
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerState
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerValue
 import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
-import myapp.hoang.instaclone.components.InstaCloneBottomAppBar
-import myapp.hoang.instaclone.components.MainScreenDrawer
-import myapp.hoang.instaclone.navigation.MainScreen
+import myapp.hoang.core_ui.components.InstaCloneBottomAppBar
+import myapp.hoang.core_ui.components.MainScreenDrawer
+import myapp.hoang.core.navigation.MainScreen
 import myapp.hoang.instaclone.screens.*
 
 @AndroidEntryPoint

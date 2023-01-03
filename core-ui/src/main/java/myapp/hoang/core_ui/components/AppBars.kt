@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.components
+package myapp.hoang.core_ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import myapp.hoang.core.navigation.MainScreen
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
-import myapp.hoang.instaclone.navigation.MainScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,7 +81,7 @@ fun InstaCloneBottomAppBar(
                 )
                 ShopIconButton(
                     isSelected = currentDestination?.hierarchy?.any { it.route == MainScreen.ShopScreen.route } == true,
-                    onClick = { onClick(MainScreen.ShopScreen)}
+                    onClick = { onClick(MainScreen.ShopScreen) }
                 )
                 BottomAppBarProfilePic(
                     isSelected = currentDestination?.hierarchy?.any { it.route == MainScreen.ProfileScreen.route } == true,

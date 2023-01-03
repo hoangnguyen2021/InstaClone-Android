@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.AddStoryIconButton
 import myapp.hoang.core_ui.components.FeedDivider
-import myapp.hoang.instaclone.components.InstaCloneTopAppBar
+import myapp.hoang.core_ui.components.InstaCloneTopAppBar
 import myapp.hoang.core_ui.components.StoryProfilePic
 
 @Composable
