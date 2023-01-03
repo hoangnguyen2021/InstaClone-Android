@@ -15,6 +15,13 @@ val MainTypography = Typography(
         fontSize = 11.sp,
         lineHeight = 15.sp,
         letterSpacing = 0.sp,
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+        lineHeight = 26.sp,
+        letterSpacing = 0.4.sp,
     )
 )
 

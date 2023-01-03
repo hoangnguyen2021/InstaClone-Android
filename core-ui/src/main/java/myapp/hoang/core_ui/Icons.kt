@@ -115,6 +115,32 @@ fun ShopIcon(
 }
 
 @Composable
+fun ChevronDownIcon(
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_chevron_down),
+        contentDescription = "Chevron down",
+        tint = color,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun MenuIcon(
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_menu),
+        contentDescription = "Menu",
+        tint = color,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun SaveIcon() {
     Icon(
         painter = painterResource(id = R.drawable.ic_save_outline),

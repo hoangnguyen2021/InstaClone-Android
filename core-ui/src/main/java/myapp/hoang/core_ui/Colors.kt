@@ -22,4 +22,4 @@ val Charcoal = Color(0xFF424242)
 val ErrorRed = Color(0xFFEF5E69)
 val ErrorBlackRed = Color(0xFF91535E)
 
-val Darkness = Color(0xFF252525)
+val Darkness = Color(0xFF262626)

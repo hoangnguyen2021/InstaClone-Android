@@ -61,6 +61,22 @@ fun MessageIconButton(
 }
 
 @Composable
+fun MenuIconButton(
+    onClick: () -> Unit
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
+    ) {
+        MenuIcon(
+            color = MaterialTheme.colorScheme.onSurface
+        )
+    }
+}
+
+@Composable
 fun HomeIconButton(
     isSelected: Boolean,
     onClick: () -> Unit
