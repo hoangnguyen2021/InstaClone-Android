@@ -1,7 +1,10 @@
 package myapp.hoang.core_ui.components
 
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -10,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import myapp.hoang.core_ui.R
 import myapp.hoang.core_ui.InstagramFamily
+import myapp.hoang.core_ui.LocalDimension
 
 @Composable
 fun InstaCloneBrand(
@@ -28,4 +32,30 @@ fun InstaCloneBrand(
         maxLines = 1,
         modifier = modifier
     )
+}
+
+@Composable
+fun ProfileStat(
+    value: Int,
+    unit: String
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .wrapContentWidth()
+            .fillMaxHeight()
+    ) {
+        Text(
+            text = value.toString(),
+            style = MaterialTheme.typography.displayLarge,
+            maxLines = 1
+        )
+        Spacer(modifier = Modifier.height(LocalDimension.current.twoExtraSmall))
+        Text(
+            text = unit,
+            style = MaterialTheme.typography.displayMedium,
+            maxLines = 1
+        )
+    }
 }

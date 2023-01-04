@@ -10,7 +10,7 @@ import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.AddStoryIconButton
 import myapp.hoang.core_ui.components.FeedDivider
 import myapp.hoang.core_ui.components.InstaCloneTopAppBar
-import myapp.hoang.core_ui.components.StoryProfilePic
+import myapp.hoang.core_ui.components.ProfilePic
 
 @Composable
 fun FeedScreen() {
@@ -57,7 +57,10 @@ fun AddStory(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier.align(Alignment.Center)
             ) {
-                StoryProfilePic(onClick = onClick)
+                ProfilePic(
+                    size = LocalDimension.current.sevenExtraLarge,
+                    onClick = onClick
+                )
             }
             Box(
                 contentAlignment = Alignment.Center,
