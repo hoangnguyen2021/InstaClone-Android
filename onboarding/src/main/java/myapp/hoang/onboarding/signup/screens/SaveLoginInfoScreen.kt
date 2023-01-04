@@ -31,7 +31,7 @@ fun SaveLoginInfoScreen(
 ) {
     var isDialogShown by remember { mutableStateOf(false) }
 
-    val signupForm by viewModel.signupForm.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,7 +70,7 @@ fun SaveLoginInfoScreen(
                 text = buildAnnotatedString {
                     append(stringResource(R.string.save_login_info_label_1))
                     withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
-                        append(signupForm.fullName ?: "")
+                        append(uiState.signupForm.fullName ?: "")
                     }
                     append(stringResource(R.string.save_login_info_label_2))
                 },

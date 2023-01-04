@@ -20,7 +20,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion Compose.composeVersion
+        kotlinCompilerExtensionVersion Compose.version
     }
     buildTypes {
         release {
@@ -52,14 +52,15 @@ dependencies {
     implementation Compose.ui
     debugImplementation Compose.uiTooling
     implementation Compose.uiToolingPreview
-    implementation Compose.hiltNavigationCompose
+    implementation Compose.hiltNavigation
     implementation Compose.material3
     implementation Compose.runtime
     implementation Compose.navigation
-    implementation Compose.viewModelCompose
-    implementation Compose.lifecycleRuntimeCompose
-    implementation Compose.activityCompose
+    implementation Compose.viewModel
+    implementation Compose.lifecycleRuntime
+    implementation Compose.activity
     implementation Compose.coil
+    implementation Compose.stateEvents
 
     implementation Google.accompanistPermissions
 

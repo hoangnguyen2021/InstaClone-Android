@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.palm.composestateevents.consumed
+import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
-import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.core_ui.utils.UiText
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
@@ -22,17 +22,14 @@ class OnBoardingViewModel @Inject constructor(
     private val signupRepository: SignupRepository,
     private val imageUploadRepository: ImageUploadRepository
 ) : ViewModel() {
-    private val _signupForm = MutableStateFlow(SignupForm())
-    val signupForm = _signupForm.asStateFlow()
+    private val _uiState = MutableStateFlow(OnBoardingUiState())
+    val uiState = _uiState.asStateFlow()
 
-    private val _profilePic = MutableStateFlow<ByteArray?>(null)
-    val profilePic = _profilePic.asStateFlow()
-
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
-
-    private val _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
+    private var state: OnBoardingUiState
+        get() = _uiState.value
+        set(newState) {
+            _uiState.update { newState }
+        }
 
     private var sendVerificationJob: Job? = null
     private var checkVerificationJob: Job? = null
@@ -40,148 +37,183 @@ class OnBoardingViewModel @Inject constructor(
     private var getProfilePicJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 mobileNumber = mobileNumber
             )
-        }
+        )
     }
 
     fun setIsMobileNumberVerified(isMobileNumberVerified: Boolean) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 isMobileNumberVerified = isMobileNumberVerified
             )
-        }
+        )
     }
 
     fun setEmail(email: String) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 email = email
             )
-        }
+        )
     }
 
     fun setIsEmailVerified(isEmailVerified: Boolean) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 isEmailVerified = isEmailVerified
             )
-        }
+        )
     }
 
     fun setFullName(fullName: String) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 fullName = fullName
             )
-        }
+        )
     }
 
     fun setBirthday(birthday: LocalDate) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 birthday = birthday
             )
-        }
+        )
     }
 
     fun setUsername(username: String) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 username = username
             )
-        }
+        )
     }
 
     fun setPassword(password: String) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 password = password
             )
-        }
+        )
     }
 
     fun setAgreedToPolicy(agreedToPolicy: Boolean) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 agreedToPolicy = agreedToPolicy
             )
-        }
+        )
     }
 
     fun setProfilePicPath(profilePicPath: String) {
-        _signupForm.update {
-            it.copy(
+        state = state.copy(
+            signupForm = state.signupForm.copy(
                 profilePicPath = profilePicPath
             )
-        }
+        )
     }
 
     fun sendConfirmationCode(recipient: String) {
-        _isLoading.value = true
+        state = state.copy(
+            isLoading = true
+        )
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
-            try {
-                //signupRepository.sendVerificationCode(recipient)
-                _isLoading.value = false
-                _uiEvent.send(UiEvent.NextScreen)
+            state = try {
+                signupRepository.sendVerificationCode(recipient)
+                state.copy(
+                    isLoading = false,
+                    nextScreenEvent = triggered
+                )
             } catch (e: Exception) {
-                _isLoading.value = false
-                _uiEvent.send(
-                    UiEvent.ShowToast(UiText.StringResource(R.string.error_send_confirmation_code))
+                Log.d("MYTAG", e.toString())
+                state.copy(
+                    isLoading = false,
+                    showToastEvent = triggered(UiText.StringResource(R.string.error_send_confirmation_code))
                 )
             }
         }
     }
 
     fun checkConfirmationCode(recipient: String, confirmationCode: String) {
-        _isLoading.value = true
+        state = state.copy(
+            isLoading = true
+        )
         checkVerificationJob?.cancel()
         checkVerificationJob = viewModelScope.launch {
-            try {
-                //signupRepository.checkVerificationCode(recipient, confirmationCode)
-                _isLoading.value = false
-                _uiEvent.send(UiEvent.HideErrorSupportingText)
-                _uiEvent.send(UiEvent.NextScreen)
+            state = try {
+                signupRepository.checkVerificationCode(recipient, confirmationCode)
+                state.copy(
+                    isLoading = false,
+                    hideErrorSupportingTextEvent = triggered,
+                    nextScreenEvent = triggered
+                )
             } catch (e: Exception) {
-                _isLoading.value = false
-                _uiEvent.send(
-                    UiEvent.ShowErrorSupportingText(
-                        UiText.StringResource(R.string.error_check_confirmation_code)
-                    )
+                state.copy(
+                    isLoading = false,
+                    showErrorSupportingTextEvent =
+                    triggered(UiText.StringResource(R.string.error_check_confirmation_code))
                 )
             }
         }
     }
 
     fun uploadProfilePicAndSignUp(imageFile: File) {
-        _isLoading.value = true
+        state = state.copy(
+            isLoading = true
+        )
         uploadProfilePicAndSignUpJob?.cancel()
         uploadProfilePicAndSignUpJob = viewModelScope.launch {
-            try {
-                //val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
-                //setProfilePicPath(profilePicPath)
-                //signupRepository.signUp(signupForm.value)
-                _isLoading.value = false
-                _uiEvent.send(UiEvent.NextScreen)
+            state = try {
+                val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
+                setProfilePicPath(profilePicPath)
+                signupRepository.signUp(state.signupForm)
+                state.copy(
+                    isLoading = false,
+                    nextScreenEvent = triggered
+                )
             } catch (e: Exception) {
-                _isLoading.value = false
-                Log.d("MYTAG", e.toString())
+                state.copy(
+                    isLoading = false,
+                )
             }
         }
     }
 
     fun getProfilePic(profilePicPath: String) {
-        _isLoading.value = true
+        state = state.copy(
+            isLoading = true
+        )
         getProfilePicJob?.cancel()
         getProfilePicJob = viewModelScope.launch {
-            try {
-                //_profilePic.value = imageUploadRepository.getProfilePic(profilePicPath)
+            state = try {
+                state.copy(
+                    profilePic = imageUploadRepository.getProfilePic(profilePicPath)
+                )
             } catch (e: Exception) {
-                _isLoading.value = false
+                state.copy(
+                    isLoading = false,
+                )
             }
         }
+    }
+
+    fun onConsumedNextScreenEvent(){
+        state = state.copy(nextScreenEvent = consumed)
+    }
+
+    fun onConsumedShowToastEvent(){
+        state = state.copy(showToastEvent = consumed())
+    }
+
+    fun onConsumedHideErrorSupportingTextEvent(){
+        state = state.copy(hideErrorSupportingTextEvent = consumed)
+    }
+
+    fun onConsumedShowErrorSupportingTextEvent(){
+        state = state.copy(showErrorSupportingTextEvent = consumed())
     }
 }

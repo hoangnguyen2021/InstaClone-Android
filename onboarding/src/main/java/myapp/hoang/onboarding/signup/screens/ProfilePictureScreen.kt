@@ -16,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,6 +28,7 @@ import com.canhub.cropper.CropImageOptions
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import de.palm.composestateevents.EventEffect
 import kotlinx.coroutines.launch
 import myapp.hoang.core.utils.FileUtils
 import myapp.hoang.core_ui.*
@@ -36,7 +36,6 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawer
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerValue
 import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
-import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
@@ -60,11 +59,7 @@ fun ProfilePictureScreen(
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var currentTmpUri by remember { mutableStateOf<Uri?>(null) }
 
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
-        initialValue = UiEvent.NoEvent,
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val pickImageLauncher =
         rememberLauncherForActivityResult(
@@ -107,13 +102,11 @@ fun ProfilePictureScreen(
         }
     )
 
-    LaunchedEffect(key1 = uiEvent) {
-        when (uiEvent) {
-            is UiEvent.NextScreen -> {
-                onNextScreen()
-            }
-            else -> {}
-        }
+    EventEffect(
+        event = uiState.nextScreenEvent,
+        onConsumed = viewModel::onConsumedNextScreenEvent
+    ) {
+        onNextScreen()
     }
 
     BottomDrawer(
@@ -153,7 +146,7 @@ fun ProfilePictureScreen(
             bottomBar = {
                 BottomBar(
                     imageUri = imageUri,
-                    isLoading = isLoading,
+                    isLoading = uiState.isLoading,
                     onAddPicture = { scope.launch { drawerState.expand() } },
                     onNextClick = onNextClick
                 )

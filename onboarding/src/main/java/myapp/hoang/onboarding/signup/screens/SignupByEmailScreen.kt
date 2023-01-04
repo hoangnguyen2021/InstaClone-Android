@@ -10,17 +10,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.palm.composestateevents.EventEffect
 import myapp.hoang.core.utils.Validator
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
-import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 
@@ -40,26 +39,20 @@ fun SignupByEmailScreen(
     var isError by remember { mutableStateOf(false) }
     var errorSupportingText by remember { mutableStateOf("") }
 
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
-        initialValue = UiEvent.NoEvent,
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = uiEvent) {
-        when (uiEvent) {
-            is UiEvent.ShowToast ->
-                Toast.makeText(
-                    context,
-                    (uiEvent as UiEvent.ShowToast).message.asString(context),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            is UiEvent.NextScreen -> {
-                onNextScreen("email")
-            }
-            else -> {}
-        }
+    EventEffect(
+        event = uiState.nextScreenEvent,
+        onConsumed = viewModel::onConsumedNextScreenEvent
+    ) {
+        onNextScreen("email")
+    }
+
+    EventEffect(
+        event = uiState.showToastEvent,
+        onConsumed = viewModel::onConsumedShowToastEvent
+    ) {
+        Toast.makeText(context, it.asString(context), Toast.LENGTH_SHORT).show()
     }
 
     Column(
@@ -136,7 +129,7 @@ fun SignupByEmailScreen(
                         onNextClick(email)
                     }
                 },
-                isLoading = isLoading
+                isLoading = uiState.isLoading
             )
             Spacer(Modifier.height(LocalDimension.current.medium))
             OnBoardingOutlinedButton(

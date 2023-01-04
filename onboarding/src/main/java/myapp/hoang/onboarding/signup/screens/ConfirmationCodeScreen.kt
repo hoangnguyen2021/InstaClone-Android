@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -18,11 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.palm.composestateevents.EventEffect
 import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
-import myapp.hoang.core_ui.utils.UiEvent
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 import myapp.hoang.onboarding.signup.viewmodels.SignupForm
@@ -46,29 +45,29 @@ fun ConfirmationCodeScreen(
     var isError by remember { mutableStateOf(false) }
     var errorSupportingText by remember { mutableStateOf("") }
 
-    val signupForm by viewModel.signupForm.collectAsStateWithLifecycle()
-    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
-    val uiEvent by viewModel.uiEvent.collectAsStateWithLifecycle(
-        initialValue = UiEvent.NoEvent,
-        lifecycleOwner = LocalLifecycleOwner.current
-    )
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = uiEvent) {
-        when (uiEvent) {
-            is UiEvent.NextScreen -> {
-                onNextScreen()
-            }
-            is UiEvent.ShowErrorSupportingText -> {
-                isError = true
-                errorSupportingText =
-                    (uiEvent as UiEvent.ShowErrorSupportingText).message.asString(context)
-            }
-            is UiEvent.HideErrorSupportingText -> {
-                isError = false
-                errorSupportingText = ""
-            }
-            else -> {}
-        }
+    EventEffect(
+        event = uiState.nextScreenEvent,
+        onConsumed = viewModel::onConsumedNextScreenEvent
+    ) {
+        onNextScreen()
+    }
+
+    EventEffect(
+        event = uiState.showErrorSupportingTextEvent,
+        onConsumed = viewModel::onConsumedShowErrorSupportingTextEvent
+    ) {
+        isError = true
+        errorSupportingText = it.asString(context)
+    }
+
+    EventEffect(
+        event = uiState.hideErrorSupportingTextEvent,
+        onConsumed = viewModel::onConsumedHideErrorSupportingTextEvent
+    ) {
+        isError = false
+        errorSupportingText = ""
     }
 
     BottomDrawer(
@@ -88,15 +87,16 @@ fun ConfirmationCodeScreen(
     ) {
         ConfirmationCodeContent(
             type = type,
-            signupForm = signupForm,
+            signupForm = uiState.signupForm,
             confirmationCode = confirmationCode,
             onConfirmationCodeChange = { confirmationCode = it },
             isError = isError,
             errorSupportingText = errorSupportingText,
-            isLoading = isLoading,
+            isLoading = uiState.isLoading,
             onNextClick = {
                 onNextClick(
-                    if (type == "phone") signupForm.mobileNumber.toString() else signupForm.email.toString(),
+                    if (type == "phone") uiState.signupForm.mobileNumber.toString()
+                    else uiState.signupForm.email.toString(),
                     confirmationCode
                 )
             },

@@ -28,11 +28,12 @@ import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 fun WelcomeScreen(
     viewModel: OnBoardingViewModel = hiltViewModel(),
 ) {
-    val signupForm by viewModel.signupForm.collectAsStateWithLifecycle()
-    val profilePic by viewModel.profilePic.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = signupForm) {
-        signupForm.profilePicPath?.let { viewModel.getProfilePic(it) }
+    uiState.signupForm.profilePicPath?.let {
+        LaunchedEffect(key1 = uiState) {
+            viewModel.getProfilePic(it)
+        }
     }
 
     Column(
@@ -61,10 +62,10 @@ fun WelcomeScreen(
                     .fillMaxWidth()
                     .wrapContentHeight()
             ) {
-                OnBoardingProfilePicture2(imageUri = profilePic)
+                OnBoardingProfilePicture2(imageUri = uiState.profilePic)
                 Spacer(modifier = Modifier.height(LocalDimension.current.sixExtraLarge))
                 Text(
-                    text = "${stringResource(R.string.welcome_text_1)}${signupForm.username}",
+                    text = "${stringResource(R.string.welcome_text_1)}${uiState.signupForm.username}",
                     style = TextStyle(
                         fontFamily = FontFamily.SansSerif,
                         fontWeight = FontWeight.Normal,

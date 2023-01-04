@@ -9,13 +9,13 @@ object Testing {
 
     const val junit4 = "junit:junit:$junitVersion"
     const val junitAndroidExt = "androidx.test.ext:junit:$junitAndroidExtVersion"
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Coroutines.version}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Kotlin.kotlinxCoroutinesVersion}"
     const val truth = "com.google.truth:truth:$truthVersion"
     const val mockk = "io.mockk:mockk:$mockkVersion"
     const val mockkAndroid = "io.mockk:mockk-android:$mockkVersion"
     const val turbine = "app.cash.turbine:turbine:$turbineVersion"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:$mockWebServerVersion"
-    const val composeUiTest = "androidx.compose.ui:ui-test-junit4:${Compose.composeVersion}"
+    const val composeUiTest = "androidx.compose.ui:ui-test-junit4:${Compose.version}"
     const val hiltTesting = "com.google.dagger:hilt-android-testing:${DaggerHilt.version}"
     const val testRunner = "androidx.test:runner:$testRunnerVersion"
 }

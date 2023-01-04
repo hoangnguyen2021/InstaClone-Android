@@ -39,7 +39,7 @@ android {
         jvmTarget = "1.8"
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Compose.composeVersion
+        kotlinCompilerExtensionVersion = Compose.version
     }
     packagingOptions {
         resources {
@@ -64,13 +64,14 @@ dependencies {
     implementation(Compose.ui)
     debugImplementation(Compose.uiTooling)
     implementation(Compose.uiToolingPreview)
-    implementation(Compose.hiltNavigationCompose)
+    implementation(Compose.hiltNavigation)
     implementation(Compose.material3)
     implementation(Compose.runtime)
     implementation(Compose.navigation)
-    implementation(Compose.viewModelCompose)
-    implementation(Compose.lifecycleRuntimeCompose)
-    implementation(Compose.activityCompose)
+    implementation(Compose.viewModel)
+    implementation(Compose.lifecycleRuntime)
+    implementation(Compose.activity)
+    implementation(Compose.stateEvents)
 
     implementation(Kotlin.kotlinxSerialization)
     implementation(Kotlin.kotlinxDateTime)
