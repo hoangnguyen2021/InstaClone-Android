@@ -4,10 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import myapp.hoang.core_ui.*
@@ -168,6 +166,32 @@ fun AddStoryIconButton(
         PlusIcon(
             color = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier.size(LocalDimension.current.small)
+        )
+    }
+}
+
+@Composable
+fun ToggleDiscoverPeopleIconButton(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    FilledIconToggleButton(
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        colors = IconButtonDefaults.filledIconToggleButtonColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+            checkedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            checkedContentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        ),
+        shape = RoundedCornerShape(LocalDimension.current.small),
+        modifier = modifier
+    ) {
+        DiscoverPeopleIcon(
+            isSelected = checked,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            modifier = Modifier.size(LocalDimension.current.mediumLarge)
         )
     }
 }

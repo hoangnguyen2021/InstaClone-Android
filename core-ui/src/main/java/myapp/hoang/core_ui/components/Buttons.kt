@@ -276,9 +276,9 @@ fun PrimaryButton(
             contentColor = MaterialTheme.colorScheme.onPrimary
         ),
         contentPadding = PaddingValues(
-            start = LocalDimension.current.sixExtraLarge,
+            start = LocalDimension.current.extraLarge,
             top = LocalDimension.current.extraSmall,
-            end = LocalDimension.current.sixExtraLarge,
+            end = LocalDimension.current.extraLarge,
             bottom = LocalDimension.current.extraSmall
         )
     ) {
@@ -294,28 +294,29 @@ fun PrimaryButton(
 fun SecondaryButton(
     text: String,
     onClick: () -> Unit,
-    isEnabled: Boolean = true
+    isEnabled: Boolean = true,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .heightIn(min = LocalDimension.current.threeExtraLarge),
         enabled = isEnabled,
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(LocalDimension.current.small),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
-            contentColor = MaterialTheme.colorScheme.onSecondary
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
         ),
         contentPadding = PaddingValues(
-            start = LocalDimension.current.sixExtraLarge,
+            start = LocalDimension.current.extraLarge,
             top = LocalDimension.current.extraSmall,
-            end = LocalDimension.current.sixExtraLarge,
+            end = LocalDimension.current.extraLarge,
             bottom = LocalDimension.current.extraSmall
-        )
+        ),
+        modifier = modifier
     ) {
         Text(
             text = text,
-            color = MaterialTheme.colorScheme.onSecondary,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.padding(vertical = 0.dp)
         )
     }

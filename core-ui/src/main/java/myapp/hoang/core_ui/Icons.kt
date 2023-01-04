@@ -141,6 +141,24 @@ fun MenuIcon(
 }
 
 @Composable
+fun DiscoverPeopleIcon(
+    isSelected: Boolean,
+    color: Color,
+    modifier: Modifier = Modifier
+) {
+    Icon(
+        painter = painterResource(
+            id =
+            if (isSelected) R.drawable.ic_discover_people_fill
+            else R.drawable.ic_discover_people_outline
+        ),
+        contentDescription = "Discover people",
+        tint = color,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun SaveIcon() {
     Icon(
         painter = painterResource(id = R.drawable.ic_save_outline),
@@ -230,39 +248,6 @@ fun MetaIcon(color: Color, modifier: Modifier = Modifier) {
         modifier = modifier,
         tint = color
     )
-}
-
-@Preview
-@Composable
-fun OnBoardingIconsPreview() {
-    OnBoardingTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.3f)
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .background(
-                        brush = onBoardingBackgroundBrush
-                    )
-                    .padding(
-                        horizontal = LocalDimension.current.small
-                    )
-            ) {
-                GradientInstagramIcon(
-                    modifier = Modifier.size(LocalDimension.current.eightExtraLarge)
-                )
-                MetaIcon(
-                    color = MaterialTheme.colorScheme.onSecondary,
-                    modifier = Modifier
-                        .size(LocalDimension.current.fiveExtraLarge)
-                )
-            }
-        }
-    }
 }
 
 @Composable

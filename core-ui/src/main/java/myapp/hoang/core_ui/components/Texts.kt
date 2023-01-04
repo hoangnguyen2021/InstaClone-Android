@@ -48,13 +48,13 @@ fun ProfileStat(
     ) {
         Text(
             text = value.toString(),
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.titleLarge,
             maxLines = 1
         )
         Spacer(modifier = Modifier.height(LocalDimension.current.twoExtraSmall))
         Text(
             text = unit,
-            style = MaterialTheme.typography.displayMedium,
+            style = MaterialTheme.typography.titleMedium,
             maxLines = 1
         )
     }

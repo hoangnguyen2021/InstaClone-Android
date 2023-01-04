@@ -3,7 +3,7 @@ package myapp.hoang.instaclone.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,6 +14,10 @@ import myapp.hoang.core_ui.components.*
 fun ProfileScreen(
     onProfileUsernameClick: () -> Unit
 ) {
+    var isDiscoverPeopleChecked by remember {
+        mutableStateOf(false)
+    }
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
@@ -80,6 +84,31 @@ fun ProfileScreen(
                 ProfileStat(value = 0, unit = "Followers")
                 ProfileStat(value = 0, unit = "Following")
             }
+        }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(LocalDimension.current.threeExtraLarge)
+                .padding(
+                    horizontal = LocalDimension.current.medium
+                )
+        ) {
+            SecondaryButton(
+                text = "Edit profile",
+                onClick = {  },
+                modifier = Modifier
+                    .fillMaxWidth(0.85f)
+                    .fillMaxHeight()
+            )
+            Spacer(modifier = Modifier.width(LocalDimension.current.small))
+            ToggleDiscoverPeopleIconButton(
+                checked = isDiscoverPeopleChecked,
+                onCheckedChange = { isDiscoverPeopleChecked = it },
+                modifier = Modifier
+                    .fillMaxSize()
+            )
         }
     }
 }

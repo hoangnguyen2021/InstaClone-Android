@@ -1,6 +1,5 @@
 package myapp.hoang.onboarding.signup.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -129,7 +128,6 @@ class OnBoardingViewModel @Inject constructor(
                     nextScreenEvent = triggered
                 )
             } catch (e: Exception) {
-                Log.d("MYTAG", e.toString())
                 state.copy(
                     isLoading = false,
                     showToastEvent = triggered(UiText.StringResource(R.string.error_send_confirmation_code))

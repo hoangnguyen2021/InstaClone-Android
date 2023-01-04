@@ -30,18 +30,25 @@ val MainTypography = Typography(
         lineHeight = 26.sp,
         letterSpacing = 0.4.sp,
     ),
-    displayMedium = TextStyle(
+    titleMedium = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 18.sp,
         letterSpacing = 0.sp,
     ),
-    displayLarge = TextStyle(
+    titleLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         lineHeight = 22.sp,
+        letterSpacing = 0.sp,
+    ),
+    displayMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Medium,
+        fontSize = 15.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.sp,
     )
 )
