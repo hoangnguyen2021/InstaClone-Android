@@ -18,6 +18,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.R
+import myapp.hoang.core_ui.utils.applyIf
 
 @Composable
 fun OnBoardingProfilePicture(
@@ -33,6 +34,7 @@ fun OnBoardingProfilePicture(
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth(0.75f)
+            .wrapContentHeight()
             .aspectRatio(1f)
             .border(
                 BorderStroke(5.dp, Light),
@@ -57,6 +59,7 @@ fun OnBoardingProfilePicture2(
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxWidth(0.5f)
+            .wrapContentHeight()
             .aspectRatio(1f)
             .border(
                 BorderStroke(0.5.dp, MaterialTheme.colorScheme.onSecondary),
@@ -103,6 +106,13 @@ fun BottomAppBarProfilePic(
         modifier = Modifier
             .size(LocalDimension.current.extraLarge)
             .aspectRatio(1f)
+            .applyIf(isSelected) {
+                border(
+                    width = LocalDimension.current.twoExtraSmall,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    shape = CircleShape
+                )
+            }
             .clip(CircleShape)
             .clickable(onClick = onClick)
     )

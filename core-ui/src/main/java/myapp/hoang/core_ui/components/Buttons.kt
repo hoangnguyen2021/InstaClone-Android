@@ -264,13 +264,13 @@ fun BottomSheetBottomButton(
 fun PrimaryButton(
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier.heightIn(min = LocalDimension.current.threeExtraLarge),
         enabled = isEnabled,
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(LocalDimension.current.small),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary
@@ -280,7 +280,8 @@ fun PrimaryButton(
             top = LocalDimension.current.extraSmall,
             end = LocalDimension.current.extraLarge,
             bottom = LocalDimension.current.extraSmall
-        )
+        ),
+        modifier = modifier
     ) {
         Text(
             text = text,

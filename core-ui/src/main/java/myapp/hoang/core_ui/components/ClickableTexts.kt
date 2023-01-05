@@ -94,7 +94,10 @@ fun ProfileUsername(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier.clickable(onClick = onClick)
+        modifier = Modifier
+            .wrapContentWidth()
+            .fillMaxHeight()
+            .clickable(onClick = onClick)
     ) {
         Text(
             text = username,

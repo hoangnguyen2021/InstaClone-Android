@@ -39,7 +39,7 @@ fun SelectAccountDrawer() {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.2f)
-            .background(color = MaterialTheme.colorScheme.surfaceVariant)
+            .background(color = MaterialTheme.colorScheme.secondaryContainer)
             .padding(horizontal = LocalDimension.current.mediumSmall)
     ) {
         SwipeIndicatorIcon(

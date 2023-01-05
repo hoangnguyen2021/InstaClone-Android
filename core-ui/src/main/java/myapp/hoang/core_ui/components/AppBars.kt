@@ -27,15 +27,9 @@ fun InstaCloneTopAppBar() {
             )
         },
         actions = {
-            NewPostIconButton {
-
-            }
-            HeartIconButton {
-
-            }
-            MessageIconButton {
-
-            }
+            NewPostIconButton(onClick = {})
+            HeartIconButton(onClick = {})
+            MessageIconButton(onClick = {})
         },
         modifier = Modifier
             .fillMaxWidth()
