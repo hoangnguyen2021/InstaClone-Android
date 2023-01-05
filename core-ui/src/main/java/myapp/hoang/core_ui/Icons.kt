@@ -1,16 +1,10 @@
 package myapp.hoang.core_ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun NewPostIcon(color: Color, modifier: Modifier = Modifier) {
@@ -154,6 +148,24 @@ fun DiscoverPeopleIcon(
         ),
         contentDescription = "Discover people",
         tint = color,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun GridIcon(modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_grid_outline),
+        contentDescription = "Grid",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun TagIcon(modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_tag_outline),
+        contentDescription = "Tag",
         modifier = modifier
     )
 }

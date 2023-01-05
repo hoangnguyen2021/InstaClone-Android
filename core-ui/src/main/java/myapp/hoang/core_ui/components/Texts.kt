@@ -55,6 +55,7 @@ fun ProfileStat(
         Text(
             text = unit,
             style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
             maxLines = 1
         )
     }

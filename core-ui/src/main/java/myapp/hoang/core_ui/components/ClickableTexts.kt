@@ -55,8 +55,8 @@ fun AlreadyHaveAccountClickableText(
 fun PartiallyClickableText(
     unclickableText: String,
     clickableText: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val annotatedText = buildAnnotatedString {
         withStyle(style = SpanStyle(color = White)) {

@@ -62,7 +62,9 @@ dependencies {
     implementation Compose.coil
     implementation Compose.stateEvents
 
-    implementation Google.accompanistPermissions
+    implementation Accompanist.permissions
+    implementation Accompanist.pager
+    implementation Accompanist.pagerIndicators
 
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid

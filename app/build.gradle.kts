@@ -55,6 +55,9 @@ dependencies {
     implementation(project(Module.coreUi))
     implementation(project(Module.onBoarding))
 
+    implementation(Kotlin.kotlinxSerialization)
+    implementation(Kotlin.kotlinxDateTime)
+
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreSplashScreen)
@@ -73,10 +76,8 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.stateEvents)
 
-    implementation(Kotlin.kotlinxSerialization)
-    implementation(Kotlin.kotlinxDateTime)
-
-    implementation(Google.accompanistSystemUiController)
+    implementation(Accompanist.pager)
+    implementation(Accompanist.pagerIndicators)
 
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)

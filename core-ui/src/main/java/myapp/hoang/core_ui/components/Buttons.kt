@@ -294,8 +294,8 @@ fun PrimaryButton(
 fun SecondaryButton(
     text: String,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
-    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = onClick,

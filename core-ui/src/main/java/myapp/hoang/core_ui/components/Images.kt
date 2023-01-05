@@ -35,7 +35,7 @@ fun OnBoardingProfilePicture(
             .fillMaxWidth(0.75f)
             .aspectRatio(1f)
             .border(
-                BorderStroke(5.dp, LightGray),
+                BorderStroke(5.dp, Light),
                 CircleShape
             )
             .padding(LocalDimension.current.twoExtraSmall)

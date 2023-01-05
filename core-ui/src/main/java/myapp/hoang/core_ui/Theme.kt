@@ -6,7 +6,6 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val MainDarkColorScheme = darkColorScheme(
@@ -15,7 +14,7 @@ private val MainDarkColorScheme = darkColorScheme(
     primaryContainer = SkyBlue,
     onPrimaryContainer = White,
     secondary = Black,
-    onSecondary = White,
+    onSecondary = LightGray,
     secondaryContainer = Darkness,
     onSecondaryContainer = White,
     tertiary = Red,
@@ -24,8 +23,8 @@ private val MainDarkColorScheme = darkColorScheme(
     onBackground = White,
     surface = Black,
     onSurface = White,
-    surfaceVariant = Darkness,
-    onSurfaceVariant = White,
+    surfaceVariant = Black,
+    onSurfaceVariant = Gray,
     outline = Darkness
 )
 
@@ -36,7 +35,7 @@ private val MainLightColorScheme = lightColorScheme(
     onPrimaryContainer = White,
     secondary = White,
     onSecondary = Black,
-    secondaryContainer = LightGray,
+    secondaryContainer = Light,
     onSecondaryContainer = Black,
     tertiary = Red,
     onTertiary = White,

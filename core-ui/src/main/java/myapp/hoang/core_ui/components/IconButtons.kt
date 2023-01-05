@@ -17,11 +17,11 @@ fun NewPostIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         NewPostIcon(
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -33,11 +33,11 @@ fun HeartIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         HeartIcon(
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -49,11 +49,11 @@ fun MessageIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         MessageIcon(
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -65,11 +65,11 @@ fun MenuIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         MenuIcon(
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -82,12 +82,12 @@ fun HomeIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         HomeIcon(
             isSelected = isSelected,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -100,12 +100,12 @@ fun SearchIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         SearchIcon(
             isSelected = isSelected,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -118,12 +118,12 @@ fun ReelsIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         ReelsIcon(
             isSelected = isSelected,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -136,12 +136,12 @@ fun ShopIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
+            contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
         ShopIcon(
             isSelected = isSelected,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }
@@ -191,7 +191,7 @@ fun ToggleDiscoverPeopleIconButton(
         DiscoverPeopleIcon(
             isSelected = checked,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
-            modifier = Modifier.size(LocalDimension.current.mediumLarge)
+            modifier = Modifier.size(LocalDimension.current.medium)
         )
     }
 }
