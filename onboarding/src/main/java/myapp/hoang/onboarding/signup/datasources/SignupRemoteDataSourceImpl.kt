@@ -3,7 +3,7 @@ package myapp.hoang.onboarding.signup.datasources
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.onboarding.signup.services.SignupService
-import myapp.hoang.onboarding.signup.viewmodels.SignupForm
+import myapp.hoang.onboarding.signup.models.SignupForm
 import javax.inject.Inject
 
 class SignupRemoteDataSourceImpl @Inject constructor(

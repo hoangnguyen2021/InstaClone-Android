@@ -23,13 +23,13 @@ import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
 import myapp.hoang.onboarding.R
-import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
-import myapp.hoang.onboarding.signup.viewmodels.SignupForm
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
+import myapp.hoang.onboarding.signup.models.SignupForm
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun ConfirmationCodeScreen(
-    viewModel: OnBoardingViewModel = hiltViewModel(),
+    viewModel: SignupViewModel = hiltViewModel(),
     type: String,
     onNextClick: (String, String) -> Unit,
     onBackClick: () -> Unit,

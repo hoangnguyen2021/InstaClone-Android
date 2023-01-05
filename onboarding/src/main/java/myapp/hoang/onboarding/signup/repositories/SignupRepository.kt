@@ -1,6 +1,6 @@
 package myapp.hoang.onboarding.signup.repositories
 
-import myapp.hoang.onboarding.signup.viewmodels.SignupForm
+import myapp.hoang.onboarding.signup.models.SignupForm
 
 
 interface SignupRepository {

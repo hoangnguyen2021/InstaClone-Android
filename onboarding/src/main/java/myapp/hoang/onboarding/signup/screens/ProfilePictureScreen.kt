@@ -37,7 +37,7 @@ import myapp.hoang.core_ui.components.bottomsheet.BottomDrawer
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerValue
 import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
 import myapp.hoang.onboarding.R
-import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(
@@ -47,7 +47,7 @@ import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
 )
 @Composable
 fun ProfilePictureScreen(
-    viewModel: OnBoardingViewModel = hiltViewModel(),
+    viewModel: SignupViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: (Uri?) -> Unit,
     onNextScreen: () -> Unit

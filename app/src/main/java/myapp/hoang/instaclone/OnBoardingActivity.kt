@@ -22,7 +22,7 @@ import myapp.hoang.core_ui.*
 import myapp.hoang.core.navigation.OnBoardingScreen
 import myapp.hoang.onboarding.login.LoginScreen
 import myapp.hoang.onboarding.signup.screens.*
-import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 import java.io.File
 
 @AndroidEntryPoint
@@ -35,7 +35,7 @@ class OnBoardingActivity : ComponentActivity() {
         setContent {
             OnBoardingTheme {
                 val navController = rememberNavController()
-                val viewModel = hiltViewModel<OnBoardingViewModel>()
+                val viewModel = hiltViewModel<SignupViewModel>()
                 val context = LocalContext.current
 
                 Surface(
@@ -46,9 +46,19 @@ class OnBoardingActivity : ComponentActivity() {
                         startDestination = OnBoardingScreen.LoginScreen.route
                     ) {
                         composable(route = OnBoardingScreen.LoginScreen.route) {
-                            LoginScreen {
-                                navController.navigate(OnBoardingScreen.SignupByPhoneScreen.route)
-                            }
+                            LoginScreen (
+                                onCreateAccountClick = {
+                                    navController.navigate(OnBoardingScreen.SignupByPhoneScreen.route)
+                                },
+                                onNextScreen = {
+                                    startActivity(
+                                        Intent(
+                                            this@OnBoardingActivity,
+                                            MainActivity::class.java
+                                        )
+                                    )
+                                }
+                            )
                         }
                         composable(route = OnBoardingScreen.SignupByPhoneScreen.route) {
                             SignupByPhoneScreen(
@@ -185,7 +195,5 @@ class OnBoardingActivity : ComponentActivity() {
                 }
             }
         }
-
-        startActivity(Intent(this, MainActivity::class.java))
     }
 }

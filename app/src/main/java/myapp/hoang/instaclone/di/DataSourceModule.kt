@@ -4,9 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.core.coroutines.DispatcherProviderImpl
+import myapp.hoang.onboarding.login.datasources.LoginRemoteDataSource
+import myapp.hoang.onboarding.login.datasources.LoginRemoteDataSourceImpl
+import myapp.hoang.onboarding.login.services.LoginService
 import myapp.hoang.onboarding.signup.datasources.SignupRemoteDataSource
 import myapp.hoang.onboarding.signup.datasources.SignupRemoteDataSourceImpl
 import myapp.hoang.onboarding.signup.services.SignupService
@@ -22,6 +24,15 @@ object DataSourceModule {
         dispatcherProvider: DispatcherProvider
     ): SignupRemoteDataSource {
         return SignupRemoteDataSourceImpl(signupService, dispatcherProvider)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginRemoteDataSource(
+        loginService: LoginService,
+        dispatcherProvider: DispatcherProvider
+    ): LoginRemoteDataSource {
+        return LoginRemoteDataSourceImpl(loginService, dispatcherProvider)
     }
 
     @Provides

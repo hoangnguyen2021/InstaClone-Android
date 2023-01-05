@@ -21,12 +21,12 @@ import myapp.hoang.core.utils.Validator
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
-import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SignupByPhoneScreen(
-    viewModel: OnBoardingViewModel = hiltViewModel(),
+    viewModel: SignupViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: (String) -> Unit,
     onSignUpWithEmailClick: () -> Unit,

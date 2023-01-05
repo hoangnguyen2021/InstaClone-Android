@@ -20,12 +20,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
-import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SaveLoginInfoScreen(
-    viewModel: OnBoardingViewModel = hiltViewModel(),
+    viewModel: SignupViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: () -> Unit
 ) {

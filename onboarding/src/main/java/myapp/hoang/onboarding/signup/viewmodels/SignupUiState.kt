@@ -4,8 +4,9 @@ import de.palm.composestateevents.StateEvent
 import de.palm.composestateevents.StateEventWithContent
 import de.palm.composestateevents.consumed
 import myapp.hoang.core_ui.utils.UiText
+import myapp.hoang.onboarding.signup.models.SignupForm
 
-data class OnBoardingUiState(
+data class SignupUiState(
     val signupForm: SignupForm = SignupForm(),
     val profilePic: ByteArray? = null,
     val isLoading: Boolean = false,
@@ -18,7 +19,7 @@ data class OnBoardingUiState(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as OnBoardingUiState
+        other as SignupUiState
 
         if (signupForm != other.signupForm) return false
         if (profilePic != null) {

@@ -7,7 +7,7 @@ import io.ktor.http.*
 import myapp.hoang.core.config.NetworkConfig.ROUTE_CHECK_VERIFICATION_CODE
 import myapp.hoang.core.config.NetworkConfig.ROUTE_SEND_VERIFICATION_CODE
 import myapp.hoang.core.config.NetworkConfig.ROUTE_SIGN_UP
-import myapp.hoang.onboarding.signup.viewmodels.SignupForm
+import myapp.hoang.onboarding.signup.models.SignupForm
 import javax.inject.Inject
 
 class KtorSignupService @Inject constructor(

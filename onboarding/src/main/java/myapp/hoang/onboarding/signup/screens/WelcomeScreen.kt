@@ -21,17 +21,17 @@ import myapp.hoang.core_ui.components.InstaCloneBrand
 import myapp.hoang.core_ui.components.OnBoardingProfilePicture2
 import myapp.hoang.core_ui.onBoardingBackgroundBrush
 import myapp.hoang.onboarding.R
-import myapp.hoang.onboarding.signup.viewmodels.OnBoardingViewModel
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun WelcomeScreen(
-    viewModel: OnBoardingViewModel = hiltViewModel(),
+    viewModel: SignupViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     uiState.signupForm.profilePicPath?.let {
-        LaunchedEffect(key1 = uiState) {
+        LaunchedEffect(key1 = uiState.signupForm.profilePicPath) {
             viewModel.getProfilePic(it)
         }
     }

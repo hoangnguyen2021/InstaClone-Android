@@ -17,14 +17,14 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class OnBoardingViewModel @Inject constructor(
+class SignupViewModel @Inject constructor(
     private val signupRepository: SignupRepository,
     private val imageUploadRepository: ImageUploadRepository
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(OnBoardingUiState())
+    private val _uiState = MutableStateFlow(SignupUiState())
     val uiState = _uiState.asStateFlow()
 
-    private var state: OnBoardingUiState
+    private var state: SignupUiState
         get() = _uiState.value
         set(newState) {
             _uiState.update { newState }
@@ -32,7 +32,7 @@ class OnBoardingViewModel @Inject constructor(
 
     private var sendVerificationJob: Job? = null
     private var checkVerificationJob: Job? = null
-    private var uploadProfilePicAndSignUpJob: Job? = null
+    private var uploadProfilePicAndSignupJob: Job? = null
     private var getProfilePicJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
@@ -163,8 +163,8 @@ class OnBoardingViewModel @Inject constructor(
         state = state.copy(
             isLoading = true
         )
-        uploadProfilePicAndSignUpJob?.cancel()
-        uploadProfilePicAndSignUpJob = viewModelScope.launch {
+        uploadProfilePicAndSignupJob?.cancel()
+        uploadProfilePicAndSignupJob = viewModelScope.launch {
             state = try {
                 val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
                 setProfilePicPath(profilePicPath)

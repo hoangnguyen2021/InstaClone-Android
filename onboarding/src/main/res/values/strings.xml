@@ -2,6 +2,12 @@
 <resources>
     <string name="instaclone">InstaClone</string>
 
+    <string name="login_label_1">Username, email or mobile number</string>
+    <string name="login_label_2">Password</string>
+    <string name="login_label_3">Forgot password?</string>
+    <string name="login_button_1">Log in</string>
+    <string name="login_button_2">Create new account</string>
+
     <string name="next">Next</string>
 
     <string name="signup_by_phone_title">What\'s your mobile number?</string>

@@ -1,4 +1,4 @@
-package myapp.hoang.onboarding.signup.viewmodels
+package myapp.hoang.onboarding.signup.models
 
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
