@@ -33,6 +33,7 @@ class SignupViewModel @Inject constructor(
     private var sendVerificationJob: Job? = null
     private var checkVerificationJob: Job? = null
     private var uploadProfilePicAndSignupJob: Job? = null
+    private var signupJob: Job? = null
     private var getProfilePicJob: Job? = null
 
     fun setMobileNumber(mobileNumber: Long) {
@@ -168,6 +169,26 @@ class SignupViewModel @Inject constructor(
             state = try {
                 val profilePicPath = imageUploadRepository.uploadProfilePic(imageFile)
                 setProfilePicPath(profilePicPath)
+                signupRepository.signUp(state.signupForm)
+                state.copy(
+                    isLoading = false,
+                    nextScreenEvent = triggered
+                )
+            } catch (e: Exception) {
+                state.copy(
+                    isLoading = false,
+                )
+            }
+        }
+    }
+
+    fun signUp() {
+        state = state.copy(
+            isLoading = true
+        )
+        signupJob?.cancel()
+        signupJob = viewModelScope.launch {
+            state = try {
                 signupRepository.signUp(state.signupForm)
                 state.copy(
                     isLoading = false,

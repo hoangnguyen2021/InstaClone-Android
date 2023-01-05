@@ -20,7 +20,7 @@ import kotlinx.datetime.toKotlinLocalDate
 import myapp.hoang.core.utils.FileUtils
 import myapp.hoang.core_ui.*
 import myapp.hoang.core.navigation.OnBoardingScreen
-import myapp.hoang.onboarding.login.LoginScreen
+import myapp.hoang.onboarding.login.screens.LoginScreen
 import myapp.hoang.onboarding.signup.screens.*
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 import java.io.File
@@ -178,9 +178,11 @@ class OnBoardingActivity : ComponentActivity() {
                                 viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = { uri ->
-                                    uri?.let {
-                                        val imageFile = File(FileUtils.getUriFilePath(context, it))
+                                    if (uri != null) {
+                                        val imageFile = File(FileUtils.getUriFilePath(context, uri))
                                         viewModel.uploadProfilePicAndSignUp(imageFile)
+                                    } else {
+                                        viewModel.signUp()
                                     }
                                 },
                                 onNextScreen = {
