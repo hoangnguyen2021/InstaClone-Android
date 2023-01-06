@@ -1,6 +1,5 @@
 package myapp.hoang.onboarding.login.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,7 +43,8 @@ class LoginViewModel @Inject constructor(
             LoginForm(username = user, password = password)
         } else {
             state = state.copy(
-                isLoading = false
+                isLoading = false,
+                showDialog1Event = triggered
             )
             return
         }
@@ -56,18 +56,32 @@ class LoginViewModel @Inject constructor(
                 state.copy(
                     isLoading = false,
                     authResponse = authResponse,
-                    nextScreenEvent = triggered
+                    loginEvent = triggered
                 )
             } catch (e: Exception) {
-                Log.d("MYTAG", e.toString())
-                state.copy(
-                    isLoading = false
-                )
+                if ((e.message ?: "").contains("Can't find account")) {
+                    state.copy(
+                        isLoading = false,
+                        showDialog2Event = triggered
+                    )
+                } else {
+                    state.copy(
+                        isLoading = false
+                    )
+                }
             }
         }
     }
 
-    fun onConsumedNextScreenEvent(){
-        state = state.copy(nextScreenEvent = consumed)
+    fun onConsumedLoginEvent(){
+        state = state.copy(loginEvent = consumed)
+    }
+
+    fun onConsumedShowDialog1Event(){
+        state = state.copy(showDialog1Event = consumed)
+    }
+
+    fun onConsumedShowDialog2Event(){
+        state = state.copy(showDialog2Event = consumed)
     }
 }

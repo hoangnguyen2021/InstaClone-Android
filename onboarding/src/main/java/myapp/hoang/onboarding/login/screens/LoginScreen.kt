@@ -17,31 +17,44 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.*
-import myapp.hoang.core_ui.components.CreateAccountButton
-import myapp.hoang.core_ui.components.OnBoardingFilledButton
-import myapp.hoang.core_ui.components.OnBoardingPasswordField
-import myapp.hoang.core_ui.components.OnBoardingTextField
+import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.login.viewmodels.LoginViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun LoginScreen(
-    onCreateAccountClick: () -> Unit,
-    onNextScreen: () -> Unit
+    onCreateAccount: () -> Unit,
+    onLogin: () -> Unit
 ) {
     val viewModel = hiltViewModel<LoginViewModel>()
 
     var user by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isDialog1Shown by remember { mutableStateOf(false) }
+    var isDialog2Shown by remember { mutableStateOf(false) }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     EventEffect(
-        event = uiState.nextScreenEvent,
-        onConsumed = viewModel::onConsumedNextScreenEvent
+        event = uiState.loginEvent,
+        onConsumed = viewModel::onConsumedLoginEvent
     ) {
-        onNextScreen()
+        onLogin()
+    }
+
+    EventEffect(
+        event = uiState.showDialog1Event,
+        onConsumed = viewModel::onConsumedShowDialog1Event
+    ) {
+        isDialog1Shown = true
+    }
+
+    EventEffect(
+        event = uiState.showDialog2Event,
+        onConsumed = viewModel::onConsumedShowDialog2Event
+    ) {
+        isDialog2Shown = true
     }
 
     Column(
@@ -97,12 +110,30 @@ fun LoginScreen(
         Spacer(Modifier.height(128.dp))
         CreateAccountButton(
             text = stringResource(R.string.login_button_2),
-            onClick = onCreateAccountClick
+            onClick = onCreateAccount
         )
         MetaIcon(
             color = AliceBlue,
             modifier = Modifier
                 .size(LocalDimension.current.sixExtraLarge)
+        )
+    }
+    if (isDialog1Shown) {
+        AlertDialog(
+            title = stringResource(R.string.dialog_login_title_1),
+            body = stringResource(R.string.dialog_login_body_1),
+            dismissText = stringResource(R.string.dialog_login_button_1),
+            onDismiss = { isDialog1Shown = false }
+        )
+    }
+    if (isDialog2Shown) {
+        AlertDialog(
+            title = stringResource(R.string.dialog_login_title_2),
+            body = stringResource(R.string.dialog_login_body_2, user),
+            dismissText = stringResource(R.string.dialog_login_button_3),
+            confirmText = stringResource(R.string.dialog_login_button_2),
+            onDismiss = { isDialog2Shown = false },
+            onConfirm = onCreateAccount
         )
     }
 }

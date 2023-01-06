@@ -75,6 +75,14 @@
 
     <string name="welcome_text_1">Welcome to InstaClone,\u0020</string>
 
+    <string name="dialog_login_title_1">Missing fields</string>
+    <string name="dialog_login_body_1">Enter your username, mobile number or email with password to continue.</string>
+    <string name="dialog_login_button_1">OK</string>
+    <string name="dialog_login_button_2">Sign up</string>
+    <string name="dialog_login_button_3">Try again</string>
+    <string name="dialog_login_title_2">Can\'t Find Account</string>
+    <string name="dialog_login_body_2">We can\'t find an account with %1$s. Try another phone number or email, or if you don\'t have an Instagram account, you can sign up.</string>
+
     <string name="error_signup_by_phone_1">Mobile number required.</string>
     <string name="error_signup_by_phone_2">Looks like your mobile number may be incorrect. Try entering your full number, including the country code.</string>
     <string name="error_signup_by_email_1">Email required.</string>

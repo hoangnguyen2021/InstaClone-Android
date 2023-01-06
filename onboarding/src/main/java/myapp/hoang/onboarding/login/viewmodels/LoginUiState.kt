@@ -9,5 +9,7 @@ data class LoginUiState(
     val loginForm: LoginForm = LoginForm(),
     val isLoading: Boolean = false,
     val authResponse: AuthResponse? = null,
-    val nextScreenEvent: StateEvent = consumed
+    val loginEvent: StateEvent = consumed,
+    val showDialog1Event: StateEvent = consumed,
+    val showDialog2Event: StateEvent = consumed
 )

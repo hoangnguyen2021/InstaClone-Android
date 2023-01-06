@@ -47,10 +47,10 @@ class OnBoardingActivity : ComponentActivity() {
                     ) {
                         composable(route = OnBoardingScreen.LoginScreen.route) {
                             LoginScreen (
-                                onCreateAccountClick = {
+                                onCreateAccount = {
                                     navController.navigate(OnBoardingScreen.SignupByPhoneScreen.route)
                                 },
-                                onNextScreen = {
+                                onLogin = {
                                     startActivity(
                                         Intent(
                                             this@OnBoardingActivity,
