@@ -65,7 +65,7 @@ fun UsernameScreen(
             Text(
                 text = stringResource(R.string.username_label_1),
                 color = White,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .align(Alignment.Start)

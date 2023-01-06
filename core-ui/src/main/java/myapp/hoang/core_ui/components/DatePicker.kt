@@ -52,7 +52,7 @@ fun DatePicker(
             Text(
                 text = label,
                 color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.labelLarge,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()

@@ -91,7 +91,7 @@ fun SignupByEmailScreen(
             Text(
                 text = stringResource(R.string.signup_by_email_label_1),
                 color = White,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .align(Alignment.Start)

@@ -75,7 +75,7 @@ fun SaveLoginInfoScreen(
                     append(stringResource(R.string.save_login_info_label_2))
                 },
                 color = White,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .align(Alignment.Start)

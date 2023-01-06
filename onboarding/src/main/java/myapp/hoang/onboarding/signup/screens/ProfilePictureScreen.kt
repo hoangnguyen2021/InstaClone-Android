@@ -213,7 +213,7 @@ fun ProfilePictureContent(
         Text(
             text = stringResource(R.string.profile_pic_label_1),
             color = White,
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Start,
             modifier = Modifier
                 .align(Alignment.Start)

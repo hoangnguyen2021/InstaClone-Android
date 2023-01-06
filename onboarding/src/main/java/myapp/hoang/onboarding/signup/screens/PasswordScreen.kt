@@ -66,7 +66,7 @@ fun PasswordScreen(
             Text(
                 text = stringResource(R.string.password_label_1),
                 color = White,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .align(Alignment.Start)

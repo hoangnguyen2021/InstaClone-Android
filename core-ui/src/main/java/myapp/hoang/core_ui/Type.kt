@@ -85,6 +85,13 @@ val InstagramFamily = FontFamily(
 )
 
 val OnBoardingTypography = Typography(
+    titleMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 20.sp,
+        lineHeight = 25.sp,
+        letterSpacing = 0.sp,
+    ),
     titleLarge = TextStyle(
         fontFamily = ShoikaFontFamily,
         fontWeight = FontWeight.Medium,
@@ -92,28 +99,21 @@ val OnBoardingTypography = Typography(
         lineHeight = 30.sp,
         letterSpacing = 0.6.sp
     ),
-    labelSmall = TextStyle(
+    labelLarge = TextStyle(
+        fontFamily = ShoikaFontFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 21.sp,
+        letterSpacing = 0.sp
+    ),
+    displaySmall = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Medium,
         fontSize = 13.sp,
         lineHeight = 18.sp,
         letterSpacing = 0.4.sp,
     ),
-    labelMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Normal,
-        fontSize = 15.sp,
-        lineHeight = 20.sp,
-        letterSpacing = 0.sp,
-    ),
-    labelLarge = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
-        lineHeight = 25.sp,
-        letterSpacing = 0.sp,
-    ),
-    displayLarge = TextStyle(
+    displayMedium = TextStyle(
         fontFamily = ArabotoFamily,
         fontWeight = FontWeight.Medium,
         fontSize = 15.sp,
@@ -124,8 +124,15 @@ val OnBoardingTypography = Typography(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Normal,
         fontSize = 13.sp,
-        lineHeight = 15.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.4.sp,
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.sp,
     ),
     bodyLarge = TextStyle(
         fontFamily = ShoikaFontFamily,

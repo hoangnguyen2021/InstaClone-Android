@@ -34,7 +34,7 @@ fun AlreadyHaveAccountClickableText(
                     append("Already have an account?")
                 }
             },
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.displaySmall,
             maxLines = 1,
             onClick = { onIsDialogShownChange(true) }
         )
@@ -71,7 +71,7 @@ fun PartiallyClickableText(
     }
     ClickableText(
         text = annotatedText,
-        style = MaterialTheme.typography.labelMedium,
+        style = MaterialTheme.typography.bodyMedium,
         onClick = { offset ->
             annotatedText.getStringAnnotations(
                 tag = "link",

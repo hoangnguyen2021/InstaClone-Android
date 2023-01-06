@@ -92,7 +92,7 @@ fun LoginScreen(
         Text(
             text = stringResource(R.string.login_label_3),
             color = White,
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.displayMedium,
         )
         Spacer(Modifier.height(128.dp))
         CreateAccountButton(

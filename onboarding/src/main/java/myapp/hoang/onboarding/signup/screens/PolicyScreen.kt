@@ -136,7 +136,7 @@ fun PolicyBody2(
     }
     ClickableText(
         text = annotatedText,
-        style = MaterialTheme.typography.labelMedium,
+        style = MaterialTheme.typography.bodyMedium,
         onClick = {},
         modifier = modifier
     )
@@ -162,7 +162,7 @@ fun PolicyBody3(
     }
     ClickableText(
         text = annotatedText,
-        style = MaterialTheme.typography.labelMedium,
+        style = MaterialTheme.typography.bodyMedium,
         onClick = {},
         modifier = modifier
     )

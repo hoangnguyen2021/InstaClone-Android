@@ -41,7 +41,7 @@ fun OnBoardingFilledButton(
             Text(
                 text = text,
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(vertical = 0.dp)
             )
         }
@@ -76,7 +76,7 @@ fun CreateAccountButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.padding(vertical = 0.dp)
         )
     }
@@ -106,7 +106,7 @@ fun OnBoardingEditButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.padding(vertical = 0.dp)
         )
     }
@@ -140,7 +140,7 @@ fun OnBoardingOutlinedButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(vertical = 0.dp)
         )
     }
@@ -176,7 +176,7 @@ fun BottomSheetTopButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.labelLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -212,7 +212,7 @@ fun BottomSheetMiddleButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.labelLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -251,7 +251,7 @@ fun BottomSheetBottomButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.labelLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()

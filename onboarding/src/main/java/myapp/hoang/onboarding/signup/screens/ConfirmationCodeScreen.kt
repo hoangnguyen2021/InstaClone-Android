@@ -149,7 +149,7 @@ fun ConfirmationCodeContent(
             text = stringResource(R.string.confirmation_code_label_1) +
                     "${if (type == "phone") signupForm.mobileNumber else signupForm.email}.",
             color = White,
-            style = MaterialTheme.typography.labelMedium,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = TextAlign.Start,
             modifier = Modifier
                 .align(Alignment.Start)
