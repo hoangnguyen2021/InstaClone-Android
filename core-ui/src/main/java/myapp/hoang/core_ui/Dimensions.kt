@@ -28,6 +28,7 @@ data class Dimensions(
     val twelveExtraLarge: Dp = 104.dp,
     val thirteenExtraLarge: Dp = 112.dp,
     val fourteenExtraLarge: Dp = 120.dp,
+    val fifteenExtraLarge: Dp = 128.dp,
 )
 
 val LocalDimension = compositionLocalOf { Dimensions() }

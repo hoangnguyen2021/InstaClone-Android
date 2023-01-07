@@ -5,9 +5,6 @@ apply {
 dependencies {
     "implementation"(project(Module.coreUi))
 
-    "implementation"(Kotlin.kotlinxSerialization)
-    "implementation"(Kotlin.kotlinxDateTime)
-
     "implementation"(Ktor.clientCore)
     "implementation"(Ktor.clientAndroid)
     "implementation"(Ktor.clientContentNegotiation)
