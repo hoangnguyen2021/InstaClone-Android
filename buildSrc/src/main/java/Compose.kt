@@ -22,6 +22,7 @@ object Compose {
     const val pagingCompose = "androidx.paging:paging-compose:$pagingVersion"
 
     const val coil = "io.coil-kt:coil-compose:$coilVersion"
+    const val coilVideo = "io.coil-kt:coil-video:$coilVersion"
 
     const val stateEvents = "com.github.leonard-palm:compose-state-events:$stateEventsVersion"
 }

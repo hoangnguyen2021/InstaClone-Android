@@ -5,4 +5,5 @@ object Module {
     const val coreUi = ":core-ui"
 
     const val onBoarding = ":onboarding"
+    const val media = ":media"
 }

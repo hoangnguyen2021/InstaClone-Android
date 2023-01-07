@@ -25,7 +25,10 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     buildFeatures {
@@ -54,6 +57,7 @@ dependencies {
     implementation(project(Module.core))
     implementation(project(Module.coreUi))
     implementation(project(Module.onBoarding))
+    implementation(project(Module.media))
 
     implementation(Kotlin.kotlinxSerialization)
     implementation(Kotlin.kotlinxDateTime)
@@ -76,6 +80,7 @@ dependencies {
     implementation(Compose.activity)
     implementation(Compose.stateEvents)
 
+    implementation(Accompanist.permissions)
     implementation(Accompanist.pager)
     implementation(Accompanist.pagerIndicators)
 

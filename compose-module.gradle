@@ -61,6 +61,7 @@ dependencies {
     implementation Compose.lifecycleRuntime
     implementation Compose.activity
     implementation Compose.coil
+    implementation Compose.coilVideo
     implementation Compose.stateEvents
 
     implementation Accompanist.permissions

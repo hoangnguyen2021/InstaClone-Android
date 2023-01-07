@@ -6,9 +6,8 @@ data class Image(
     override val id: Long,
     override val contentUri: Uri,
     override val displayName: String,
-    override val title: String,
     override val size: Long,
     override val path: String,
     override val mimeType: String,
-    override val dateAdded: Int
-): Media(id, contentUri, displayName, title, size, path, mimeType, dateAdded)
+    override val dateAdded: Long
+): Media(id, contentUri, displayName, size, path, mimeType, dateAdded)

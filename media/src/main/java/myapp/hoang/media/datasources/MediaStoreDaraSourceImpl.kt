@@ -6,8 +6,9 @@ import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
 import myapp.hoang.media.models.Video
 import myapp.hoang.media.services.MediaStoreService
+import javax.inject.Inject
 
-class MediaStoreDaraSourceImpl(
+class MediaStoreDaraSourceImpl @Inject constructor(
     private val mediaStoreService: MediaStoreService,
     private val dispatcherProvider: DispatcherProvider
 ): MediaStoreDataSource {

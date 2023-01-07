@@ -39,7 +39,6 @@ import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalPermissionsApi::class,
@@ -152,7 +151,7 @@ fun ProfilePictureScreen(
                 )
             },
             modifier = Modifier.fillMaxSize()
-        ) {
+        ) { innerPadding ->
             ProfilePictureContent(
                 imageUri = imageUri,
                 onBackClick = onBackClick,
@@ -169,7 +168,8 @@ fun ProfilePictureScreen(
                             )
                         )
                     )
-                }
+                },
+                modifier = Modifier.padding(innerPadding)
             )
         }
     }
@@ -179,14 +179,15 @@ fun ProfilePictureScreen(
 fun ProfilePictureContent(
     imageUri: Uri?,
     onBackClick: () -> Unit,
-    onCrop: () -> Unit
+    onCrop: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(brush = onBoardingBackgroundBrush)
             .padding(

@@ -7,8 +7,9 @@ import android.provider.MediaStore
 import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
 import myapp.hoang.media.models.Video
+import javax.inject.Inject
 
-class AndroidMediaStoreService(
+class AndroidMediaStoreService @Inject constructor(
     private val context: Context
 ) : MediaStoreService {
     override fun getAllImages(): List<Image> {
@@ -27,7 +28,8 @@ class AndroidMediaStoreService(
             MediaStore.Images.Media.DISPLAY_NAME,
             MediaStore.Images.Media.DATA,
             MediaStore.Images.Media.SIZE,
-            MediaStore.Images.Media.MIME_TYPE
+            MediaStore.Images.Media.MIME_TYPE,
+            MediaStore.Images.Media.DATE_ADDED
         )
         val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
         val query = context.contentResolver.query(
@@ -41,8 +43,6 @@ class AndroidMediaStoreService(
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
             val displayNameColumn =
                 cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-            val titleColumn =
-                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.TITLE)
             val pathColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
             val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
             val mimeTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)
@@ -51,11 +51,10 @@ class AndroidMediaStoreService(
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
                 val displayName = cursor.getString(displayNameColumn)
-                val title = cursor.getString(titleColumn)
                 val path = cursor.getString(pathColumn)
                 val size = cursor.getLong(sizeColumn)
                 val mimeType = cursor.getString(mimeTypeColumn)
-                val dateAdded = cursor.getInt(dateAddedColumn)
+                val dateAdded = cursor.getLong(dateAddedColumn)
 
                 val contentUri = ContentUris.withAppendedId(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id
@@ -64,7 +63,6 @@ class AndroidMediaStoreService(
                     id = id,
                     contentUri = contentUri,
                     displayName = displayName,
-                    title = title,
                     path = path,
                     size = size,
                     mimeType = mimeType,
@@ -92,7 +90,8 @@ class AndroidMediaStoreService(
             MediaStore.Video.Media.DATA,
             MediaStore.Video.Media.SIZE,
             MediaStore.Video.Media.MIME_TYPE,
-            MediaStore.Video.Media.DURATION
+            MediaStore.Video.Media.DURATION,
+            MediaStore.Video.Media.DATE_ADDED
         )
         val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
         val query = context.contentResolver.query(
@@ -106,23 +105,20 @@ class AndroidMediaStoreService(
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
             val displayNameColumn =
                 cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
-            val titleColumn =
-                cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE)
             val pathColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
             val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
             val mimeTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE)
+            val dateAddedColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATE_ADDED)
             val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)
-            val dateAddedColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_ADDED)
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
                 val displayName = cursor.getString(displayNameColumn)
-                val title = cursor.getString(titleColumn)
                 val path = cursor.getString(pathColumn)
                 val size = cursor.getLong(sizeColumn)
                 val mimeType = cursor.getString(mimeTypeColumn)
+                val dateAdded = cursor.getLong(dateAddedColumn)
                 val duration = cursor.getLong(durationColumn)
-                val dateAdded = cursor.getInt(dateAddedColumn)
 
                 val contentUri = ContentUris.withAppendedId(
                     MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id
@@ -131,7 +127,6 @@ class AndroidMediaStoreService(
                     id = id,
                     contentUri = contentUri,
                     displayName = displayName,
-                    title = title,
                     path = path,
                     size = size,
                     mimeType = mimeType,
@@ -144,7 +139,89 @@ class AndroidMediaStoreService(
     }
 
     override fun getAllMedia(): List<Media> {
-        return (getAllImages() + getAllVideos())
-            .sortedByDescending { it.dateAdded }
+        val mediaList = mutableListOf<Media>()
+
+        val collection =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                MediaStore.Files.getContentUri(
+                    MediaStore.VOLUME_EXTERNAL
+                )
+            } else {
+                MediaStore.Files.getContentUri("external")
+            }
+        val projection = arrayOf(
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Files.FileColumns.DATA,
+            MediaStore.Files.FileColumns.SIZE,
+            MediaStore.Files.FileColumns.MIME_TYPE,
+            MediaStore.Files.FileColumns.DURATION,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.MEDIA_TYPE
+        )
+        val selection =
+            "${MediaStore.Files.FileColumns.MEDIA_TYPE} = ? OR ${MediaStore.Files.FileColumns.MEDIA_TYPE} = ?"
+        val selectionArgs = arrayOf(
+            MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE.toString(),
+            MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO.toString()
+        )
+        val sortOrder = "${MediaStore.Files.FileColumns.DATE_ADDED} DESC"
+        val query = context.contentResolver.query(
+            collection,
+            projection,
+            selection,
+            selectionArgs,
+            sortOrder
+        )
+        query?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+            val displayNameColumn =
+                cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
+            val pathColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA)
+            val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE)
+            val mimeTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MIME_TYPE)
+            val dateAddedColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_ADDED)
+            val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DURATION)
+            val mediaTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MEDIA_TYPE)
+
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idColumn)
+                val displayName = cursor.getString(displayNameColumn)
+                val path = cursor.getString(pathColumn)
+                val size = cursor.getLong(sizeColumn)
+                val mimeType = cursor.getString(mimeTypeColumn)
+                val dateAdded = cursor.getLong(dateAddedColumn)
+                val duration = cursor.getLong(durationColumn)
+                val mediaType = cursor.getInt(mediaTypeColumn)
+
+                val contentUri = ContentUris.withAppendedId(
+                    MediaStore.Files.getContentUri("external"), id
+                )
+                if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) {
+                    mediaList += Image(
+                        id = id,
+                        contentUri = contentUri,
+                        displayName = displayName,
+                        path = path,
+                        size = size,
+                        dateAdded = dateAdded,
+                        mimeType = mimeType
+                    )
+                } else if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) {
+                    mediaList += Video(
+                        id = id,
+                        contentUri = contentUri,
+                        displayName = displayName,
+                        path = path,
+                        size = size,
+                        mimeType = mimeType,
+                        dateAdded = dateAdded,
+                        duration = duration
+                    )
+                }
+            }
+        }
+
+        return mediaList.toList()
     }
 }
