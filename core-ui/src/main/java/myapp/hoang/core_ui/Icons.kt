@@ -301,3 +301,43 @@ fun ErrorIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun CloseIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_close),
+        contentDescription = "Close",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun NextIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_arrow_right),
+        contentDescription = "Next",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun MultipleIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_multiple),
+        contentDescription = "Multiple",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun CameraIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_camera),
+        contentDescription = "Multiple",
+        modifier = modifier,
+        tint = color
+    )
+}

@@ -173,7 +173,7 @@ fun GridTabEmptyContent() {
         Spacer(modifier = Modifier.height(LocalDimension.current.small))
         Text(
             text = stringResource(R.string.profile_tab_description),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center
         )
@@ -197,7 +197,7 @@ fun TagTabEmptyContent() {
         Spacer(modifier = Modifier.height(LocalDimension.current.small))
         Text(
             text = stringResource(R.string.tag_tab_description),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSecondary,
             textAlign = TextAlign.Center
         )

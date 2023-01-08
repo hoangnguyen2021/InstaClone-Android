@@ -23,18 +23,18 @@ val MainTypography = Typography(
         lineHeight = 18.sp,
         letterSpacing = 0.sp,
     ),
-    headlineMedium = TextStyle(
-        fontFamily = FontFamily.SansSerif,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 18.sp,
-        letterSpacing = 0.4.sp,
-    ),
     headlineLarge = TextStyle(
         fontFamily = FontFamily.SansSerif,
         fontWeight = FontWeight.Bold,
         fontSize = 22.sp,
         lineHeight = 26.sp,
+        letterSpacing = 0.4.sp,
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp,
+        lineHeight = 22.sp,
         letterSpacing = 0.4.sp,
     ),
     titleMedium = TextStyle(
@@ -57,6 +57,13 @@ val MainTypography = Typography(
         fontSize = 15.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.sp,
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily.SansSerif,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 18.sp,
+        letterSpacing = 0.4.sp,
     )
 )
 

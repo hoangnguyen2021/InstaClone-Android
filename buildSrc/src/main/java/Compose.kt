@@ -5,6 +5,7 @@ object Compose {
     private const val pagingVersion = "1.0.0-rc1"
     private const val coilVersion = "2.2.2"
     private const val stateEventsVersion = "1.2.3"
+    private const val composeCropperVersion = "0.2.4"
 
     const val animation = "androidx.compose.animation:animation:$version"
     const val compiler = "androidx.compose.compiler:compiler:$version"
@@ -25,4 +26,5 @@ object Compose {
     const val coilVideo = "io.coil-kt:coil-video:$coilVersion"
 
     const val stateEvents = "com.github.leonard-palm:compose-state-events:$stateEventsVersion"
+    const val composeCropper = "com.github.SmartToolFactory:Compose-Cropper:$composeCropperVersion"
 }

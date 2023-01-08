@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
+import coil.request.videoFrameMillis
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
@@ -24,6 +25,7 @@ import java.io.File
 @Composable
 fun MediaGrid(
     mediaList: List<Media>,
+    onMediaClick: (Uri) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -39,13 +41,13 @@ fun MediaGrid(
                 is Image -> {
                     ImagePreview(
                         uri = item.contentUri,
-                        onClick = {}
+                        onClick = { onMediaClick(item.contentUri) }
                     )
                 }
                 is Video -> {
                     VideoPreview(
                         uri = item.contentUri,
-                        onClick = {}
+                        onClick = {  }
                     )
                 }
             }
@@ -84,6 +86,7 @@ fun VideoPreview(
         model = ImageRequest.Builder(LocalContext.current)
             .data(uri)
             .decoderFactory(VideoFrameDecoder.Factory())
+            .videoFrameMillis(0L)
             .crossfade(true)
             .build(),
         contentDescription = "Video preview",

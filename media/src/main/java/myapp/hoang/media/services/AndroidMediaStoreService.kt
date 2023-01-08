@@ -2,6 +2,9 @@ package myapp.hoang.media.services
 
 import android.content.ContentUris
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import myapp.hoang.media.models.Image
@@ -179,10 +182,13 @@ class AndroidMediaStoreService @Inject constructor(
                 cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
             val pathColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA)
             val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE)
-            val mimeTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MIME_TYPE)
-            val dateAddedColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_ADDED)
+            val mimeTypeColumn =
+                cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MIME_TYPE)
+            val dateAddedColumn =
+                cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATE_ADDED)
             val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DURATION)
-            val mediaTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MEDIA_TYPE)
+            val mediaTypeColumn =
+                cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.MEDIA_TYPE)
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
@@ -223,5 +229,14 @@ class AndroidMediaStoreService @Inject constructor(
         }
 
         return mediaList.toList()
+    }
+
+    override fun getBitmapFromUri(uri: Uri): Bitmap {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uri))
+        } else {
+            @Suppress("DEPRECATION")
+            MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+        }
     }
 }

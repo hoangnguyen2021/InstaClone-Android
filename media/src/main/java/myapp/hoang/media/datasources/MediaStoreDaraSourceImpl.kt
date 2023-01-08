@@ -1,5 +1,7 @@
 package myapp.hoang.media.datasources
 
+import android.graphics.Bitmap
+import android.net.Uri
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.media.models.Image
@@ -27,6 +29,12 @@ class MediaStoreDaraSourceImpl @Inject constructor(
     override suspend fun getAllMedia(): List<Media> {
         return withContext(dispatcherProvider.io) {
             mediaStoreService.getAllMedia()
+        }
+    }
+
+    override suspend fun getBitmapFromUri(uri: Uri): Bitmap {
+        return withContext(dispatcherProvider.io) {
+            mediaStoreService.getBitmapFromUri(uri)
         }
     }
 }

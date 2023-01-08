@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import myapp.hoang.core_ui.*
 
 @Composable
@@ -17,6 +18,7 @@ fun NewPostIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -33,6 +35,7 @@ fun HeartIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -49,6 +52,7 @@ fun MessageIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -65,6 +69,7 @@ fun MenuIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -82,6 +87,7 @@ fun HomeIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -99,7 +105,7 @@ fun SearchIconButton(
 ) {
     IconButton(
         onClick = onClick,
-        colors = IconButtonDefaults.iconButtonColors(
+        colors = IconButtonDefaults.iconButtonColors(containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -118,6 +124,7 @@ fun ReelsIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -136,6 +143,7 @@ fun ShopIconButton(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -192,6 +200,87 @@ fun ToggleDiscoverPeopleIconButton(
             isSelected = checked,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             modifier = Modifier.size(LocalDimension.current.medium)
+        )
+    }
+}
+
+@Composable
+fun CloseIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    ) {
+        CloseIcon(
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+@Composable
+fun NextIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier
+    ) {
+        NextIcon(
+            color = MaterialTheme.colorScheme.primaryContainer,
+            modifier = Modifier.size(LocalDimension.current.extraLarge)
+        )
+    }
+}
+
+@Composable
+fun MultipleMediaIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    FilledIconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = LightDarkness,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        ),
+        shape = CircleShape,
+        modifier = modifier
+    ) {
+        MultipleIcon(
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            modifier = Modifier.size(LocalDimension.current.mediumLarge)
+        )
+    }
+}
+
+@Composable
+fun CameraIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    FilledIconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = LightDarkness,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+        ),
+        shape = CircleShape,
+        modifier = modifier
+    ) {
+        CameraIcon(
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            modifier = Modifier.size(LocalDimension.current.mediumLarge)
         )
     }
 }

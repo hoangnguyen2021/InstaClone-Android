@@ -1,6 +1,8 @@
 package myapp.hoang.media.viewmodels
 
+import android.net.Uri
 import android.util.Log
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,7 @@ class MediaStoreViewModel @Inject constructor(
         }
 
     private var getAllMediaJob: Job? = null
+    private var getBitmapFromUriJob: Job? = null
 
     fun getAllMedia() {
         getAllMediaJob?.cancel()
@@ -36,7 +39,21 @@ class MediaStoreViewModel @Inject constructor(
                 state = state.copy(
                     mediaList = mediaList
                 )
-                Log.d("MYTAG", mediaList.toString())
+            } catch (e: Exception) {
+                Log.d("MYTAG", e.toString())
+            }
+        }
+    }
+
+    fun getBitmapFromUri(uri: Uri) {
+        getBitmapFromUriJob?.cancel()
+
+        getBitmapFromUriJob = viewModelScope.launch {
+            try {
+                val bitmap = mediaStoreRepository.getBitmapFromUri(uri)
+                state = state.copy(
+                    imageBitmap = bitmap.asImageBitmap()
+                )
             } catch (e: Exception) {
                 Log.d("MYTAG", e.toString())
             }

@@ -1,5 +1,7 @@
 package myapp.hoang.media.repositories
 
+import android.graphics.Bitmap
+import android.net.Uri
 import myapp.hoang.media.datasources.MediaStoreDataSource
 import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
@@ -19,5 +21,9 @@ class MediaStoreRepositoryImpl @Inject constructor(
 
     override suspend fun getAllMedia(): List<Media> {
         return mediaStoreDataSource.getAllMedia()
+    }
+
+    override suspend fun getBitmapFromUri(uri: Uri): Bitmap {
+        return mediaStoreDataSource.getBitmapFromUri(uri)
     }
 }
