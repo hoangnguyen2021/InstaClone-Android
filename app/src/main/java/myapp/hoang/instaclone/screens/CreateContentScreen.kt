@@ -24,7 +24,7 @@ import myapp.hoang.core_ui.components.MultipleMediaIconButton
 import myapp.hoang.core_ui.components.NextIconButton
 import myapp.hoang.media.components.MediaCollectionSelect
 import myapp.hoang.media.components.MediaGrid
-import myapp.hoang.media.components.MyImageCropper
+import myapp.hoang.media.components.InstaCloneCropper
 import myapp.hoang.media.viewmodels.MediaStoreViewModel
 
 @OptIn(
@@ -104,7 +104,7 @@ fun CreateContentScreen(
                         .background(Color(0xFF363636))
                 )
             } else {
-                MyImageCropper(
+                InstaCloneCropper(
                     imageBitmap = uiState.imageBitmap!!,
                     modifier = Modifier.fillMaxSize()
                 )

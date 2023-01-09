@@ -251,14 +251,14 @@ fun MultipleMediaIconButton(
     FilledIconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = LightDarkness,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
         ),
         shape = CircleShape,
         modifier = modifier
     ) {
         MultipleIcon(
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
             modifier = Modifier.size(LocalDimension.current.mediumLarge)
         )
     }
@@ -272,14 +272,14 @@ fun CameraIconButton(
     FilledIconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = LightDarkness,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
         ),
         shape = CircleShape,
         modifier = modifier
     ) {
         CameraIcon(
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
             modifier = Modifier.size(LocalDimension.current.mediumLarge)
         )
     }
