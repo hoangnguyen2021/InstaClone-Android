@@ -176,7 +176,7 @@ class SignupViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 state.copy(
-                    isLoading = false,
+                    isLoading = false
                 )
             }
         }
@@ -196,7 +196,7 @@ class SignupViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 state.copy(
-                    isLoading = false,
+                    isLoading = false
                 )
             }
         }
@@ -214,25 +214,25 @@ class SignupViewModel @Inject constructor(
                 )
             } catch (e: Exception) {
                 state.copy(
-                    isLoading = false,
+                    isLoading = false
                 )
             }
         }
     }
 
-    fun onConsumedNextScreenEvent(){
+    fun onConsumedNextScreenEvent() {
         state = state.copy(nextScreenEvent = consumed)
     }
 
-    fun onConsumedShowToastEvent(){
+    fun onConsumedShowToastEvent() {
         state = state.copy(showToastEvent = consumed())
     }
 
-    fun onConsumedHideErrorSupportingTextEvent(){
+    fun onConsumedHideErrorSupportingTextEvent() {
         state = state.copy(hideErrorSupportingTextEvent = consumed)
     }
 
-    fun onConsumedShowErrorSupportingTextEvent(){
+    fun onConsumedShowErrorSupportingTextEvent() {
         state = state.copy(showErrorSupportingTextEvent = consumed())
     }
 }

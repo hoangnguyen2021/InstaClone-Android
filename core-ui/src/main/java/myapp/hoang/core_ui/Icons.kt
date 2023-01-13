@@ -265,7 +265,7 @@ fun MetaIcon(color: Color, modifier: Modifier = Modifier) {
 @Composable
 fun BackIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_arrow_back),
+        painter = painterResource(id = R.drawable.ic_arrow_left_1),
         contentDescription = "Go back",
         modifier = modifier,
         tint = color
@@ -313,10 +313,30 @@ fun CloseIcon(color: Color, modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun MagicWandIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_magic_wand),
+        contentDescription = "Magic wand",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
 fun NextIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_arrow_right),
         contentDescription = "Next",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun BackIcon2(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_arrow_left_2),
+        contentDescription = "Go back",
         modifier = modifier,
         tint = color
     )

@@ -244,6 +244,26 @@ fun NextIconButton(
 }
 
 @Composable
+fun BackIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    ) {
+        BackIcon2(
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.size(LocalDimension.current.extraLarge)
+        )
+    }
+}
+
+@Composable
 fun MultipleMediaIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
