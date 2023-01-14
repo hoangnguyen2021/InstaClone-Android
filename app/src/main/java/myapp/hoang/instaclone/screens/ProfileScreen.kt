@@ -19,7 +19,7 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.models.ProfileTab
 import myapp.hoang.instaclone.R
 
-val tabs = listOf(
+val profileTabs = listOf(
     ProfileTab(
         icon = { GridIcon(modifier = Modifier.size(LocalDimension.current.mediumLarge)) },
         emptyContent = { GridTabEmptyContent() }
@@ -138,7 +138,7 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             ProfileTabRow(
-                tabs = tabs,
+                tabs = profileTabs,
                 pagerState = pagerState,
                 onScrollToPage = { scope.launch { pagerState.animateScrollToPage(it) } },
                 modifier = Modifier
@@ -146,11 +146,11 @@ fun ProfileScreen(
                     .height(LocalDimension.current.fiveExtraLarge)
             )
             HorizontalPager(
-                count = tabs.size,
+                count = profileTabs.size,
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
-                tabs[page].emptyContent()
+                profileTabs[page].emptyContent()
             }
         }
     }

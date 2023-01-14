@@ -40,7 +40,7 @@ class MediaStoreViewModel @Inject constructor(
                     mediaList = mediaList
                 )
             } catch (e: Exception) {
-                Log.d("MYTAG", e.toString())
+                Log.d(TAG, e.toString())
             }
         }
     }
@@ -55,8 +55,12 @@ class MediaStoreViewModel @Inject constructor(
                     imageBitmap = bitmap.asImageBitmap()
                 )
             } catch (e: Exception) {
-                Log.d("MYTAG", e.toString())
+                Log.d(TAG, e.toString())
             }
         }
+    }
+
+    companion object {
+        private val TAG = MediaStoreViewModel::class.java.simpleName
     }
 }

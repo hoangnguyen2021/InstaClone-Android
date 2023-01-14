@@ -78,6 +78,7 @@ dependencies {
     implementation(Compose.viewModel)
     implementation(Compose.lifecycleRuntime)
     implementation(Compose.activity)
+    implementation(Compose.coil)
     implementation(Compose.stateEvents)
 
     implementation(Accompanist.permissions)

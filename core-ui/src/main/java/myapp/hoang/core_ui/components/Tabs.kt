@@ -1,11 +1,13 @@
 package myapp.hoang.core_ui.components
 
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import myapp.hoang.core_ui.LocalDimension
+import myapp.hoang.core_ui.components.models.EditImageTab
 import myapp.hoang.core_ui.components.models.ProfileTab
 import myapp.hoang.core_ui.components.pager.pagerTabIndicatorOffset
 
@@ -52,6 +54,58 @@ fun ProfileTab(
         onClick = onClick,
         modifier = modifier,
         icon = icon,
+        selectedContentColor = MaterialTheme.colorScheme.onSurface,
+        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+}
+
+@Composable
+fun EditImageTabRow(
+    tabs: List<EditImageTab>,
+    selectedTabIndex: Int,
+    onSwitchTab: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    TabRow(
+        selectedTabIndex = selectedTabIndex,
+        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        indicator = @Composable { tabPositions ->
+            TabRowDefaults.Indicator(
+                modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                color = MaterialTheme.colorScheme.onSurface,
+                height = LocalDimension.current.twoExtraSmall
+            )
+        },
+        modifier = modifier
+    ) {
+        tabs.forEachIndexed { i, tab ->
+            EditImageTab(
+                selected = selectedTabIndex == i,
+                text = tab.text,
+                onClick = { onSwitchTab(i) }
+            )
+        }
+    }
+}
+
+@Composable
+fun EditImageTab(
+    selected: Boolean,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Tab(
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        text = {
+            Text(
+                text = text.uppercase(),
+                style = MaterialTheme.typography.labelMedium
+            )
+        },
         selectedContentColor = MaterialTheme.colorScheme.onSurface,
         unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant
     )

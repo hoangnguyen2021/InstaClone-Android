@@ -1,8 +1,7 @@
-package myapp.hoang.instaclone.screens
+package myapp.hoang.instaclone.screens.createcontent
 
 import android.Manifest
 import android.os.Build
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,20 +10,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import myapp.hoang.core_ui.LocalDimension
-import myapp.hoang.core_ui.components.CameraIconButton
-import myapp.hoang.core_ui.components.CloseIconButton
-import myapp.hoang.core_ui.components.MultipleMediaIconButton
-import myapp.hoang.core_ui.components.NextIconButton
+import myapp.hoang.core_ui.components.*
+import myapp.hoang.media.components.InstaCloneCropper
 import myapp.hoang.media.components.MediaCollectionSelect
 import myapp.hoang.media.components.MediaGrid
-import myapp.hoang.media.components.InstaCloneCropper
 import myapp.hoang.media.viewmodels.MediaStoreViewModel
 
 @OptIn(
@@ -32,11 +27,11 @@ import myapp.hoang.media.viewmodels.MediaStoreViewModel
     ExperimentalLifecycleComposeApi::class
 )
 @Composable
-fun CreateContentScreen(
-    onClose: () -> Unit
+fun SelectContentScreen(
+    onClose: () -> Unit,
+    onNext: () -> Unit,
+    viewModel: MediaStoreViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<MediaStoreViewModel>()
-
     val readImagesPermissionState = rememberMultiplePermissionsState(
         permissions =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -88,21 +83,18 @@ fun CreateContentScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             NextIconButton(
-                onClick = {},
+                onClick = onNext,
                 modifier = Modifier.weight(0.1f)
             )
         }
-        Row(
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.5f)
         ) {
             if (uiState.imageBitmap == null) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color(0xFF363636))
-                )
+                ImagePlaceholder()
             } else {
                 InstaCloneCropper(
                     imageBitmap = uiState.imageBitmap!!,
@@ -140,7 +132,8 @@ fun CreateContentScreen(
                 )
             }
         }
-        Row(
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.35f)

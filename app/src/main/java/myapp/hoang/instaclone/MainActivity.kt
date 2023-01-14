@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.InstaCloneTheme
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.screens.*
+import myapp.hoang.instaclone.screens.createcontent.CreateContentScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
