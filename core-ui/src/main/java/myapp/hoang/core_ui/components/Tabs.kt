@@ -99,7 +99,6 @@ fun EditImageTab(
     Tab(
         selected = selected,
         onClick = onClick,
-        modifier = modifier,
         text = {
             Text(
                 text = text.uppercase(),
@@ -107,6 +106,7 @@ fun EditImageTab(
             )
         },
         selectedContentColor = MaterialTheme.colorScheme.onSurface,
-        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = modifier
     )
 }

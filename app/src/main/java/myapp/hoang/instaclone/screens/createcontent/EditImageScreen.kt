@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -212,7 +213,7 @@ fun EditImageScreen(
                         horizontalArrangement = Arrangement.Start,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.34f)
+                            .weight(0.82f)
                     ) {
                         Text("page 1")
                     }
@@ -226,7 +227,7 @@ fun EditImageScreen(
                         ),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .weight(0.34f)
+                            .weight(0.82f)
                     ) {
                         items(items = editImageButtons) { item ->
                             Column(
@@ -259,7 +260,8 @@ fun EditImageScreen(
                 onSwitchTab = { selectedTabIndex = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.08f)
+                    .weight(0.18f)
+                    .offset(y = LocalDimension.current.extraSmall)
             )
         }
     }
