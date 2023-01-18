@@ -30,10 +30,12 @@ A Clone Instagram app on Android using Jetpack Compose for UI and Ktor for serve
    
 ## Project Status
 In development
+
 Finished:
 - Signup Flow
 - Send verification email/text messages
 - Sign in
+
 In progress:
 - Create New Post
 
