@@ -41,7 +41,10 @@ fun ProfileStat(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.twoExtraSmall,
+            alignment = Alignment.CenterVertically
+        ),
         modifier = Modifier
             .wrapContentWidth()
             .fillMaxHeight()
@@ -51,7 +54,6 @@ fun ProfileStat(
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1
         )
-        Spacer(modifier = Modifier.height(LocalDimension.current.twoExtraSmall))
         Text(
             text = unit,
             style = MaterialTheme.typography.titleMedium,

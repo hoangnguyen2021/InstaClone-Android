@@ -160,7 +160,10 @@ fun ProfileScreen(
 fun GridTabEmptyContent() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.small,
+            alignment = Alignment.CenterVertically
+        ),
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = LocalDimension.current.sevenExtraLarge)
@@ -170,7 +173,6 @@ fun GridTabEmptyContent() {
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onPrimary
         )
-        Spacer(modifier = Modifier.height(LocalDimension.current.small))
         Text(
             text = stringResource(R.string.profile_tab_description),
             style = MaterialTheme.typography.bodyMedium,
@@ -184,7 +186,10 @@ fun GridTabEmptyContent() {
 fun TagTabEmptyContent() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.small,
+            alignment = Alignment.CenterVertically
+        ),
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = LocalDimension.current.sevenExtraLarge)
@@ -194,7 +199,6 @@ fun TagTabEmptyContent() {
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onPrimary
         )
-        Spacer(modifier = Modifier.height(LocalDimension.current.small))
         Text(
             text = stringResource(R.string.tag_tab_description),
             style = MaterialTheme.typography.bodyMedium,

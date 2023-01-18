@@ -17,7 +17,10 @@ fun MediaCollectionSelect(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.small,
+            alignment = Alignment.Start
+        ),
         modifier = Modifier
             .wrapContentWidth()
             .fillMaxHeight()
@@ -27,7 +30,6 @@ fun MediaCollectionSelect(
             text = mediaCollection,
             style = MaterialTheme.typography.headlineMedium
         )
-        Spacer(modifier = Modifier.width(LocalDimension.current.small))
         ChevronDownIcon(
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier

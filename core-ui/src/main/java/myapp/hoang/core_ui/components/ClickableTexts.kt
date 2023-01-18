@@ -93,7 +93,10 @@ fun ProfileUsername(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.extraSmall,
+            alignment = Alignment.Start
+        ),
         modifier = Modifier
             .wrapContentWidth()
             .fillMaxHeight()
@@ -103,7 +106,6 @@ fun ProfileUsername(
             text = username,
             style = MaterialTheme.typography.headlineLarge
         )
-        Spacer(modifier = Modifier.width(LocalDimension.current.extraSmall))
         ChevronDownIcon(
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
