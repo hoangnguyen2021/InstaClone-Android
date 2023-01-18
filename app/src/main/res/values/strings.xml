@@ -6,4 +6,7 @@
     <string name="profile_tab_description">When you share photos and videos, they\'ll appear on your profile.</string>
     <string name="tag_tab_title">Photos and videos of you</string>
     <string name="tag_tab_description">When people tag you in photos and videos, they\'ll appear here.</string>
+
+    <string name="new_post">New post</string>
+    <string name="gallery">Gallery</string>
 </resources>

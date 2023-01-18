@@ -8,6 +8,10 @@ import androidx.navigation.compose.rememberNavController
 import myapp.hoang.core.navigation.CreateContentScreen
 import myapp.hoang.media.viewmodels.MediaStoreViewModel
 
+/**
+ * New Post flow.
+ *
+ */
 @Composable
 fun CreateContentScreen(
     onClose: () -> Unit

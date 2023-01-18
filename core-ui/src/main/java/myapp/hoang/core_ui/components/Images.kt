@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -140,7 +139,7 @@ fun ImageEditPreview(
 }
 
 @Composable
-fun ImagePlaceholder() {
+fun ImagePreviewPlaceholder() {
     Box(
         modifier = Modifier
             .fillMaxSize()

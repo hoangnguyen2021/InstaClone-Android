@@ -65,7 +65,7 @@ fun EditImageScreen(
                 .weight(0.5f)
         ) {
             if (uiState.croppedImageBitmap == null) {
-                ImagePlaceholder()
+                ImagePreviewPlaceholder()
             } else {
                 ImageEditPreview(
                     bitmap = uiState.croppedImageBitmap!!,

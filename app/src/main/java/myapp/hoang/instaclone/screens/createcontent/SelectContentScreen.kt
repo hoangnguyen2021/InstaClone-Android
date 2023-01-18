@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,6 +17,7 @@ import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
+import myapp.hoang.instaclone.R
 import myapp.hoang.media.components.InstaCloneCropper
 import myapp.hoang.media.components.MediaCollectionSelect
 import myapp.hoang.media.components.MediaGrid
@@ -31,7 +33,7 @@ fun SelectContentScreen(
     onNextScreen: () -> Unit,
     viewModel: MediaStoreViewModel = hiltViewModel()
 ) {
-    val readImagesPermissionState = rememberMultiplePermissionsState(
+    val readMediaPermissionState = rememberMultiplePermissionsState(
         permissions =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             listOf(
@@ -51,11 +53,11 @@ fun SelectContentScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(key1 = true) {
-        if (readImagesPermissionState.allPermissionsGranted) {
+    LaunchedEffect(key1 = readMediaPermissionState.allPermissionsGranted) {
+        if (readMediaPermissionState.allPermissionsGranted) {
             viewModel.getAllMedia()
         } else {
-            readImagesPermissionState.launchMultiplePermissionRequest()
+            readMediaPermissionState.launchMultiplePermissionRequest()
         }
     }
 
@@ -82,7 +84,7 @@ fun SelectContentScreen(
                 modifier = Modifier.weight(0.1f)
             )
             Text(
-                text = "New post",
+                text = stringResource(R.string.new_post),
                 style = MaterialTheme.typography.headlineLarge,
                 modifier = Modifier
                     .weight(0.8f)
@@ -100,7 +102,7 @@ fun SelectContentScreen(
                 .weight(0.5f)
         ) {
             if (uiState.imageBitmap == null) {
-                ImagePlaceholder()
+                ImagePreviewPlaceholder()
             } else {
                 InstaCloneCropper(
                     crop = uiState.crop,
@@ -120,12 +122,12 @@ fun SelectContentScreen(
                 .padding(horizontal = LocalDimension.current.mediumSmall)
         ) {
             MediaCollectionSelect(
-                mediaCollection = "Gallery",
+                mediaCollection = stringResource(R.string.gallery),
                 onClick = {}
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.Start,
                 modifier = Modifier
                     .wrapContentWidth()
                     .fillMaxHeight()
