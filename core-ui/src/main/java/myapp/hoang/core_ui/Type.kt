@@ -8,6 +8,30 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+val ProximaNovaFamily = FontFamily(
+    Font(R.font.proximanova_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.proximanova_medium, FontWeight.Medium, FontStyle.Normal),
+)
+
+val ArabotoFamily = FontFamily(
+    Font(R.font.araboto_light, FontWeight.Light, FontStyle.Normal),
+    Font(R.font.araboto_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.araboto_medium, FontWeight.Medium, FontStyle.Normal),
+)
+
+val ShoikaFontFamily = FontFamily(
+    Font(R.font.shoika_medium, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.shoika_medium_italic, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.shoika_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.shoika_regular_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.shoika_light, FontWeight.Light, FontStyle.Normal),
+    Font(R.font.shoika_light_italic, FontWeight.Light, FontStyle.Italic),
+)
+
+val InstagramFamily = FontFamily(
+    Font(R.font.instagram_regular, FontWeight.Normal, FontStyle.Normal)
+)
+
 val MainTypography = Typography(
     labelSmall = TextStyle(
         fontFamily = FontFamily.SansSerif,
@@ -65,30 +89,6 @@ val MainTypography = Typography(
         lineHeight = 18.sp,
         letterSpacing = 0.4.sp,
     )
-)
-
-val ProximaNovaFamily = FontFamily(
-    Font(R.font.proximanova_regular, FontWeight.Normal, FontStyle.Normal),
-    Font(R.font.proximanova_medium, FontWeight.Medium, FontStyle.Normal),
-)
-
-val ArabotoFamily = FontFamily(
-    Font(R.font.araboto_light, FontWeight.Light, FontStyle.Normal),
-    Font(R.font.araboto_regular, FontWeight.Normal, FontStyle.Normal),
-    Font(R.font.araboto_medium, FontWeight.Medium, FontStyle.Normal),
-)
-
-val ShoikaFontFamily = FontFamily(
-    Font(R.font.shoika_medium, FontWeight.Medium, FontStyle.Normal),
-    Font(R.font.shoika_medium_italic, FontWeight.Medium, FontStyle.Italic),
-    Font(R.font.shoika_regular, FontWeight.Normal, FontStyle.Normal),
-    Font(R.font.shoika_regular_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.shoika_light, FontWeight.Light, FontStyle.Normal),
-    Font(R.font.shoika_light_italic, FontWeight.Light, FontStyle.Italic),
-)
-
-val InstagramFamily = FontFamily(
-    Font(R.font.instagram_regular, FontWeight.Normal, FontStyle.Normal)
 )
 
 val OnBoardingTypography = Typography(

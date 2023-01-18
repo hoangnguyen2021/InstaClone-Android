@@ -5,5 +5,7 @@ import myapp.hoang.media.models.Media
 
 data class MediaStoreUiState(
     val mediaList: List<Media> = emptyList(),
-    val imageBitmap: ImageBitmap? = null
+    val imageBitmap: ImageBitmap? = null,
+    val crop: Boolean = false,
+    val croppedImageBitmap: ImageBitmap? = null
 )

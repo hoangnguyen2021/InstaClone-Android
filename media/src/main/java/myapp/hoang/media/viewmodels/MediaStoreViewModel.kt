@@ -2,6 +2,7 @@ package myapp.hoang.media.viewmodels
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,6 +59,20 @@ class MediaStoreViewModel @Inject constructor(
                 Log.d(TAG, e.toString())
             }
         }
+    }
+
+    fun setCrop(crop: Boolean) {
+        state = state.copy(
+            crop = crop
+        )
+        Log.d(TAG, "setCrop")
+    }
+
+    fun setCroppedImageBitmap(croppedImageBitmap: ImageBitmap) {
+        state = state.copy(
+            croppedImageBitmap = croppedImageBitmap
+        )
+        Log.d(TAG, "setCroppedImageBitmap")
     }
 
     companion object {

@@ -64,11 +64,11 @@ fun EditImageScreen(
                 .fillMaxWidth()
                 .weight(0.5f)
         ) {
-            if (uiState.imageBitmap == null) {
+            if (uiState.croppedImageBitmap == null) {
                 ImagePlaceholder()
             } else {
                 ImageEditPreview(
-                    bitmap = uiState.imageBitmap!!,
+                    bitmap = uiState.croppedImageBitmap!!,
                     modifier = Modifier
                         .fillMaxSize()
                         .aspectRatio(1f)

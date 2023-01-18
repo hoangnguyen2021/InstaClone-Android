@@ -1,5 +1,6 @@
 package myapp.hoang.media.components
 
+import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,12 +16,11 @@ import com.smarttoolfactory.cropper.settings.CropOutlineProperty
 @Composable
 fun InstaCloneCropper(
     imageBitmap: ImageBitmap,
+    crop: Boolean,
+    onCropChange: (Boolean) -> Unit,
+    onCroppedImageBitmapChange: (ImageBitmap) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var croppedImage by remember { mutableStateOf<ImageBitmap?>(null) }
-    var crop by remember { mutableStateOf(false) }
-    var isCropping by remember { mutableStateOf(false) }
-
     ImageCropper(
         imageBitmap = imageBitmap,
         contentDescription = "InstaClone Image Cropper",
@@ -39,12 +39,11 @@ fun InstaCloneCropper(
         ),
         crop = crop,
         onCropStart = {
-            isCropping = true
+            Log.d("MYTAG", "Hi")
         },
         onCropSuccess = {
-            croppedImage = it
-            isCropping = false
-            crop = false
+            onCropChange(false)
+            onCroppedImageBitmapChange(it)
         },
         modifier = modifier
     )

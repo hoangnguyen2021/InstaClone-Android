@@ -5,9 +5,7 @@ import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -83,7 +81,10 @@ fun SelectContentScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             NextIconButton(
-                onClick = onNext,
+                onClick = {
+                    viewModel.setCrop(true)
+                    onNext()
+                },
                 modifier = Modifier.weight(0.1f)
             )
         }
@@ -97,7 +98,10 @@ fun SelectContentScreen(
                 ImagePlaceholder()
             } else {
                 InstaCloneCropper(
+                    crop = uiState.crop,
+                    onCropChange = { viewModel.setCrop(it) },
                     imageBitmap = uiState.imageBitmap!!,
+                    onCroppedImageBitmapChange = { viewModel.setCroppedImageBitmap(it) },
                     modifier = Modifier.fillMaxSize()
                 )
             }
