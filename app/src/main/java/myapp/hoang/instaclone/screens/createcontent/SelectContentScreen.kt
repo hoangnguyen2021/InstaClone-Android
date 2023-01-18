@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.media.components.InstaCloneCropper
@@ -27,7 +28,7 @@ import myapp.hoang.media.viewmodels.MediaStoreViewModel
 @Composable
 fun SelectContentScreen(
     onClose: () -> Unit,
-    onNext: () -> Unit,
+    onNextScreen: () -> Unit,
     viewModel: MediaStoreViewModel = hiltViewModel()
 ) {
     val readImagesPermissionState = rememberMultiplePermissionsState(
@@ -58,6 +59,13 @@ fun SelectContentScreen(
         }
     }
 
+    EventEffect(
+        event = uiState.nextScreenEvent,
+        onConsumed = viewModel::onConsumedNextScreenEvent
+    ) {
+        onNextScreen()
+    }
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -81,10 +89,7 @@ fun SelectContentScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             NextIconButton(
-                onClick = {
-                    viewModel.setCrop(true)
-                    onNext()
-                },
+                onClick = { viewModel.startCropping() },
                 modifier = Modifier.weight(0.1f)
             )
         }
@@ -99,9 +104,9 @@ fun SelectContentScreen(
             } else {
                 InstaCloneCropper(
                     crop = uiState.crop,
-                    onCropChange = { viewModel.setCrop(it) },
+                    onCropStart = {},
+                    onCropSuccess = { viewModel.finishCropping(it) },
                     imageBitmap = uiState.imageBitmap!!,
-                    onCroppedImageBitmapChange = { viewModel.setCroppedImageBitmap(it) },
                     modifier = Modifier.fillMaxSize()
                 )
             }

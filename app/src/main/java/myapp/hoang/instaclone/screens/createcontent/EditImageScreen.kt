@@ -27,7 +27,7 @@ val editImageTabs = listOf(
 @Composable
 fun EditImageScreen(
     onBack: () -> Unit,
-    onNext: () -> Unit,
+    onNextScreen: () -> Unit,
     viewModel: MediaStoreViewModel = hiltViewModel()
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }

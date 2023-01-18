@@ -7,6 +7,8 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.palm.composestateevents.consumed
+import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -61,18 +63,26 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
-    fun setCrop(crop: Boolean) {
+    fun startCropping() {
         state = state.copy(
-            crop = crop
+            crop = true,
+            isCropping = true
         )
-        Log.d(TAG, "setCrop")
+        Log.d(TAG, "startCropping")
     }
 
-    fun setCroppedImageBitmap(croppedImageBitmap: ImageBitmap) {
+    fun finishCropping(croppedImageBitmap: ImageBitmap) {
         state = state.copy(
-            croppedImageBitmap = croppedImageBitmap
+            crop = false,
+            isCropping = false,
+            croppedImageBitmap = croppedImageBitmap,
+            nextScreenEvent = triggered
         )
-        Log.d(TAG, "setCroppedImageBitmap")
+        Log.d(TAG, "finishCropping")
+    }
+
+    fun onConsumedNextScreenEvent() {
+        state = state.copy(nextScreenEvent = consumed)
     }
 
     companion object {

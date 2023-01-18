@@ -1,6 +1,5 @@
 package myapp.hoang.media.components
 
-import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -17,8 +16,8 @@ import com.smarttoolfactory.cropper.settings.CropOutlineProperty
 fun InstaCloneCropper(
     imageBitmap: ImageBitmap,
     crop: Boolean,
-    onCropChange: (Boolean) -> Unit,
-    onCroppedImageBitmapChange: (ImageBitmap) -> Unit,
+    onCropStart: () -> Unit,
+    onCropSuccess: (ImageBitmap) -> Unit,
     modifier: Modifier = Modifier
 ) {
     ImageCropper(
@@ -38,13 +37,8 @@ fun InstaCloneCropper(
             aspectRatio = AspectRatio(1f)
         ),
         crop = crop,
-        onCropStart = {
-            Log.d("MYTAG", "Hi")
-        },
-        onCropSuccess = {
-            onCropChange(false)
-            onCroppedImageBitmapChange(it)
-        },
+        onCropStart = onCropStart,
+        onCropSuccess = { onCropSuccess(it) },
         modifier = modifier
     )
 }

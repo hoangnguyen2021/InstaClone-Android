@@ -22,14 +22,14 @@ fun CreateContentScreen(
         composable(route = CreateContentScreen.SelectContentScreen.route) {
             SelectContentScreen(
                 onClose = onClose,
-                onNext = { navController.navigate(CreateContentScreen.EditImageScreen.route) },
+                onNextScreen = { navController.navigate(CreateContentScreen.EditImageScreen.route) },
                 viewModel = viewModel
             )
         }
         composable(route = CreateContentScreen.EditImageScreen.route) {
             EditImageScreen(
                 onBack = { navController.navigateUp() },
-                onNext = { },
+                onNextScreen = { },
                 viewModel = viewModel
             )
         }
