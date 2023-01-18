@@ -28,7 +28,7 @@ A Clone Instagram app on Android using Jetpack Compose for UI and Ktor for serve
 - CI/CD: Bitrise
 - Deployment: AWS Amplify
    
-## Stage
+## Project Status
 In development
 Finished:
 - Signup Flow
