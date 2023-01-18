@@ -105,7 +105,8 @@ fun SearchIconButton(
 ) {
     IconButton(
         onClick = onClick,
-        colors = IconButtonDefaults.iconButtonColors(containerColor = Transparent,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
@@ -302,5 +303,28 @@ fun CameraIconButton(
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             modifier = Modifier.size(LocalDimension.current.mediumLarge)
         )
+    }
+}
+
+@Composable
+fun EditImageButton(
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+    modifier: Modifier
+) {
+    OutlinedIconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        shape = CircleShape,
+        border = BorderStroke(
+            width = LocalDimension.current.half,
+            color = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    ) {
+        icon()
     }
 }

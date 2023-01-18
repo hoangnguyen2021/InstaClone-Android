@@ -361,3 +361,133 @@ fun CameraIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun AdjustIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_adjust),
+        contentDescription = "Adjust",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun BrightnessIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_brightness),
+        contentDescription = "Brightness",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun ContrastIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_contrast),
+        contentDescription = "Contrast",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun StructureIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_structure),
+        contentDescription = "Structure",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun WarmthIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_warmth),
+        contentDescription = "Warmth",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun SaturationIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_saturation),
+        contentDescription = "Saturation",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun ColorIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_color),
+        contentDescription = "Color",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun FadeIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_fade),
+        contentDescription = "Fade",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun HighlightsIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_highlights),
+        contentDescription = "Highlights",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun ShadowsIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_shadows),
+        contentDescription = "Shadows",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun VignetteIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_vignette),
+        contentDescription = "Vignette",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun TiltShiftIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_tilt_shift),
+        contentDescription = "Tilt shift",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun SharpenIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_sharpen),
+        contentDescription = "Sharpen",
+        modifier = modifier,
+        tint = color
+    )
+}

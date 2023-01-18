@@ -127,7 +127,10 @@ fun SelectContentScreen(
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = LocalDimension.current.small,
+                    alignment = Alignment.Start
+                ),
                 modifier = Modifier
                     .wrapContentWidth()
                     .fillMaxHeight()
@@ -136,7 +139,6 @@ fun SelectContentScreen(
                     onClick = { },
                     modifier = Modifier.size(LocalDimension.current.twoExtraLarge)
                 )
-                Spacer(modifier = Modifier.width(LocalDimension.current.small))
                 CameraIconButton(
                     onClick = { },
                     Modifier.size(LocalDimension.current.twoExtraLarge)
