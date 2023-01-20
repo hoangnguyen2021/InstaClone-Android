@@ -57,11 +57,19 @@ fun WritePostScreen(
                 modifier = Modifier.weight(0.1f)
             )
         }
-        WritePostCaptionTextField(
-            value = caption,
-            onValueChange = { caption = it },
-            label = "Write a caption...",
-            leadingBitmap = uiState.croppedImageBitmap!!
-        )
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.92f)
+        ) {
+            WritePostCaptionTextField(
+                value = caption,
+                onValueChange = { caption = it },
+                label = "Write a caption...",
+                leadingBitmap = uiState.croppedImageBitmap!!
+            )
+        }
     }
 }

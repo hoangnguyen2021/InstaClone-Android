@@ -253,44 +253,63 @@ fun WritePostCaptionTextField(
     leadingBitmap: ImageBitmap,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colorScheme.onPrimary,
-            containerColor = MaterialTheme.colorScheme.primary,
-            cursorColor = Turquoise,
-            selectionColors = TextSelectionColors(Turquoise, Verdigris),
-            focusedIndicatorColor = MaterialTheme.colorScheme.outline,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
-            disabledIndicatorColor = MaterialTheme.colorScheme.outline,
-        ),
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start,
         modifier = Modifier
             .fillMaxWidth()
-            .height(LocalDimension.current.sevenExtraLarge)
-            .background(MaterialTheme.colorScheme.primary)
-            .padding(vertical = LocalDimension.current.extraSmall),
-        textStyle = MaterialTheme.typography.bodyLarge,
-        placeholder = {
-            Text(
-                text = label,
-                color = MaterialTheme.colorScheme.onSecondary,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Normal
-            )
-        },
-        leadingIcon = {
-            ImageEditPreview(
-                bitmap = leadingBitmap,
+            .wrapContentHeight()
+    ) {
+        ImageEditPreview(
+            bitmap = leadingBitmap,
+            modifier = Modifier
+                .size(LocalDimension.current.sixExtraLarge)
+                .aspectRatio(1f)
+                .clip(RectangleShape)
+        )
+        // use box to center TextField vertically
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = LocalDimension.current.tenExtraLarge),
+            contentAlignment = Alignment.Center,
+        ) {
+            TextField(
+                value = value,
+                onValueChange = onValueChange,
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colorScheme.onPrimary,
+                    placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    cursorColor = Turquoise,
+                    selectionColors = TextSelectionColors(Turquoise, Verdigris),
+                    focusedIndicatorColor = Transparent,
+                    unfocusedIndicatorColor = Transparent,
+                    disabledIndicatorColor = Transparent
+                ),
                 modifier = Modifier
-                    .size(LocalDimension.current.sixExtraLarge)
-                    .aspectRatio(1f)
-                    .clip(RectangleShape)
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                textStyle = MaterialTheme.typography.bodyMedium,
+                placeholder = {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Normal
+                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = keyboardType
+                ),
+                shape = RectangleShape
             )
-        },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = keyboardType
-        ),
-        shape = RectangleShape
+        }
+    }
+    Divider(
+        color = MaterialTheme.colorScheme.outline,
+        thickness = 0.3.dp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
     )
 }

@@ -279,7 +279,7 @@ fun CheckMarkIconButton(
     ) {
         CheckMarkIcon(
             color = MaterialTheme.colorScheme.primaryContainer,
-            modifier = Modifier.size(LocalDimension.current.large)
+            modifier = Modifier.size(LocalDimension.current.extraLarge)
         )
     }
 }
