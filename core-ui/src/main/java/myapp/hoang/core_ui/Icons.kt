@@ -325,7 +325,7 @@ fun MagicWandIcon(color: Color, modifier: Modifier = Modifier) {
 @Composable
 fun NextIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_arrow_right),
+        painter = painterResource(id = R.drawable.ic_arrow_right_2),
         contentDescription = "Next",
         modifier = modifier,
         tint = color
@@ -337,6 +337,16 @@ fun BackIcon2(color: Color, modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_arrow_left_2),
         contentDescription = "Go back",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun CheckMarkIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_check_mark),
+        contentDescription = "Check mark",
         modifier = modifier,
         tint = color
     )

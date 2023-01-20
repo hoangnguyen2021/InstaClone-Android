@@ -69,6 +69,8 @@ fun SelectContentScreen(
     }
 
     Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier.fillMaxSize()
     ) {
         Row(

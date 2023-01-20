@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -157,6 +156,8 @@ fun EditImageScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier.fillMaxSize()
     ) {
         Row(
@@ -176,7 +177,7 @@ fun EditImageScreen(
                 modifier = Modifier.weight(0.8f)
             )
             NextIconButton(
-                onClick = {},
+                onClick = onNextScreen,
                 modifier = Modifier.weight(0.1f)
             )
         }

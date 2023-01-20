@@ -11,8 +11,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -238,4 +242,55 @@ fun OnBoardingBirthdayField(
             onTextFieldValueChange = onValueChange
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WritePostCaptionTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    leadingBitmap: ImageBitmap,
+    keyboardType: KeyboardType = KeyboardType.Text
+) {
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primary,
+            cursorColor = Turquoise,
+            selectionColors = TextSelectionColors(Turquoise, Verdigris),
+            focusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            disabledIndicatorColor = MaterialTheme.colorScheme.outline,
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.sevenExtraLarge)
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(vertical = LocalDimension.current.extraSmall),
+        textStyle = MaterialTheme.typography.bodyLarge,
+        placeholder = {
+            Text(
+                text = label,
+                color = MaterialTheme.colorScheme.onSecondary,
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Normal
+            )
+        },
+        leadingIcon = {
+            ImageEditPreview(
+                bitmap = leadingBitmap,
+                modifier = Modifier
+                    .size(LocalDimension.current.sixExtraLarge)
+                    .aspectRatio(1f)
+                    .clip(RectangleShape)
+            )
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ),
+        shape = RectangleShape
+    )
 }

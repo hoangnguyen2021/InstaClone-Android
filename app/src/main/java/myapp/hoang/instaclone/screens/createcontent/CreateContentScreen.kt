@@ -33,7 +33,14 @@ fun CreateContentScreen(
         composable(route = CreateContentScreen.EditImageScreen.route) {
             EditImageScreen(
                 onBack = { navController.navigateUp() },
-                onNextScreen = { },
+                onNextScreen = { navController.navigate(CreateContentScreen.WritePostScreen.route) },
+                viewModel = viewModel
+            )
+        }
+        composable(route = CreateContentScreen.WritePostScreen.route) {
+            WritePostScreen(
+                onBack = { navController.navigateUp() },
+                onCreateContent = { },
                 viewModel = viewModel
             )
         }

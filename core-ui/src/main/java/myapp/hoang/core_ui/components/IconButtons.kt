@@ -225,26 +225,6 @@ fun CloseIconButton(
 }
 
 @Composable
-fun NextIconButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    IconButton(
-        onClick = onClick,
-        colors = IconButtonDefaults.iconButtonColors(
-            containerColor = Transparent,
-            contentColor = MaterialTheme.colorScheme.primaryContainer
-        ),
-        modifier = modifier
-    ) {
-        NextIcon(
-            color = MaterialTheme.colorScheme.primaryContainer,
-            modifier = Modifier.size(LocalDimension.current.extraLarge)
-        )
-    }
-}
-
-@Composable
 fun BackIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -259,7 +239,47 @@ fun BackIconButton(
     ) {
         BackIcon2(
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.size(LocalDimension.current.extraLarge)
+            modifier = Modifier.size(LocalDimension.current.large)
+        )
+    }
+}
+
+@Composable
+fun NextIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier
+    ) {
+        NextIcon(
+            color = MaterialTheme.colorScheme.primaryContainer,
+            modifier = Modifier.size(LocalDimension.current.large)
+        )
+    }
+}
+
+@Composable
+fun CheckMarkIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier
+    ) {
+        CheckMarkIcon(
+            color = MaterialTheme.colorScheme.primaryContainer,
+            modifier = Modifier.size(LocalDimension.current.large)
         )
     }
 }
