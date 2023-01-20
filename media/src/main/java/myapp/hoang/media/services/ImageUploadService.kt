@@ -1,9 +1,8 @@
-package myapp.hoang.onboarding.signup.repositories
+package myapp.hoang.media.services
 
 import java.io.File
 
-
-interface ImageUploadRepository {
+interface ImageUploadService {
     suspend fun uploadProfilePic(imageFile: File): String
     suspend fun getProfilePic(profilePicPath: String): ByteArray
 }

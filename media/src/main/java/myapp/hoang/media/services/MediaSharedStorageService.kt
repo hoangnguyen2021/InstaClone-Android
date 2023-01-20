@@ -6,7 +6,7 @@ import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
 import myapp.hoang.media.models.Video
 
-interface MediaStoreService {
+interface MediaSharedStorageService {
     fun getAllImages(): List<Image>
     fun getAllVideos(): List<Video>
     fun getAllMedia(): List<Media>

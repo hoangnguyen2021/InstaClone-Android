@@ -12,9 +12,9 @@ import myapp.hoang.media.models.Media
 import myapp.hoang.media.models.Video
 import javax.inject.Inject
 
-class AndroidMediaStoreService @Inject constructor(
+class AndroidMediaSharedStorageService @Inject constructor(
     private val context: Context
-) : MediaStoreService {
+) : MediaSharedStorageService {
     override fun getAllImages(): List<Image> {
         val imageList = mutableListOf<Image>()
 

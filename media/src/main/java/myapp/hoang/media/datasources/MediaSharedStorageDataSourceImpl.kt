@@ -7,34 +7,34 @@ import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
 import myapp.hoang.media.models.Video
-import myapp.hoang.media.services.MediaStoreService
+import myapp.hoang.media.services.MediaSharedStorageService
 import javax.inject.Inject
 
-class MediaStoreDaraSourceImpl @Inject constructor(
-    private val mediaStoreService: MediaStoreService,
+class MediaSharedStorageDataSourceImpl @Inject constructor(
+    private val mediaSharedStorageService: MediaSharedStorageService,
     private val dispatcherProvider: DispatcherProvider
-): MediaStoreDataSource {
+): MediaSharedStorageDataSource {
     override suspend fun getAllImages(): List<Image> {
         return withContext(dispatcherProvider.io) {
-            mediaStoreService.getAllImages()
+            mediaSharedStorageService.getAllImages()
         }
     }
 
     override suspend fun getAllVideos(): List<Video> {
         return withContext(dispatcherProvider.io) {
-            mediaStoreService.getAllVideos()
+            mediaSharedStorageService.getAllVideos()
         }
     }
 
     override suspend fun getAllMedia(): List<Media> {
         return withContext(dispatcherProvider.io) {
-            mediaStoreService.getAllMedia()
+            mediaSharedStorageService.getAllMedia()
         }
     }
 
     override suspend fun getBitmapFromUri(uri: Uri): Bitmap {
         return withContext(dispatcherProvider.io) {
-            mediaStoreService.getBitmapFromUri(uri)
+            mediaSharedStorageService.getBitmapFromUri(uri)
         }
     }
 }

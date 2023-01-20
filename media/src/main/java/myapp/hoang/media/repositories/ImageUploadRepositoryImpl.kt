@@ -1,8 +1,8 @@
-package myapp.hoang.onboarding.signup.repositories
+package myapp.hoang.media.repositories
 
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
-import myapp.hoang.onboarding.signup.services.ImageUploadService
+import myapp.hoang.media.services.ImageUploadService
 import java.io.File
 import javax.inject.Inject
 

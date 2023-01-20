@@ -6,8 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import myapp.hoang.media.services.AndroidMediaStoreService
-import myapp.hoang.media.services.MediaStoreService
+import myapp.hoang.media.services.AndroidMediaSharedStorageService
+import myapp.hoang.media.services.MediaSharedStorageService
 import javax.inject.Singleton
 
 @Module
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun provideMediaStoreService(@ApplicationContext context: Context): MediaStoreService {
-        return AndroidMediaStoreService(context)
+    fun provideMediaStoreService(@ApplicationContext context: Context): MediaSharedStorageService {
+        return AndroidMediaSharedStorageService(context)
     }
 }

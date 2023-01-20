@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import myapp.hoang.core_ui.utils.UiText
 import myapp.hoang.onboarding.R
-import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
+import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import java.io.File
 import javax.inject.Inject

@@ -9,11 +9,11 @@ import myapp.hoang.onboarding.login.datasources.LoginRemoteDataSource
 import myapp.hoang.onboarding.login.repositories.LoginRepository
 import myapp.hoang.onboarding.login.repositories.LoginRepositoryImpl
 import myapp.hoang.onboarding.signup.datasources.SignupRemoteDataSource
-import myapp.hoang.onboarding.signup.repositories.ImageUploadRepository
-import myapp.hoang.onboarding.signup.repositories.ImageUploadRepositoryImpl
+import myapp.hoang.media.repositories.ImageUploadRepository
+import myapp.hoang.media.repositories.ImageUploadRepositoryImpl
 import myapp.hoang.onboarding.signup.repositories.SignupRepository
 import myapp.hoang.onboarding.signup.repositories.SignupRepositoryImpl
-import myapp.hoang.onboarding.signup.services.ImageUploadService
+import myapp.hoang.media.services.ImageUploadService
 import javax.inject.Singleton
 
 @Module

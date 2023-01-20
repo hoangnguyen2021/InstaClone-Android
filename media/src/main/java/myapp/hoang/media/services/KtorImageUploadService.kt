@@ -1,4 +1,4 @@
-package myapp.hoang.onboarding.signup.services
+package myapp.hoang.media.services
 
 import io.ktor.client.*
 import io.ktor.client.call.*

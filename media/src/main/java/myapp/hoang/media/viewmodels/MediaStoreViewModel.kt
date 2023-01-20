@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import myapp.hoang.media.repositories.MediaStoreRepository
+import myapp.hoang.media.repositories.MediaSharedStorageRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MediaStoreViewModel @Inject constructor(
-    private val mediaStoreRepository: MediaStoreRepository
+    private val mediaSharedStorageRepository: MediaSharedStorageRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(MediaStoreUiState())
     val uiState = _uiState.asStateFlow()
@@ -38,7 +38,7 @@ class MediaStoreViewModel @Inject constructor(
 
         getAllMediaJob = viewModelScope.launch {
             try {
-                val mediaList = mediaStoreRepository.getAllMedia()
+                val mediaList = mediaSharedStorageRepository.getAllMedia()
                 state = state.copy(
                     mediaList = mediaList
                 )
@@ -53,7 +53,7 @@ class MediaStoreViewModel @Inject constructor(
 
         getBitmapFromUriJob = viewModelScope.launch {
             try {
-                val bitmap = mediaStoreRepository.getBitmapFromUri(uri)
+                val bitmap = mediaSharedStorageRepository.getBitmapFromUri(uri)
                 state = state.copy(
                     imageBitmap = bitmap.asImageBitmap()
                 )

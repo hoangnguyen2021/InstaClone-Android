@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import myapp.hoang.core.coroutines.DispatcherProvider
-import myapp.hoang.media.datasources.MediaStoreDaraSourceImpl
-import myapp.hoang.media.datasources.MediaStoreDataSource
-import myapp.hoang.media.services.MediaStoreService
+import myapp.hoang.media.datasources.MediaSharedStorageDataSourceImpl
+import myapp.hoang.media.datasources.MediaSharedStorageDataSource
+import myapp.hoang.media.services.MediaSharedStorageService
 import javax.inject.Singleton
 
 @Module
@@ -16,9 +16,9 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideMediaStoreDataSource(
-        mediaStoreService: MediaStoreService,
+        mediaSharedStorageService: MediaSharedStorageService,
         dispatcherProvider: DispatcherProvider
-    ): MediaStoreDataSource {
-        return MediaStoreDaraSourceImpl(mediaStoreService, dispatcherProvider)
+    ): MediaSharedStorageDataSource {
+        return MediaSharedStorageDataSourceImpl(mediaSharedStorageService, dispatcherProvider)
     }
 }

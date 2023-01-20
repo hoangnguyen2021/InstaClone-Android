@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import myapp.hoang.media.datasources.MediaStoreDataSource
-import myapp.hoang.media.repositories.MediaStoreRepository
-import myapp.hoang.media.repositories.MediaStoreRepositoryImpl
+import myapp.hoang.media.datasources.MediaSharedStorageDataSource
+import myapp.hoang.media.repositories.MediaSharedStorageRepository
+import myapp.hoang.media.repositories.MediaSharedStorageRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -15,8 +15,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideMediaStoreRepository(
-        mediaStoreDataSource: MediaStoreDataSource
-    ): MediaStoreRepository {
-        return MediaStoreRepositoryImpl(mediaStoreDataSource)
+        mediaSharedStorageDataSource: MediaSharedStorageDataSource
+    ): MediaSharedStorageRepository {
+        return MediaSharedStorageRepositoryImpl(mediaSharedStorageDataSource)
     }
 }

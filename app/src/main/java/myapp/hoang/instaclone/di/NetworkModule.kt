@@ -14,8 +14,8 @@ import io.ktor.serialization.kotlinx.json.*
 import myapp.hoang.core.config.NetworkConfig.HOST
 import myapp.hoang.onboarding.login.services.KtorLoginService
 import myapp.hoang.onboarding.login.services.LoginService
-import myapp.hoang.onboarding.signup.services.ImageUploadService
-import myapp.hoang.onboarding.signup.services.KtorImageUploadService
+import myapp.hoang.media.services.ImageUploadService
+import myapp.hoang.media.services.KtorImageUploadService
 import myapp.hoang.onboarding.signup.services.KtorSignupService
 import myapp.hoang.onboarding.signup.services.SignupService
 import javax.inject.Singleton

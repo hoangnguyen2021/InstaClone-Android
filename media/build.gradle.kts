@@ -5,5 +5,11 @@ apply {
 dependencies {
     "implementation"(project(Module.core))
     "implementation"(project(Module.coreUi))
+
     "implementation"(Compose.composeCropper)
+    "implementation"(Ktor.clientCore)
+    "implementation"(Ktor.clientAndroid)
+    "implementation"(Ktor.clientContentNegotiation)
+    "implementation"(Ktor.clientLogging)
+    "implementation"(Ktor.serializationKotlinxJson)
 }
