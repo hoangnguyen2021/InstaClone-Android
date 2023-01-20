@@ -21,7 +21,7 @@ import myapp.hoang.media.viewmodels.MediaStoreViewModel
 @Composable
 fun WritePostScreen(
     onBack: () -> Unit,
-    onCreateContent: () -> Unit,
+    onClose: () -> Unit,
     viewModel: MediaStoreViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -53,7 +53,9 @@ fun WritePostScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             CheckMarkIconButton(
-                onClick = onCreateContent,
+                onClick = {
+                    viewModel.uploadPostImageAndCreatePost()
+                },
                 modifier = Modifier.weight(0.1f)
             )
         }
@@ -68,7 +70,7 @@ fun WritePostScreen(
                 value = caption,
                 onValueChange = { caption = it },
                 label = "Write a caption...",
-                leadingBitmap = uiState.croppedImageBitmap!!
+                leadingBitmap = uiState.editedImageBitmap!!
             )
         }
     }

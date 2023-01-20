@@ -3,6 +3,7 @@ package myapp.hoang.media.viewmodels
 import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,12 +15,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.media.repositories.MediaSharedStorageRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MediaStoreViewModel @Inject constructor(
-    private val mediaSharedStorageRepository: MediaSharedStorageRepository
+    private val mediaSharedStorageRepository: MediaSharedStorageRepository,
+    private val imageUploadRepository: ImageUploadRepository
 ): ViewModel() {
     private val _uiState = MutableStateFlow(MediaStoreUiState())
     val uiState = _uiState.asStateFlow()
@@ -32,6 +35,7 @@ class MediaStoreViewModel @Inject constructor(
 
     private var getAllMediaJob: Job? = null
     private var getBitmapFromUriJob: Job? = null
+    private var uploadPostImageAndCreatePostJob: Job? = null
 
     fun getAllMedia() {
         getAllMediaJob?.cancel()
@@ -75,10 +79,33 @@ class MediaStoreViewModel @Inject constructor(
         state = state.copy(
             crop = false,
             isCropping = false,
-            croppedImageBitmap = croppedImageBitmap,
+            editedImageBitmap = croppedImageBitmap,
             nextScreenEvent = triggered
         )
         Log.d(TAG, "finishCropping")
+    }
+
+    fun uploadPostImageAndCreatePost() {
+        val bitmap = state.editedImageBitmap ?: return
+
+        state = state.copy(
+            isLoading = true
+        )
+        uploadPostImageAndCreatePostJob?.cancel()
+        uploadPostImageAndCreatePostJob = viewModelScope.launch {
+            state = try {
+                val postImagePath = imageUploadRepository.uploadPostImage(bitmap.asAndroidBitmap())
+                state.copy(
+                    isLoading = false,
+                    nextScreenEvent = triggered
+                )
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state.copy(
+                    isLoading = false
+                )
+            }
+        }
     }
 
     fun onConsumedNextScreenEvent() {

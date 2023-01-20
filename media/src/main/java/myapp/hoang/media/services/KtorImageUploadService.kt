@@ -1,5 +1,7 @@
 package myapp.hoang.media.services
 
+import android.graphics.Bitmap
+import android.util.Log
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
@@ -7,6 +9,7 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import myapp.hoang.core.config.NetworkConfig
+import myapp.hoang.core.utils.BitmapUtils
 import myapp.hoang.core.utils.TimeUtils
 import java.io.File
 import javax.inject.Inject
@@ -46,5 +49,38 @@ class KtorImageUploadService @Inject constructor(
             url(NetworkConfig.ROUTE_GET_PROFILE_PIC)
             parameter("objectKey", profilePicPath)
         }.body()
+    }
+
+    override suspend fun uploadPostImage(bitmap: Bitmap): String {
+        val timestamp = TimeUtils.getCurrentEpochMilli()
+
+        return client.post {
+            url(NetworkConfig.ROUTE_UPLOAD_POST_IMAGE)
+            setBody(MultiPartFormDataContent(
+                formData {
+                    append("description", "post image")
+                    append(
+                        "post-image",
+                        BitmapUtils.writeBitmapToByteArray(
+                            bitmap, Bitmap.CompressFormat.JPEG, 90
+                        ),
+                        Headers.build {
+                            append(HttpHeaders.ContentType, "image/jpeg")
+                            append(
+                                HttpHeaders.ContentDisposition,
+                                "filename=\"post-image-$timestamp.jpeg\""
+                            )
+                        }
+                    )
+                }
+            ))
+            onUpload { bytesSentTotal, contentLength ->
+                Log.d(TAG, "Sent $bytesSentTotal bytes from $contentLength")
+            }
+        }.body()
+    }
+
+    companion object {
+        private val TAG = KtorImageUploadService::class.java.simpleName
     }
 }

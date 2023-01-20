@@ -10,6 +10,7 @@ data class MediaStoreUiState(
     val imageBitmap: ImageBitmap? = null,
     val crop: Boolean = false,
     val isCropping: Boolean = false,
-    val croppedImageBitmap: ImageBitmap? = null,
+    val editedImageBitmap: ImageBitmap? = null,
+    val isLoading: Boolean = false,
     val nextScreenEvent: StateEvent = consumed
 )

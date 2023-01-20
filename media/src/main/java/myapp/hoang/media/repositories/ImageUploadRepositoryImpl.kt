@@ -1,5 +1,6 @@
 package myapp.hoang.media.repositories
 
+import android.graphics.Bitmap
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.media.services.ImageUploadService
@@ -19,6 +20,12 @@ class ImageUploadRepositoryImpl @Inject constructor(
     override suspend fun getProfilePic(profilePicPath: String): ByteArray {
         return withContext(dispatcherProvider.io) {
             imageUploadService.getProfilePic(profilePicPath)
+        }
+    }
+
+    override suspend fun uploadPostImage(bitmap: Bitmap): String {
+        return withContext(dispatcherProvider.io) {
+            imageUploadService.uploadPostImage(bitmap)
         }
     }
 }
