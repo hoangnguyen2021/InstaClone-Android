@@ -1,5 +1,6 @@
 object Compose {
-    const val version = "1.3.2"
+    const val version = "1.3.3"
+    private const val compilerVersion = "1.4.0"
     private const val material3Version = "1.0.1"
     private const val hiltNavigationVersion = "1.0.0"
     private const val pagingVersion = "1.0.0-rc1"
@@ -8,7 +9,7 @@ object Compose {
     private const val composeCropperVersion = "0.2.4"
 
     const val animation = "androidx.compose.animation:animation:$version"
-    const val compiler = "androidx.compose.compiler:compiler:$version"
+    const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
     const val material3 = "androidx.compose.material3:material3:$material3Version"
     const val runtime = "androidx.compose.runtime:runtime:$version"
     const val ui = "androidx.compose.ui:ui:$version"

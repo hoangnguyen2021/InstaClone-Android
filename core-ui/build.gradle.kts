@@ -3,6 +3,6 @@ apply {
 }
 
 dependencies {
-    "implementation"("androidx.compose.ui:ui-util:1.3.2")
+    "implementation"("androidx.compose.ui:ui-util:1.3.3")
     "implementation"(Accompanist.systemUiController)
 }
