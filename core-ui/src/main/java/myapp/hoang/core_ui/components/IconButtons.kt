@@ -286,14 +286,18 @@ fun CheckMarkIconButton(
 
 @Composable
 fun MultipleMediaIconButton(
-    onClick: () -> Unit,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    FilledIconButton(
-        onClick = onClick,
-        colors = IconButtonDefaults.iconButtonColors(
+    FilledIconToggleButton(
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        colors = IconButtonDefaults.filledIconToggleButtonColors(
             containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            checkedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            checkedContentColor = MaterialTheme.colorScheme.onPrimaryContainer
         ),
         shape = CircleShape,
         modifier = modifier

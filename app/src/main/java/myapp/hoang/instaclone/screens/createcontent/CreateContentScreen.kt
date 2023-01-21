@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core.navigation.CreateContentScreen
+import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.viewmodels.MediaStoreViewModel
 
 /**
@@ -38,9 +39,21 @@ fun CreateContentScreen(
         startDestination = CreateContentScreen.SelectContentScreen.route
     ) {
         composable(route = CreateContentScreen.SelectContentScreen.route) {
-            SelectContentScreen(
+            SelectMediaScreen(
                 onClose = onClose,
-                onNextScreen = { navController.navigate(CreateContentScreen.EditImageScreen.route) },
+                onNextScreen = {
+                    if (uiState.selectMediaMode == SelectMediaMode.MULTIPLE)
+                        navController.navigate(CreateContentScreen.EditImagesScreen.route)
+                    else
+                        navController.navigate(CreateContentScreen.EditImageScreen.route)
+                },
+                viewModel = viewModel
+            )
+        }
+        composable(route = CreateContentScreen.EditImagesScreen.route) {
+            EditImagesScreen(
+                onBack = { navController.navigateUp() },
+                onNextScreen = { navController.navigate(CreateContentScreen.WritePostScreen.route) },
                 viewModel = viewModel
             )
         }

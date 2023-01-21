@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.media.repositories.MediaSharedStorageRepository
 import javax.inject.Inject
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class MediaStoreViewModel @Inject constructor(
     private val mediaSharedStorageRepository: MediaSharedStorageRepository,
     private val imageUploadRepository: ImageUploadRepository
-): ViewModel() {
+) : ViewModel() {
     private val _uiState = MutableStateFlow(MediaStoreUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -46,6 +47,13 @@ class MediaStoreViewModel @Inject constructor(
                 state = state.copy(
                     mediaList = mediaList
                 )
+                // auto-select first media after load
+                if (mediaList.isNotEmpty()) {
+                    state = state.copy(
+                        selectedMediaIndices = setOf(0),
+                        focusedMediaIndex = 0
+                    )
+                }
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
             }
@@ -64,6 +72,44 @@ class MediaStoreViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
             }
+        }
+    }
+
+    fun toggleMediaSelection(index: Int) {
+        // focusedMediaIndex is always index unless
+        // the media at this index is unselected
+        var focusedMediaIndex = index
+        var shouldShowLimitAlert = false
+        state = state.copy(
+            selectedMediaIndices = state.selectedMediaIndices.toMutableSet()
+                .apply {
+                    when (state.selectMediaMode) {
+                        SelectMediaMode.SINGLE -> {
+                            clear()
+                            add(index)
+                        }
+                        SelectMediaMode.MULTIPLE -> {
+                            if (this.contains(index) && index == state.focusedMediaIndex) {
+                                remove(index)
+                                this.lastOrNull()?.let { focusedMediaIndex = it }
+                            } else if (size < 10) {
+                                add(index)
+                            } else if (!this.contains(index)) {
+                                shouldShowLimitAlert = true
+                            }
+                        }
+                    }
+                    toSet()
+                }
+        )
+        state = if (shouldShowLimitAlert) {
+            state.copy(
+                showLimitAlert = triggered
+            )
+        } else {
+            state.copy(
+                focusedMediaIndex = focusedMediaIndex
+            )
         }
     }
 
@@ -108,8 +154,24 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
+    fun toggleSelectMediaMode() {
+        state = if (state.selectMediaMode == SelectMediaMode.SINGLE) {
+            state.copy(
+                selectMediaMode = SelectMediaMode.MULTIPLE
+            )
+        } else {
+            state.copy(
+                selectMediaMode = SelectMediaMode.SINGLE
+            )
+        }
+    }
+
     fun onConsumedNextScreenEvent() {
         state = state.copy(nextScreenEvent = consumed)
+    }
+
+    fun onConsumedShowLimitAlert() {
+        state = state.copy(showLimitAlert = consumed)
     }
 
     companion object {
