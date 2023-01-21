@@ -1,17 +1,22 @@
 package myapp.hoang.core_ui.components
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -145,4 +150,29 @@ fun ImagePreviewPlaceholder() {
             .fillMaxSize()
             .background(Color(0xFF363636))
     )
+}
+
+@Composable
+fun ImagesEditPreview(
+    bitmaps: List<ImageBitmap>,
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.small),
+        contentPadding = PaddingValues(
+            horizontal = LocalDimension.current.medium
+        ),
+        modifier = modifier
+    ) {
+        items(items = bitmaps) { bitmap ->
+            ImageEditPreview(
+                bitmap = bitmap,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .aspectRatio(1f)
+                    .clip(RectangleShape)
+            )
+        }
+    }
 }

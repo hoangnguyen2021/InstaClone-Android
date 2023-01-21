@@ -42,7 +42,7 @@ android {
         jvmTarget = "1.8"
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Compose.version
+        kotlinCompilerExtensionVersion = Compose.compilerVersion
     }
     packagingOptions {
         resources {

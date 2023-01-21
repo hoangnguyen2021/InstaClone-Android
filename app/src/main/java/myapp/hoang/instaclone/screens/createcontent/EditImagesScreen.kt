@@ -47,9 +47,13 @@ fun EditImagesScreen(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.5f)
+                .weight(0.4f)
         ) {
-
+//            ImagesEditPreview(
+//                bitmaps = uiState.mediaList
+//                    .filterIndexed { index, media -> uiState.selectedMediaIndices.contains(index) }
+//                    .map { it.contentUri }
+//            )
         }
     }
 }

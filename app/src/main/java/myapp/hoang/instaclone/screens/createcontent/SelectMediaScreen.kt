@@ -3,7 +3,6 @@ package myapp.hoang.instaclone.screens.createcontent
 import android.Manifest
 import android.os.Build
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -71,14 +70,14 @@ fun SelectMediaScreen(
         // when switch to single mode from multiple mode
         if (uiState.selectMediaMode == SelectMediaMode.SINGLE) {
             // re-select the media with focusedMediaIndex
-            viewModel.toggleMediaSelection(uiState.focusedMediaIndex)
+            viewModel.toggleMediaSelection(uiState.focusedMedia)
         }
     }
 
-    LaunchedEffect(key1 = uiState.focusedMediaIndex) {
+    LaunchedEffect(key1 = uiState.focusedMedia) {
         // update media preview whenever focusedMediaIndex changes
-        uiState.mediaList.getOrNull(uiState.focusedMediaIndex)?.let {
-            viewModel.getBitmapFromUri(it.contentUri)
+        uiState.mediaList.getOrNull(uiState.focusedMedia.index)?.let {
+            viewModel.setCropPreviewFromUri(it.contentUri)
         }
     }
 
@@ -136,14 +135,14 @@ fun SelectMediaScreen(
                     .fillMaxWidth()
                     .weight(0.5f)
             ) {
-                if (uiState.imageBitmap == null) {
+                if (uiState.cropPreviewBitmap == null) {
                     ImagePreviewPlaceholder()
                 } else {
                     InstaCloneCropper(
                         crop = uiState.crop,
                         onCropStart = {},
                         onCropSuccess = { viewModel.finishCropping(it) },
-                        imageBitmap = uiState.imageBitmap!!,
+                        imageBitmap = uiState.cropPreviewBitmap!!,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -190,8 +189,8 @@ fun SelectMediaScreen(
                 MediaGrid(
                     mediaList = uiState.mediaList,
                     selectMediaMode = uiState.selectMediaMode,
-                    selectedMediaIndices = uiState.selectedMediaIndices,
-                    lastClickedMediaIndex = uiState.focusedMediaIndex,
+                    selectedMediaSet = uiState.selectedMediaSet,
+                    focusedMedia = uiState.focusedMedia,
                     onMediaSelect = { viewModel.toggleMediaSelection(it) },
                     modifier = Modifier.fillMaxSize()
                 )

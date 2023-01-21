@@ -187,11 +187,11 @@ fun EditImageScreen(
                 .fillMaxWidth()
                 .weight(0.5f)
         ) {
-            if (uiState.editedImageBitmap == null) {
+            if (uiState.editedBitmaps.isEmpty()) {
                 ImagePreviewPlaceholder()
             } else {
                 ImageEditPreview(
-                    bitmap = uiState.editedImageBitmap!!,
+                    bitmap = uiState.editedBitmaps.first(),
                     modifier = Modifier
                         .fillMaxSize()
                         .aspectRatio(1f)

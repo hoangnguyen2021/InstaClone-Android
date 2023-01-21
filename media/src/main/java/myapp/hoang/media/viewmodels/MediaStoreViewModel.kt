@@ -50,8 +50,8 @@ class MediaStoreViewModel @Inject constructor(
                 // auto-select first media after load
                 if (mediaList.isNotEmpty()) {
                     state = state.copy(
-                        selectedMediaIndices = setOf(0),
-                        focusedMediaIndex = 0
+                        selectedMediaSet = setOf(SelectedMedia(0)),
+                        focusedMedia = SelectedMedia(0)
                     )
                 }
             } catch (e: Exception) {
@@ -60,14 +60,14 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
-    fun getBitmapFromUri(uri: Uri) {
+    fun setCropPreviewFromUri(uri: Uri) {
         getBitmapFromUriJob?.cancel()
 
         getBitmapFromUriJob = viewModelScope.launch {
             try {
                 val bitmap = mediaSharedStorageRepository.getBitmapFromUri(uri)
                 state = state.copy(
-                    imageBitmap = bitmap.asImageBitmap()
+                    cropPreviewBitmap = bitmap.asImageBitmap()
                 )
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
@@ -75,26 +75,26 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
-    fun toggleMediaSelection(index: Int) {
+    fun toggleMediaSelection(toggledMedia: SelectedMedia) {
         // focusedMediaIndex is always index unless
         // the media at this index is unselected
-        var focusedMediaIndex = index
+        var focusedMediaIndex = toggledMedia
         var shouldShowLimitAlert = false
         state = state.copy(
-            selectedMediaIndices = state.selectedMediaIndices.toMutableSet()
+            selectedMediaSet = state.selectedMediaSet.toMutableSet()
                 .apply {
                     when (state.selectMediaMode) {
                         SelectMediaMode.SINGLE -> {
                             clear()
-                            add(index)
+                            add(toggledMedia)
                         }
                         SelectMediaMode.MULTIPLE -> {
-                            if (this.contains(index) && index == state.focusedMediaIndex) {
-                                remove(index)
+                            if (this.contains(toggledMedia) && toggledMedia == state.focusedMedia) {
+                                remove(toggledMedia)
                                 this.lastOrNull()?.let { focusedMediaIndex = it }
                             } else if (size < 10) {
-                                add(index)
-                            } else if (!this.contains(index)) {
+                                add(toggledMedia)
+                            } else if (!this.contains(toggledMedia)) {
                                 shouldShowLimitAlert = true
                             }
                         }
@@ -108,7 +108,7 @@ class MediaStoreViewModel @Inject constructor(
             )
         } else {
             state.copy(
-                focusedMediaIndex = focusedMediaIndex
+                focusedMedia = focusedMediaIndex
             )
         }
     }
@@ -125,22 +125,21 @@ class MediaStoreViewModel @Inject constructor(
         state = state.copy(
             crop = false,
             isCropping = false,
-            editedImageBitmap = croppedImageBitmap,
+            editedBitmaps = setOf(croppedImageBitmap),
             nextScreenEvent = triggered
         )
         Log.d(TAG, "finishCropping")
     }
 
     fun uploadPostImageAndCreatePost() {
-        val bitmap = state.editedImageBitmap ?: return
-
         state = state.copy(
             isLoading = true
         )
         uploadPostImageAndCreatePostJob?.cancel()
         uploadPostImageAndCreatePostJob = viewModelScope.launch {
             state = try {
-                val postImagePath = imageUploadRepository.uploadPostImage(bitmap.asAndroidBitmap())
+                val postImagePath = imageUploadRepository
+                    .uploadPostImages(state.editedBitmaps.map { it.asAndroidBitmap() })
                 state.copy(
                     isLoading = false,
                     nextScreenEvent = triggered

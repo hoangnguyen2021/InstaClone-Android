@@ -51,27 +51,28 @@ class KtorImageUploadService @Inject constructor(
         }.body()
     }
 
-    override suspend fun uploadPostImage(bitmap: Bitmap): String {
-        val timestamp = TimeUtils.getCurrentEpochMilli()
-
+    override suspend fun uploadPostImages(bitmaps: List<Bitmap>): String {
         return client.post {
             url(NetworkConfig.ROUTE_UPLOAD_POST_IMAGE)
             setBody(MultiPartFormDataContent(
                 formData {
                     append("description", "post image")
-                    append(
-                        "post-image",
-                        BitmapUtils.writeBitmapToByteArray(
-                            bitmap, Bitmap.CompressFormat.JPEG, 90
-                        ),
-                        Headers.build {
-                            append(HttpHeaders.ContentType, "image/jpeg")
-                            append(
-                                HttpHeaders.ContentDisposition,
-                                "filename=\"post-image-$timestamp.jpeg\""
-                            )
-                        }
-                    )
+                    bitmaps.forEach { bitmap ->
+                        val timestamp = TimeUtils.getCurrentEpochMilli()
+                        append(
+                            "post-image",
+                            BitmapUtils.writeBitmapToByteArray(
+                                bitmap, Bitmap.CompressFormat.JPEG, 90
+                            ),
+                            Headers.build {
+                                append(HttpHeaders.ContentType, "image/jpeg")
+                                append(
+                                    HttpHeaders.ContentDisposition,
+                                    "filename=\"post-image-$timestamp.jpeg\""
+                                )
+                            }
+                        )
+                    }
                 }
             ))
             onUpload { bytesSentTotal, contentLength ->

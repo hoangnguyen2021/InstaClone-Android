@@ -31,14 +31,15 @@ import myapp.hoang.media.models.Image
 import myapp.hoang.media.models.Media
 import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.models.Video
+import myapp.hoang.media.viewmodels.SelectedMedia
 
 @Composable
 fun MediaGrid(
     mediaList: List<Media>,
     selectMediaMode: SelectMediaMode,
-    selectedMediaIndices: Set<Int>,
-    lastClickedMediaIndex: Int,
-    onMediaSelect: (Int) -> Unit,
+    selectedMediaSet: Set<SelectedMedia>,
+    focusedMedia: SelectedMedia,
+    onMediaSelect: (SelectedMedia) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -55,9 +56,9 @@ fun MediaGrid(
                     ImagePreview(
                         uri = item.contentUri,
                         selectMediaMode = selectMediaMode,
-                        selectedOrder = selectedMediaIndices.indexOf(i),
-                        isFocused = lastClickedMediaIndex == i,
-                        onClick = { onMediaSelect(i) }
+                        selectedOrder = selectedMediaSet.indexOf(SelectedMedia(i)),
+                        isFocused = focusedMedia.index == i,
+                        onClick = { onMediaSelect(SelectedMedia(i)) }
                     )
                 }
                 is Video -> {

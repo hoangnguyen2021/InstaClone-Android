@@ -9,12 +9,12 @@ import myapp.hoang.media.models.SelectMediaMode
 data class MediaStoreUiState(
     val mediaList: List<Media> = emptyList(),
     val selectMediaMode: SelectMediaMode = SelectMediaMode.SINGLE,
-    val selectedMediaIndices: Set<Int> = emptySet(),
-    val focusedMediaIndex: Int = 0,
-    val imageBitmap: ImageBitmap? = null,
+    val selectedMediaSet: Set<SelectedMedia> = emptySet(),
+    val focusedMedia: SelectedMedia = SelectedMedia(0),
+    val cropPreviewBitmap: ImageBitmap? = null,
     val crop: Boolean = false,
     val isCropping: Boolean = false,
-    val editedImageBitmap: ImageBitmap? = null,
+    val editedBitmaps: Set<ImageBitmap> = emptySet(),
     val isLoading: Boolean = false,
     val nextScreenEvent: StateEvent = consumed,
     val showLimitAlert: StateEvent = consumed

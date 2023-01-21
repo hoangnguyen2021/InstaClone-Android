@@ -70,7 +70,7 @@ fun WritePostScreen(
                 value = caption,
                 onValueChange = { caption = it },
                 label = "Write a caption...",
-                leadingBitmap = uiState.editedImageBitmap!!
+                leadingBitmap = uiState.editedBitmaps.first()
             )
         }
     }
