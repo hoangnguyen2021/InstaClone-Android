@@ -108,30 +108,45 @@ class MediaStoreViewModel @Inject constructor(
     private suspend fun buildSelectedMedia(index: Int): SelectedMedia {
         return SelectedMedia(
             index = index,
+            crop = false,
             originalBitmap = mediaSharedStorageRepository
                 .getBitmapFromUri(state.mediaList[index].contentUri)
-                .asImageBitmap()
+                .asImageBitmap(),
+            croppedBitmap = null
         )
+    }
+
+    fun startCropping(index: Int) {
+        state = state.copy(
+            selectedMediaList = state.selectedMediaList
+                .map {
+                    if (it.index == index)
+                        SelectedMedia(it.index, true, it.originalBitmap, it.croppedBitmap)
+                    else it
+                }
+        )
+        Log.d(TAG, "startCropping $index")
+    }
+
+    fun finishCropping(index: Int, croppedImageBitmap: ImageBitmap) {
+        state = state.copy(
+            selectedMediaList = state.selectedMediaList
+                .map {
+                    if (it.index == index)
+                        SelectedMedia(it.index, false, it.originalBitmap, croppedImageBitmap)
+                    else it
+                },
+            nextScreenEvent = triggered
+        )
+        Log.d(TAG, "finishCropping media $index")
     }
 
     fun startCropping() {
         state = state.copy(
             selectedMediaList = state.selectedMediaList
-                .map { SelectedMedia(it.index, true) }
+                .map { SelectedMedia(it.index, true, it.originalBitmap, it.croppedBitmap) }
         )
         Log.d(TAG, "startCropping all selected media")
-    }
-
-    fun finishCropping(croppedMedia: SelectedMedia, croppedImageBitmap: ImageBitmap) {
-        state = state.copy(
-            selectedMediaList = state.selectedMediaList
-                .map {
-                    if (it == croppedMedia) SelectedMedia(it.index, false, croppedImageBitmap)
-                    else it
-                },
-            nextScreenEvent = triggered
-        )
-        Log.d(TAG, "finishCropping media of index ${croppedMedia.index}")
     }
 
     fun uploadPostImageAndCreatePost() {

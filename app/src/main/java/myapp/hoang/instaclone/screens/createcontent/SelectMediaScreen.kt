@@ -3,9 +3,9 @@ package myapp.hoang.instaclone.screens.createcontent
 import android.Manifest
 import android.os.Build
 import android.util.Log
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,6 +20,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.LocalDimension
+import myapp.hoang.core_ui.White
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
 import myapp.hoang.media.components.InstaCloneCropper
@@ -31,7 +32,7 @@ import myapp.hoang.media.viewmodels.MediaStoreViewModel
 @OptIn(
     ExperimentalPermissionsApi::class,
     ExperimentalLifecycleComposeApi::class,
-    ExperimentalMaterial3Api::class
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
 fun SelectMediaScreen(
@@ -60,6 +61,8 @@ fun SelectMediaScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val snackbarHostState = remember { SnackbarHostState() }
+    val scrollState = rememberScrollState()
+    val overscrollEffect = ScrollableDefaults.overscrollEffect()
     val context = LocalContext.current
 
     LaunchedEffect(key1 = readMediaPermissionState.allPermissionsGranted) {
@@ -140,23 +143,25 @@ fun SelectMediaScreen(
                 if (uiState.selectedMediaList.isEmpty()) {
                     ImagePreviewPlaceholder()
                 } else {
-                    LazyRow(
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.large),
                         modifier = Modifier.fillMaxSize()
+                            .horizontalScroll(
+                                state = scrollState,
+                                flingBehavior = ScrollableDefaults.flingBehavior()
+                            )
+                            .overscroll(overscrollEffect)
                     ) {
-                        items(items = uiState.selectedMediaList) { selectedMedia ->
+                        uiState.selectedMediaList.forEach { selectedMedia ->
                             if (selectedMedia.originalBitmap != null) {
                                 InstaCloneCropper(
                                     crop = selectedMedia.crop,
                                     onCropStart = {},
-                                    onCropSuccess = { viewModel.finishCropping(selectedMedia, it) },
+                                    onCropSuccess = { viewModel.finishCropping(selectedMedia.index, it) },
                                     imageBitmap = selectedMedia.originalBitmap!!,
-                                    modifier = if (selectedMedia.index == uiState.focusedMediaIndex) {
-                                        Modifier
-                                            .fillMaxHeight()
-                                            .aspectRatio(1f)
-                                    } else {
-                                        Modifier.size(1.dp)
-                                    }
+                                    modifier = Modifier
+                                        .fillMaxHeight(0.8f)
+                                        .aspectRatio(1f)
                                 )
                             }
                         }
