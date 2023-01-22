@@ -1,6 +1,5 @@
 package myapp.hoang.media.viewmodels
 
-import android.net.Uri
 import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
@@ -49,9 +48,55 @@ class MediaStoreViewModel @Inject constructor(
                 )
                 // auto-select first media after load
                 if (mediaList.isNotEmpty()) {
-                    state = state.copy(
-                        selectedMediaSet = setOf(SelectedMedia(0)),
-                        focusedMedia = SelectedMedia(0)
+                    toggleMediaSelection(0)
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+            }
+        }
+    }
+
+    fun toggleMediaSelection(toggledIndex: Int) {
+        getBitmapFromUriJob?.cancel()
+
+        getBitmapFromUriJob = viewModelScope.launch {
+            try {
+                // focusedIndex is always toggledIndex
+                // unless the media at toggledIndex is unselected
+                var focusedIndex = toggledIndex
+                var shouldShowLimitAlert = false
+                state = state.copy(
+                    selectedMediaList = state.selectedMediaList.toMutableList()
+                        .apply {
+                            when (state.selectMediaMode) {
+                                SelectMediaMode.SINGLE -> {
+                                    clear()
+                                    val selectedMedia = buildSelectedMedia(toggledIndex)
+                                    add(selectedMedia)
+                                }
+                                SelectMediaMode.MULTIPLE -> {
+                                    val alreadySelected = any { it.index == toggledIndex }
+                                    if (alreadySelected && toggledIndex == state.focusedMediaIndex) {
+                                        removeIf { it.index == toggledIndex }
+                                        lastOrNull()?.let { focusedIndex = it.index }
+                                    } else if (!alreadySelected && size < 10) {
+                                        val selectedMedia = buildSelectedMedia(toggledIndex)
+                                        add(selectedMedia)
+                                    } else if (!alreadySelected) {
+                                        shouldShowLimitAlert = true
+                                    }
+                                }
+                            }
+                            toList()
+                        }
+                )
+                state = if (shouldShowLimitAlert) {
+                    state.copy(
+                        showLimitAlert = triggered
+                    )
+                } else {
+                    state.copy(
+                        focusedMediaIndex = focusedIndex
                     )
                 }
             } catch (e: Exception) {
@@ -60,75 +105,33 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
-    fun setCropPreviewFromUri(uri: Uri) {
-        getBitmapFromUriJob?.cancel()
-
-        getBitmapFromUriJob = viewModelScope.launch {
-            try {
-                val bitmap = mediaSharedStorageRepository.getBitmapFromUri(uri)
-                state = state.copy(
-                    cropPreviewBitmap = bitmap.asImageBitmap()
-                )
-            } catch (e: Exception) {
-                Log.d(TAG, e.toString())
-            }
-        }
-    }
-
-    fun toggleMediaSelection(toggledMedia: SelectedMedia) {
-        // focusedMediaIndex is always index unless
-        // the media at this index is unselected
-        var focusedMediaIndex = toggledMedia
-        var shouldShowLimitAlert = false
-        state = state.copy(
-            selectedMediaSet = state.selectedMediaSet.toMutableSet()
-                .apply {
-                    when (state.selectMediaMode) {
-                        SelectMediaMode.SINGLE -> {
-                            clear()
-                            add(toggledMedia)
-                        }
-                        SelectMediaMode.MULTIPLE -> {
-                            if (this.contains(toggledMedia) && toggledMedia == state.focusedMedia) {
-                                remove(toggledMedia)
-                                this.lastOrNull()?.let { focusedMediaIndex = it }
-                            } else if (size < 10) {
-                                add(toggledMedia)
-                            } else if (!this.contains(toggledMedia)) {
-                                shouldShowLimitAlert = true
-                            }
-                        }
-                    }
-                    toSet()
-                }
+    private suspend fun buildSelectedMedia(index: Int): SelectedMedia {
+        return SelectedMedia(
+            index = index,
+            originalBitmap = mediaSharedStorageRepository
+                .getBitmapFromUri(state.mediaList[index].contentUri)
+                .asImageBitmap()
         )
-        state = if (shouldShowLimitAlert) {
-            state.copy(
-                showLimitAlert = triggered
-            )
-        } else {
-            state.copy(
-                focusedMedia = focusedMediaIndex
-            )
-        }
     }
 
     fun startCropping() {
         state = state.copy(
-            crop = true,
-            isCropping = true
+            selectedMediaList = state.selectedMediaList
+                .map { SelectedMedia(it.index, true) }
         )
-        Log.d(TAG, "startCropping")
+        Log.d(TAG, "startCropping all selected media")
     }
 
-    fun finishCropping(croppedImageBitmap: ImageBitmap) {
+    fun finishCropping(croppedMedia: SelectedMedia, croppedImageBitmap: ImageBitmap) {
         state = state.copy(
-            crop = false,
-            isCropping = false,
-            editedBitmaps = setOf(croppedImageBitmap),
+            selectedMediaList = state.selectedMediaList
+                .map {
+                    if (it == croppedMedia) SelectedMedia(it.index, false, croppedImageBitmap)
+                    else it
+                },
             nextScreenEvent = triggered
         )
-        Log.d(TAG, "finishCropping")
+        Log.d(TAG, "finishCropping media of index ${croppedMedia.index}")
     }
 
     fun uploadPostImageAndCreatePost() {
@@ -138,8 +141,9 @@ class MediaStoreViewModel @Inject constructor(
         uploadPostImageAndCreatePostJob?.cancel()
         uploadPostImageAndCreatePostJob = viewModelScope.launch {
             state = try {
-                val postImagePath = imageUploadRepository
-                    .uploadPostImages(state.editedBitmaps.map { it.asAndroidBitmap() })
+                val postImagePath = imageUploadRepository.uploadPostImages(
+                    state.selectedMediaList.mapNotNull { it.croppedBitmap?.asAndroidBitmap() }
+                )
                 state.copy(
                     isLoading = false,
                     nextScreenEvent = triggered

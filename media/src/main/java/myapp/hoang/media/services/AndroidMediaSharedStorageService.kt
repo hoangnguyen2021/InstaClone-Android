@@ -239,4 +239,17 @@ class AndroidMediaSharedStorageService @Inject constructor(
             MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
         }
     }
+
+    override fun getBitmapsFromUris(uris: List<Uri>): List<Bitmap> {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            uris.map { uri ->
+                ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, uri))
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            uris.map { uri ->
+                MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+            }
+        }
+    }
 }

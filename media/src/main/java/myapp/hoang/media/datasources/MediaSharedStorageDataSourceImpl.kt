@@ -37,4 +37,10 @@ class MediaSharedStorageDataSourceImpl @Inject constructor(
             mediaSharedStorageService.getBitmapFromUri(uri)
         }
     }
+
+    override suspend fun getBitmapsFromUris(uris: List<Uri>): List<Bitmap> {
+        return withContext(dispatcherProvider.io) {
+            mediaSharedStorageService.getBitmapsFromUris(uris)
+        }
+    }
 }

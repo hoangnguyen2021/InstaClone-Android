@@ -11,4 +11,5 @@ interface MediaSharedStorageRepository {
     suspend fun getAllVideos(): List<Video>
     suspend fun getAllMedia(): List<Media>
     suspend fun getBitmapFromUri(uri: Uri): Bitmap
+    suspend fun getBitmapsFromUris(uris: List<Uri>): List<Bitmap>
 }

@@ -2,13 +2,17 @@ package myapp.hoang.instaclone.screens.createcontent
 
 import android.Manifest
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -70,15 +74,12 @@ fun SelectMediaScreen(
         // when switch to single mode from multiple mode
         if (uiState.selectMediaMode == SelectMediaMode.SINGLE) {
             // re-select the media with focusedMediaIndex
-            viewModel.toggleMediaSelection(uiState.focusedMedia)
+            viewModel.toggleMediaSelection(uiState.focusedMediaIndex)
         }
     }
 
-    LaunchedEffect(key1 = uiState.focusedMedia) {
-        // update media preview whenever focusedMediaIndex changes
-        uiState.mediaList.getOrNull(uiState.focusedMedia.index)?.let {
-            viewModel.setCropPreviewFromUri(it.contentUri)
-        }
+    LaunchedEffect(key1 = uiState.selectedMediaList) {
+        Log.d("MYTAG", uiState.selectedMediaList.toString())
     }
 
     EventEffect(
@@ -90,7 +91,8 @@ fun SelectMediaScreen(
 
     EventEffect(
         event = uiState.showLimitAlert,
-        onConsumed = viewModel::onConsumedShowLimitAlert) {
+        onConsumed = viewModel::onConsumedShowLimitAlert
+    ) {
         snackbarHostState.showSnackbar(context.getString(R.string.select_media_limit_alert))
     }
 
@@ -135,16 +137,30 @@ fun SelectMediaScreen(
                     .fillMaxWidth()
                     .weight(0.5f)
             ) {
-                if (uiState.cropPreviewBitmap == null) {
+                if (uiState.selectedMediaList.isEmpty()) {
                     ImagePreviewPlaceholder()
                 } else {
-                    InstaCloneCropper(
-                        crop = uiState.crop,
-                        onCropStart = {},
-                        onCropSuccess = { viewModel.finishCropping(it) },
-                        imageBitmap = uiState.cropPreviewBitmap!!,
+                    LazyRow(
                         modifier = Modifier.fillMaxSize()
-                    )
+                    ) {
+                        items(items = uiState.selectedMediaList) { selectedMedia ->
+                            if (selectedMedia.originalBitmap != null) {
+                                InstaCloneCropper(
+                                    crop = selectedMedia.crop,
+                                    onCropStart = {},
+                                    onCropSuccess = { viewModel.finishCropping(selectedMedia, it) },
+                                    imageBitmap = selectedMedia.originalBitmap!!,
+                                    modifier = if (selectedMedia.index == uiState.focusedMediaIndex) {
+                                        Modifier
+                                            .fillMaxHeight()
+                                            .aspectRatio(1f)
+                                    } else {
+                                        Modifier.size(1.dp)
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
             }
             Row(
@@ -189,8 +205,8 @@ fun SelectMediaScreen(
                 MediaGrid(
                     mediaList = uiState.mediaList,
                     selectMediaMode = uiState.selectMediaMode,
-                    selectedMediaSet = uiState.selectedMediaSet,
-                    focusedMedia = uiState.focusedMedia,
+                    selectedMediaList = uiState.selectedMediaList,
+                    focusedMediaIndex = uiState.focusedMediaIndex,
                     onMediaSelect = { viewModel.toggleMediaSelection(it) },
                     modifier = Modifier.fillMaxSize()
                 )

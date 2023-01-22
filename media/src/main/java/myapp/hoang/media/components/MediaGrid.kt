@@ -37,9 +37,9 @@ import myapp.hoang.media.viewmodels.SelectedMedia
 fun MediaGrid(
     mediaList: List<Media>,
     selectMediaMode: SelectMediaMode,
-    selectedMediaSet: Set<SelectedMedia>,
-    focusedMedia: SelectedMedia,
-    onMediaSelect: (SelectedMedia) -> Unit,
+    selectedMediaList: List<SelectedMedia>,
+    focusedMediaIndex: Int,
+    onMediaSelect: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -56,9 +56,9 @@ fun MediaGrid(
                     ImagePreview(
                         uri = item.contentUri,
                         selectMediaMode = selectMediaMode,
-                        selectedOrder = selectedMediaSet.indexOf(SelectedMedia(i)),
-                        isFocused = focusedMedia.index == i,
-                        onClick = { onMediaSelect(SelectedMedia(i)) }
+                        selectedOrder = selectedMediaList.indexOfFirst { it.index == i },
+                        isFocused = focusedMediaIndex == i,
+                        onClick = { onMediaSelect(i) }
                     )
                 }
                 is Video -> {

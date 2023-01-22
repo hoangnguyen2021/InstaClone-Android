@@ -11,4 +11,5 @@ interface MediaSharedStorageService {
     fun getAllVideos(): List<Video>
     fun getAllMedia(): List<Media>
     fun getBitmapFromUri(uri: Uri): Bitmap
+    fun getBitmapsFromUris(uris: List<Uri>): List<Bitmap>
 }
