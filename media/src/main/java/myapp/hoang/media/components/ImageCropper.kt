@@ -34,7 +34,8 @@ fun InstaCloneCropper(
                 cropOutline = RectCropShape(0, "Rect")
             ),
             handleSize = 20.dp,
-            aspectRatio = AspectRatio(1f)
+            aspectRatio = AspectRatio(1f),
+            overlayRatio = 1f
         ),
         crop = crop,
         onCropStart = onCropStart,

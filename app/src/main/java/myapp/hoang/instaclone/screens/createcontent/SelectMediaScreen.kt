@@ -144,7 +144,8 @@ fun SelectMediaScreen(
                     ImagePreviewPlaceholder()
                 } else {
                     Row(
-                        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.large),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.mediumLarge),
                         modifier = Modifier.fillMaxSize()
                             .horizontalScroll(
                                 state = scrollState,
@@ -160,7 +161,7 @@ fun SelectMediaScreen(
                                     onCropSuccess = { viewModel.finishCropping(selectedMedia.index, it) },
                                     imageBitmap = selectedMedia.originalBitmap!!,
                                     modifier = Modifier
-                                        .fillMaxHeight(0.8f)
+                                        .fillMaxHeight(if (uiState.selectedMediaList.size == 1) 1f else 0.9f)
                                         .aspectRatio(1f)
                                 )
                             }
