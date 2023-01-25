@@ -116,16 +116,12 @@ class MediaStoreViewModel @Inject constructor(
         )
     }
 
-    fun startCropping(index: Int) {
+    fun startCropping() {
         state = state.copy(
             selectedMediaList = state.selectedMediaList
-                .map {
-                    if (it.index == index)
-                        SelectedMedia(it.index, true, it.originalBitmap, it.croppedBitmap)
-                    else it
-                }
+                .map { SelectedMedia(it.index, true, it.originalBitmap, it.croppedBitmap) }
         )
-        Log.d(TAG, "startCropping $index")
+        Log.d(TAG, "startCropping all selected media")
     }
 
     fun finishCropping(index: Int, croppedImageBitmap: ImageBitmap) {
@@ -133,20 +129,21 @@ class MediaStoreViewModel @Inject constructor(
             selectedMediaList = state.selectedMediaList
                 .map {
                     if (it.index == index)
-                        SelectedMedia(it.index, false, it.originalBitmap, croppedImageBitmap)
+                        SelectedMedia(
+                            index = it.index,
+                            crop = false,
+                            originalBitmap = it.originalBitmap,
+                            croppedBitmap = croppedImageBitmap
+                        )
                     else it
-                },
-            nextScreenEvent = triggered
+                }
         )
         Log.d(TAG, "finishCropping media $index")
-    }
-
-    fun startCropping() {
-        state = state.copy(
-            selectedMediaList = state.selectedMediaList
-                .map { SelectedMedia(it.index, true, it.originalBitmap, it.croppedBitmap) }
-        )
-        Log.d(TAG, "startCropping all selected media")
+        if (state.selectedMediaList.all { it.croppedBitmap != null }) {
+            state = state.copy(
+                nextScreenEvent = triggered
+            )
+        }
     }
 
     fun uploadPostImageAndCreatePost() {

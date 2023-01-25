@@ -2,7 +2,6 @@ package myapp.hoang.instaclone.screens.createcontent
 
 import android.Manifest
 import android.os.Build
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.*
@@ -12,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,7 +18,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.LocalDimension
-import myapp.hoang.core_ui.White
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
 import myapp.hoang.media.components.InstaCloneCropper
@@ -79,10 +76,6 @@ fun SelectMediaScreen(
             // re-select the media with focusedMediaIndex
             viewModel.toggleMediaSelection(uiState.focusedMediaIndex)
         }
-    }
-
-    LaunchedEffect(key1 = uiState.selectedMediaList) {
-        Log.d("MYTAG", uiState.selectedMediaList.toString())
     }
 
     EventEffect(
@@ -146,7 +139,8 @@ fun SelectMediaScreen(
                     Row(
                         verticalAlignment = Alignment.Top,
                         horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.mediumLarge),
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
                             .horizontalScroll(
                                 state = scrollState,
                                 flingBehavior = ScrollableDefaults.flingBehavior()
@@ -158,7 +152,12 @@ fun SelectMediaScreen(
                                 InstaCloneCropper(
                                     crop = selectedMedia.crop,
                                     onCropStart = {},
-                                    onCropSuccess = { viewModel.finishCropping(selectedMedia.index, it) },
+                                    onCropSuccess = {
+                                        viewModel.finishCropping(
+                                            selectedMedia.index,
+                                            it
+                                        )
+                                    },
                                     imageBitmap = selectedMedia.originalBitmap!!,
                                     modifier = Modifier
                                         .fillMaxHeight(if (uiState.selectedMediaList.size == 1) 1f else 0.9f)

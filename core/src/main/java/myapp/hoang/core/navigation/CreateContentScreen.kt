@@ -1,7 +1,7 @@
 package myapp.hoang.core.navigation
 
 sealed class CreateContentScreen(val route: String) {
-    object SelectContentScreen : CreateContentScreen("select-content")
+    object SelectMediaScreen : CreateContentScreen("select-media")
     object EditImageScreen : CreateContentScreen("edit-image")
     object EditImagesScreen : CreateContentScreen("edit-images")
     object WritePostScreen : CreateContentScreen("write-post")

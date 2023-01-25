@@ -49,11 +49,18 @@ fun EditImagesScreen(
                 .fillMaxWidth()
                 .weight(0.4f)
         ) {
-//            ImagesEditPreview(
-//                bitmaps = uiState.mediaList
-//                    .filterIndexed { index, media -> uiState.selectedMediaIndices.contains(index) }
-//                    .map { it.contentUri }
-//            )
+            ImagesEditPreview(
+                bitmaps = uiState.selectedMediaList.mapNotNull { it.croppedBitmap },
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.52f)
+        ) {
+
         }
     }
 }

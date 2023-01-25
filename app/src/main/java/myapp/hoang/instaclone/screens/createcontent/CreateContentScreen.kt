@@ -27,18 +27,11 @@ fun CreateContentScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    EventEffect(
-        event = uiState.nextScreenEvent,
-        onConsumed = viewModel::onConsumedNextScreenEvent
-    ) {
-        onClose()
-    }
-
     NavHost(
         navController = navController,
-        startDestination = CreateContentScreen.SelectContentScreen.route
+        startDestination = CreateContentScreen.SelectMediaScreen.route
     ) {
-        composable(route = CreateContentScreen.SelectContentScreen.route) {
+        composable(route = CreateContentScreen.SelectMediaScreen.route) {
             SelectMediaScreen(
                 onClose = onClose,
                 onNextScreen = {
