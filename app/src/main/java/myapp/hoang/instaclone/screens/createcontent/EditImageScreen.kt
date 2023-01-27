@@ -18,6 +18,7 @@ import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.models.EditImageButton
 import myapp.hoang.core_ui.components.models.EditImageTab
+import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.viewmodels.MediaStoreViewModel
 
 val editImageTabs = listOf(
@@ -148,6 +149,7 @@ val editImageButtons = listOf(
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun EditImageScreen(
+    selectedMediaListIndex: Int,
     onBack: () -> Unit,
     onNextScreen: () -> Unit,
     viewModel: MediaStoreViewModel = hiltViewModel()
@@ -168,18 +170,34 @@ fun EditImageScreen(
                 .weight(0.08f)
                 .padding(horizontal = LocalDimension.current.small)
         ) {
-            BackIconButton(
-                onClick = onBack,
-                modifier = Modifier.weight(0.1f)
-            )
+            when (uiState.selectMediaMode) {
+                SelectMediaMode.SINGLE ->
+                    BackIconButton(
+                        onClick = onBack,
+                        modifier = Modifier.weight(0.1f)
+                    )
+                SelectMediaMode.MULTIPLE ->
+                    CloseIconButton(
+                        onClick = onBack,
+                        modifier = Modifier.weight(0.1f)
+                    )
+            }
             MagicWandIcon(
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.weight(0.8f)
             )
-            NextIconButton(
-                onClick = onNextScreen,
-                modifier = Modifier.weight(0.1f)
-            )
+            when (uiState.selectMediaMode) {
+                SelectMediaMode.SINGLE ->
+                    NextIconButton(
+                        onClick = onNextScreen,
+                        modifier = Modifier.weight(0.1f)
+                    )
+                SelectMediaMode.MULTIPLE ->
+                    CheckMarkIconButton(
+                        onClick = onBack,
+                        modifier = Modifier.weight(0.1f)
+                    )
+            }
         }
         Box(
             contentAlignment = Alignment.Center,
@@ -190,13 +208,15 @@ fun EditImageScreen(
             if (uiState.selectedMediaList.isEmpty()) {
                 ImagePreviewPlaceholder()
             } else {
-                ImageEditPreview(
-                    bitmap = uiState.selectedMediaList.first().croppedBitmap!!,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .aspectRatio(1f)
-                        .clip(RectangleShape)
-                )
+                uiState.selectedMediaList[selectedMediaListIndex].croppedBitmap?.let { bitmap ->
+                    ImageEditPreview(
+                        bitmap = bitmap,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .aspectRatio(1f)
+                            .clip(RectangleShape)
+                    )
+                }
             }
         }
         Column(

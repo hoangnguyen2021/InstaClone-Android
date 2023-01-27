@@ -1,6 +1,8 @@
 package myapp.hoang.instaclone.screens.createcontent
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +17,7 @@ import myapp.hoang.media.viewmodels.MediaStoreViewModel
 @Composable
 fun EditImagesScreen(
     onBack: () -> Unit,
+    onImageClick: (Int) -> Unit,
     onNextScreen: () -> Unit,
     viewModel: MediaStoreViewModel = hiltViewModel()
 ) {
@@ -48,9 +51,11 @@ fun EditImagesScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.4f)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             ImagesEditPreview(
                 bitmaps = uiState.selectedMediaList.mapNotNull { it.croppedBitmap },
+                onImageClick = onImageClick,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -59,6 +64,7 @@ fun EditImagesScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(0.52f)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
 
         }

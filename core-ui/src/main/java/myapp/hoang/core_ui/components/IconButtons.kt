@@ -219,7 +219,8 @@ fun CloseIconButton(
         modifier = modifier
     ) {
         CloseIcon(
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.size(LocalDimension.current.mediumLarge)
         )
     }
 }

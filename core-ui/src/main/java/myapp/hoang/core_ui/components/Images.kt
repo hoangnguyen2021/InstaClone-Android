@@ -1,13 +1,12 @@
 package myapp.hoang.core_ui.components
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -155,6 +154,7 @@ fun ImagePreviewPlaceholder() {
 @Composable
 fun ImagesEditPreview(
     bitmaps: List<ImageBitmap>,
+    onImageClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyRow(
@@ -165,13 +165,14 @@ fun ImagesEditPreview(
         ),
         modifier = modifier
     ) {
-        items(items = bitmaps) { bitmap ->
+        itemsIndexed(items = bitmaps) { index, bitmap ->
             ImageEditPreview(
                 bitmap = bitmap,
                 modifier = Modifier
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .clip(RectangleShape)
+                    .clickable { onImageClick(index) }
             )
         }
     }
