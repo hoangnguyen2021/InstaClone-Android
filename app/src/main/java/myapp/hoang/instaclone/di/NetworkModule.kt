@@ -12,12 +12,6 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import myapp.hoang.core.config.NetworkConfig.HOST
-import myapp.hoang.onboarding.login.services.KtorLoginService
-import myapp.hoang.onboarding.login.services.LoginService
-import myapp.hoang.media.services.ImageUploadService
-import myapp.hoang.media.services.KtorImageUploadService
-import myapp.hoang.onboarding.signup.services.KtorSignupService
-import myapp.hoang.onboarding.signup.services.SignupService
 import javax.inject.Singleton
 
 @Module
@@ -43,23 +37,5 @@ object NetworkModule {
             }
             expectSuccess = true
         }
-    }
-
-    @Provides
-    @Singleton
-    fun provideSignupService(httpClient: HttpClient): SignupService {
-        return KtorSignupService(httpClient)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLoginService(httpClient: HttpClient): LoginService {
-        return KtorLoginService(httpClient)
-    }
-
-    @Provides
-    @Singleton
-    fun provideImageUploadService(httpClient: HttpClient): ImageUploadService {
-        return KtorImageUploadService(httpClient)
     }
 }

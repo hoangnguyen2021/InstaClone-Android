@@ -1,11 +1,10 @@
-package myapp.hoang.instaclone.di
+package myapp.hoang.onboarding.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import myapp.hoang.core.coroutines.DispatcherProvider
-import myapp.hoang.core.coroutines.DispatcherProviderImpl
 import myapp.hoang.onboarding.login.datasources.LoginRemoteDataSource
 import myapp.hoang.onboarding.login.datasources.LoginRemoteDataSourceImpl
 import myapp.hoang.onboarding.login.services.LoginService
@@ -33,11 +32,5 @@ object DataSourceModule {
         dispatcherProvider: DispatcherProvider
     ): LoginRemoteDataSource {
         return LoginRemoteDataSourceImpl(loginService, dispatcherProvider)
-    }
-
-    @Provides
-    @Singleton
-    fun provideDispatcherProvider(): DispatcherProvider {
-        return DispatcherProviderImpl()
     }
 }
