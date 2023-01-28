@@ -7,10 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
-import myapp.hoang.media.services.AndroidMediaSharedStorageService
-import myapp.hoang.media.services.ImageUploadService
-import myapp.hoang.media.services.KtorImageUploadService
-import myapp.hoang.media.services.MediaSharedStorageService
+import myapp.hoang.media.services.*
 import javax.inject.Singleton
 
 @Module
@@ -26,5 +23,11 @@ object ServiceModule {
     @Singleton
     fun provideImageUploadService(httpClient: HttpClient): ImageUploadService {
         return KtorImageUploadService(httpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun providePostService(httpClient: HttpClient): PostService {
+        return KtorPostService(httpClient)
     }
 }

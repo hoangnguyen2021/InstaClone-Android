@@ -1,10 +1,13 @@
 package myapp.hoang.media.models
 
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PostForm(
-    val mediaList: List<Media>,
-    val createdAt: Instant = Clock.System.now(),
-    val caption: String
+    val caption: String? = null,
+    val authorUsername: String? = null,
+    val createdAt: Instant? = null,
+    val lastEditedAt: Instant? = null,
+    val mediaPaths: List<String> = emptyList()
 )

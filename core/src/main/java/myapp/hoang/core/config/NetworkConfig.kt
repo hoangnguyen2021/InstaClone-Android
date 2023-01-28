@@ -13,5 +13,6 @@ object NetworkConfig {
     private const val ROUTE_POST = "post"
     const val ROUTE_UPLOAD_PROFILE_PIC = "$ROUTE_MEDIA/$ROUTE_PROFILE_PIC/upload-profile-pic"
     const val ROUTE_GET_PROFILE_PIC = "$ROUTE_MEDIA/$ROUTE_PROFILE_PIC/get-profile-pic"
-    const val ROUTE_UPLOAD_POST_IMAGE = "$ROUTE_MEDIA/$ROUTE_POST/upload-post-image"
+    const val ROUTE_UPLOAD_IMAGES = "$ROUTE_MEDIA/$ROUTE_POST/upload-images"
+    const val ROUTE_CREATE_POST = "$ROUTE_MEDIA/$ROUTE_POST/create"
 }

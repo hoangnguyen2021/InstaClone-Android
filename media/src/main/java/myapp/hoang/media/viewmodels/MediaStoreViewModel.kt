@@ -14,15 +14,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import myapp.hoang.media.models.PostForm
 import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.media.repositories.MediaSharedStorageRepository
+import myapp.hoang.media.repositories.PostRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MediaStoreViewModel @Inject constructor(
     private val mediaSharedStorageRepository: MediaSharedStorageRepository,
-    private val imageUploadRepository: ImageUploadRepository
+    private val imageUploadRepository: ImageUploadRepository,
+    private val postRepository: PostRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MediaStoreUiState())
     val uiState = _uiState.asStateFlow()
@@ -154,16 +158,24 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
-    fun uploadPostImageAndCreatePost() {
+    fun uploadPostImageAndCreatePost(caption: String) {
         state = state.copy(
             isLoading = true
         )
         uploadPostImageAndCreatePostJob?.cancel()
         uploadPostImageAndCreatePostJob = viewModelScope.launch {
             state = try {
-                imageUploadRepository.uploadPostImages(
+                val mediaPaths = imageUploadRepository.uploadPostImages(
                     state.selectedMediaList.mapNotNull { it.croppedBitmap?.asAndroidBitmap() }
                 )
+                val postForm = PostForm(
+                    caption = caption,
+                    authorUsername = "hoang__ng_",
+                    createdAt = Clock.System.now(),
+                    lastEditedAt = Clock.System.now(),
+                    mediaPaths = mediaPaths
+                )
+                postRepository.createPost(postForm)
                 state.copy(
                     isLoading = false,
                     nextScreenEvent = triggered

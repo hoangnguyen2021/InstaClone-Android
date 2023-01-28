@@ -56,7 +56,7 @@ class KtorImageUploadService @Inject constructor(
         val description = "post-images-$timestamp"
 
         return client.post {
-            url(NetworkConfig.ROUTE_UPLOAD_POST_IMAGE)
+            url(NetworkConfig.ROUTE_UPLOAD_IMAGES)
             setBody(MultiPartFormDataContent(
                 formData {
                     append("description", description)

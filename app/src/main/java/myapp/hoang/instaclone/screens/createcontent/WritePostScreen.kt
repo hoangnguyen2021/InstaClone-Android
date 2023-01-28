@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.BackIconButton
 import myapp.hoang.core_ui.components.CheckMarkIconButton
@@ -27,6 +28,13 @@ fun WritePostScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     var caption by remember { mutableStateOf("") }
+
+    EventEffect(
+        event = uiState.nextScreenEvent,
+        onConsumed = viewModel::onConsumedNextScreenEvent
+    ) {
+        onClose()
+    }
 
     Column(
         verticalArrangement = Arrangement.Top,
@@ -53,7 +61,7 @@ fun WritePostScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             CheckMarkIconButton(
-                onClick = { viewModel.uploadPostImageAndCreatePost() },
+                onClick = { viewModel.uploadPostImageAndCreatePost(caption) },
                 modifier = Modifier.weight(0.1f)
             )
         }
@@ -64,12 +72,14 @@ fun WritePostScreen(
                 .fillMaxWidth()
                 .weight(0.92f)
         ) {
-            WritePostCaptionTextField(
-                value = caption,
-                onValueChange = { caption = it },
-                label = "Write a caption...",
-                leadingBitmap = uiState.selectedMediaList.first().croppedBitmap!!
-            )
+            uiState.selectedMediaList.firstOrNull()?.croppedBitmap?.let { bitmap ->
+                WritePostCaptionTextField(
+                    value = caption,
+                    onValueChange = { caption = it },
+                    label = stringResource(R.string.write_caption_prompt),
+                    leadingBitmap = bitmap
+                )
+            }
         }
     }
 }
