@@ -59,8 +59,9 @@ dependencies {
     implementation(project(Module.onBoarding))
     implementation(project(Module.media))
 
-    implementation(Kotlin.kotlinxSerialization)
-    implementation(Kotlin.kotlinxDateTime)
+    implementation(Kotlinx.coroutines)
+    implementation(Kotlinx.serialization)
+    implementation(Kotlinx.dateTime)
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)

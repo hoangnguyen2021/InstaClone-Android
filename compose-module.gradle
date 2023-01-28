@@ -46,8 +46,9 @@ android {
 dependencies {
     implementation project(':core')
 
-    implementation Kotlin.kotlinxSerialization
-    implementation Kotlin.kotlinxDateTime
+    implementation Kotlinx.coroutines
+    implementation Kotlinx.serialization
+    implementation Kotlinx.dateTime
 
     implementation Compose.compiler
     implementation Compose.ui

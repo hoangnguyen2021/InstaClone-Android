@@ -12,7 +12,5 @@ dependencies {
     "implementation"(Ktor.clientLogging)
     "implementation"(Ktor.serializationKotlinxJson)
 
-    "implementation"(Twilio.javaSdk)
-
     "implementation"(Canhub.androidImageCropper)
 }
