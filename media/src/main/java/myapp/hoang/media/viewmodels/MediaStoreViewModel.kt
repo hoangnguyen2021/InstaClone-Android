@@ -119,7 +119,14 @@ class MediaStoreViewModel @Inject constructor(
     fun startCropping() {
         state = state.copy(
             selectedMediaList = state.selectedMediaList
-                .map { SelectedMedia(it.index, true, it.originalBitmap, it.croppedBitmap) }
+                .map {
+                    SelectedMedia(
+                        index = it.index,
+                        crop = true,
+                        originalBitmap = it.originalBitmap,
+                        croppedBitmap = it.croppedBitmap
+                    )
+                }
         )
         Log.d(TAG, "startCropping all selected media")
     }
@@ -139,6 +146,7 @@ class MediaStoreViewModel @Inject constructor(
                 }
         )
         Log.d(TAG, "finishCropping media $index")
+        // check if selected images are cropped
         if (state.selectedMediaList.all { it.croppedBitmap != null }) {
             state = state.copy(
                 nextScreenEvent = triggered
@@ -153,7 +161,7 @@ class MediaStoreViewModel @Inject constructor(
         uploadPostImageAndCreatePostJob?.cancel()
         uploadPostImageAndCreatePostJob = viewModelScope.launch {
             state = try {
-                val postImagePath = imageUploadRepository.uploadPostImages(
+                imageUploadRepository.uploadPostImages(
                     state.selectedMediaList.mapNotNull { it.croppedBitmap?.asAndroidBitmap() }
                 )
                 state.copy(

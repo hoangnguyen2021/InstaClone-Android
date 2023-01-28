@@ -23,7 +23,7 @@ class ImageUploadRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun uploadPostImages(bitmaps: List<Bitmap>): String {
+    override suspend fun uploadPostImages(bitmaps: List<Bitmap>): List<String> {
         return withContext(dispatcherProvider.io) {
             imageUploadService.uploadPostImages(bitmaps)
         }

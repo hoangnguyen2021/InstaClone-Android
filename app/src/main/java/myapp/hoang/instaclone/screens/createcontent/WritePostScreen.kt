@@ -53,9 +53,7 @@ fun WritePostScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             CheckMarkIconButton(
-                onClick = {
-                    viewModel.uploadPostImageAndCreatePost()
-                },
+                onClick = { viewModel.uploadPostImageAndCreatePost() },
                 modifier = Modifier.weight(0.1f)
             )
         }

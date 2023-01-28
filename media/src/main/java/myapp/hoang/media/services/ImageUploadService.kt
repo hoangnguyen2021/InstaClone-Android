@@ -6,5 +6,5 @@ import java.io.File
 interface ImageUploadService {
     suspend fun uploadProfilePic(imageFile: File): String
     suspend fun getProfilePic(profilePicPath: String): ByteArray
-    suspend fun uploadPostImages(bitmaps: List<Bitmap>): String
+    suspend fun uploadPostImages(bitmaps: List<Bitmap>): List<String>
 }
