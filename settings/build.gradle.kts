@@ -4,5 +4,6 @@ apply {
 
 dependencies {
     "implementation"(DataStore.protobuf)
+
     "implementation"(Kotlinx.collectionsImmutable)
 }

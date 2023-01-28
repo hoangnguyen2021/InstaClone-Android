@@ -7,6 +7,7 @@ dependencies {
     "implementation"(project(Module.coreUi))
 
     "implementation"(Compose.composeCropper)
+
     "implementation"(Ktor.clientCore)
     "implementation"(Ktor.clientAndroid)
     "implementation"(Ktor.clientContentNegotiation)

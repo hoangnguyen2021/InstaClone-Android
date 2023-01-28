@@ -15,8 +15,8 @@ import javax.inject.Singleton
 object ServiceModule {
     @Provides
     @Singleton
-    fun provideMediaStoreService(@ApplicationContext context: Context): MediaSharedStorageService {
-        return AndroidMediaSharedStorageService(context)
+    fun provideMediaStoreService(@ApplicationContext appContext: Context): MediaSharedStorageService {
+        return AndroidMediaSharedStorageService(appContext)
     }
 
     @Provides
