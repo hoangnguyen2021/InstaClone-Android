@@ -69,6 +69,8 @@ dependencies {
     implementation Accompanist.pager
     implementation Accompanist.pagerIndicators
 
+    implementation DataStore.protobuf
+
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
 

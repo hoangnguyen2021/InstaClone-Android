@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,6 +13,7 @@ import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -20,13 +22,15 @@ import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.media.repositories.MediaSharedStorageRepository
 import myapp.hoang.media.repositories.PostRepository
+import myapp.hoang.settings.models.UserPreferences
 import javax.inject.Inject
 
 @HiltViewModel
-class MediaStoreViewModel @Inject constructor(
+class MediaSharedStorageViewModel @Inject constructor(
     private val mediaSharedStorageRepository: MediaSharedStorageRepository,
     private val imageUploadRepository: ImageUploadRepository,
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val userPreferences: DataStore<UserPreferences>
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MediaStoreUiState())
     val uiState = _uiState.asStateFlow()
@@ -158,7 +162,7 @@ class MediaStoreViewModel @Inject constructor(
         }
     }
 
-    fun uploadPostImageAndCreatePost(caption: String) {
+    fun uploadPostImagesAndCreatePost(caption: String) {
         state = state.copy(
             isLoading = true
         )
@@ -170,7 +174,7 @@ class MediaStoreViewModel @Inject constructor(
                 )
                 val postForm = PostForm(
                     caption = caption,
-                    authorUsername = "hoang__ng_",
+                    authorUsername = userPreferences.data.first().username,
                     createdAt = Clock.System.now(),
                     lastEditedAt = Clock.System.now(),
                     mediaPaths = mediaPaths
@@ -210,6 +214,6 @@ class MediaStoreViewModel @Inject constructor(
     }
 
     companion object {
-        private val TAG = MediaStoreViewModel::class.java.simpleName
+        private val TAG = MediaSharedStorageViewModel::class.java.simpleName
     }
 }

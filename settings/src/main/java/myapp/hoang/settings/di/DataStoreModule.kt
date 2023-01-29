@@ -13,8 +13,8 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import myapp.hoang.settings.models.AppSettings
-import myapp.hoang.settings.serializers.AppSettingsSerializer
+import myapp.hoang.settings.models.UserPreferences
+import myapp.hoang.settings.serializers.UserPreferencesSerializer
 import javax.inject.Singleton
 
 private const val DATA_STORE_FILE_NAME = "app_settings.pb"
@@ -24,12 +24,12 @@ private const val DATA_STORE_FILE_NAME = "app_settings.pb"
 object DataStoreModule {
     @Provides
     @Singleton
-    fun provideProtoDataStore(@ApplicationContext appContext: Context): DataStore<AppSettings> {
+    fun provideProtoDataStore(@ApplicationContext appContext: Context): DataStore<UserPreferences> {
         return DataStoreFactory.create(
-            serializer = AppSettingsSerializer,
+            serializer = UserPreferencesSerializer,
             produceFile = { appContext.dataStoreFile(DATA_STORE_FILE_NAME) },
             corruptionHandler = ReplaceFileCorruptionHandler(
-                produceNewData = { AppSettings() }
+                produceNewData = { UserPreferences() }
             ),
             scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
         )

@@ -11,7 +11,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
-import myapp.hoang.media.viewmodels.MediaStoreViewModel
+import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -19,7 +19,7 @@ fun EditImagesScreen(
     onBack: () -> Unit,
     onImageClick: (Int) -> Unit,
     onNextScreen: () -> Unit,
-    viewModel: MediaStoreViewModel = hiltViewModel()
+    viewModel: MediaSharedStorageViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 

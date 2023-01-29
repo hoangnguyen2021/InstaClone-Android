@@ -16,14 +16,14 @@ import myapp.hoang.core_ui.components.BackIconButton
 import myapp.hoang.core_ui.components.CheckMarkIconButton
 import myapp.hoang.core_ui.components.WritePostCaptionTextField
 import myapp.hoang.instaclone.R
-import myapp.hoang.media.viewmodels.MediaStoreViewModel
+import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun WritePostScreen(
     onBack: () -> Unit,
     onClose: () -> Unit,
-    viewModel: MediaStoreViewModel = hiltViewModel()
+    viewModel: MediaSharedStorageViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -61,7 +61,7 @@ fun WritePostScreen(
                     .padding(start = LocalDimension.current.medium)
             )
             CheckMarkIconButton(
-                onClick = { viewModel.uploadPostImageAndCreatePost(caption) },
+                onClick = { viewModel.uploadPostImagesAndCreatePost(caption) },
                 modifier = Modifier.weight(0.1f)
             )
         }

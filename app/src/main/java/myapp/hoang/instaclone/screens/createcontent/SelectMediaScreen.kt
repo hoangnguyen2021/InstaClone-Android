@@ -22,7 +22,7 @@ import myapp.hoang.media.components.CropperCarousel
 import myapp.hoang.media.components.MediaCollectionSelect
 import myapp.hoang.media.components.MediaGrid
 import myapp.hoang.media.models.SelectMediaMode
-import myapp.hoang.media.viewmodels.MediaStoreViewModel
+import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
 @OptIn(
     ExperimentalPermissionsApi::class,
@@ -33,7 +33,7 @@ import myapp.hoang.media.viewmodels.MediaStoreViewModel
 fun SelectMediaScreen(
     onClose: () -> Unit,
     onNextScreen: () -> Unit,
-    viewModel: MediaStoreViewModel = hiltViewModel()
+    viewModel: MediaSharedStorageViewModel = hiltViewModel()
 ) {
     val readMediaPermissionState = rememberMultiplePermissionsState(
         permissions =

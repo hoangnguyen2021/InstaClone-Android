@@ -5,6 +5,7 @@ apply {
 dependencies {
     "implementation"(project(Module.core))
     "implementation"(project(Module.coreUi))
+    "implementation"(project(Module.settings))
 
     "implementation"(Compose.composeCropper)
 

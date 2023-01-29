@@ -5,6 +5,7 @@ apply {
 dependencies {
     "implementation"(project(Module.coreUi))
     "implementation"(project(Module.media))
+    "implementation"(project(Module.settings))
 
     "implementation"(Ktor.clientCore)
     "implementation"(Ktor.clientAndroid)

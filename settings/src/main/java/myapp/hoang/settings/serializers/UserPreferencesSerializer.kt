@@ -5,18 +5,18 @@ package myapp.hoang.settings.serializers
 import androidx.datastore.core.Serializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import myapp.hoang.settings.models.AppSettings
+import myapp.hoang.settings.models.UserPreferences
 import java.io.InputStream
 import java.io.OutputStream
 
-object AppSettingsSerializer : Serializer<AppSettings> {
-    override val defaultValue: AppSettings
-        get() = AppSettings()
+object UserPreferencesSerializer : Serializer<UserPreferences> {
+    override val defaultValue: UserPreferences
+        get() = UserPreferences()
 
-    override suspend fun readFrom(input: InputStream): AppSettings {
+    override suspend fun readFrom(input: InputStream): UserPreferences {
         return try {
             Json.decodeFromString(
-                deserializer = AppSettings.serializer(),
+                deserializer = UserPreferences.serializer(),
                 string = input.readBytes().decodeToString()
             )
         } catch (e: SerializationException) {
@@ -25,11 +25,11 @@ object AppSettingsSerializer : Serializer<AppSettings> {
         }
     }
 
-    override suspend fun writeTo(t: AppSettings, output: OutputStream) {
+    override suspend fun writeTo(t: UserPreferences, output: OutputStream) {
         output.write(
             Json
                 .encodeToString(
-                    serializer = AppSettings.serializer(),
+                    serializer = UserPreferences.serializer(),
                     value = t
                 )
                 .encodeToByteArray()

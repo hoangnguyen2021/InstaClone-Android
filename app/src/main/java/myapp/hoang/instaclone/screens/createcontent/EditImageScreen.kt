@@ -19,7 +19,7 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.models.EditImageButton
 import myapp.hoang.core_ui.components.models.EditImageTab
 import myapp.hoang.media.models.SelectMediaMode
-import myapp.hoang.media.viewmodels.MediaStoreViewModel
+import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
 val editImageTabs = listOf(
     EditImageTab(text = "Filter"),
@@ -152,7 +152,7 @@ fun EditImageScreen(
     selectedMediaListIndex: Int,
     onBack: () -> Unit,
     onNextScreen: () -> Unit,
-    viewModel: MediaStoreViewModel = hiltViewModel()
+    viewModel: MediaSharedStorageViewModel = hiltViewModel()
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

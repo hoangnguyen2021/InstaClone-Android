@@ -1,5 +1,7 @@
 package myapp.hoang.onboarding.login.viewmodels
 
+import android.util.Log
+import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,12 +15,14 @@ import kotlinx.coroutines.launch
 import myapp.hoang.core.utils.Validator
 import myapp.hoang.onboarding.login.models.LoginForm
 import myapp.hoang.onboarding.login.repositories.LoginRepository
+import myapp.hoang.settings.models.UserPreferences
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository
-): ViewModel() {
+    private val loginRepository: LoginRepository,
+    private val userPreferences: DataStore<UserPreferences>
+) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
 
@@ -53,6 +57,18 @@ class LoginViewModel @Inject constructor(
         loginJob = viewModelScope.launch {
             state = try {
                 val authResponse = loginRepository.logIn(loginForm)
+                userPreferences.updateData {
+                    it.copy(
+                        authToken = authResponse.token,
+                        username = authResponse.username,
+                        mobileNumber = authResponse.mobileNumber,
+                        email = authResponse.email,
+                        fullName = authResponse.fullName,
+                        birthday = authResponse.birthday,
+                        agreedToPolicy = authResponse.agreedToPolicy,
+                        profilePicPath = authResponse.profilePicPath
+                    )
+                }
                 state.copy(
                     isLoading = false,
                     authResponse = authResponse,
@@ -65,6 +81,7 @@ class LoginViewModel @Inject constructor(
                         showDialog2Event = triggered
                     )
                 } else {
+                    Log.d(TAG, e.toString())
                     state.copy(
                         isLoading = false
                     )
@@ -73,15 +90,19 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun onConsumedLoginEvent(){
+    fun onConsumedLoginEvent() {
         state = state.copy(loginEvent = consumed)
     }
 
-    fun onConsumedShowDialog1Event(){
+    fun onConsumedShowDialog1Event() {
         state = state.copy(showDialog1Event = consumed)
     }
 
-    fun onConsumedShowDialog2Event(){
+    fun onConsumedShowDialog2Event() {
         state = state.copy(showDialog2Event = consumed)
+    }
+
+    companion object {
+        private val TAG = LoginViewModel::class.java.simpleName
     }
 }

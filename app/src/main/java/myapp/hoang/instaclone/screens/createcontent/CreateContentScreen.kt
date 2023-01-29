@@ -13,7 +13,7 @@ import androidx.navigation.navArgument
 import myapp.hoang.core.navigation.CreateContentScreen
 import myapp.hoang.core.navigation.CreateContentScreen.EditImageScreen.INDEX
 import myapp.hoang.media.models.SelectMediaMode
-import myapp.hoang.media.viewmodels.MediaStoreViewModel
+import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
 /**
  * New Post flow.
@@ -25,7 +25,7 @@ fun CreateContentScreen(
     onClose: () -> Unit
 ) {
     val navController = rememberNavController()
-    val viewModel = hiltViewModel<MediaStoreViewModel>()
+    val viewModel = hiltViewModel<MediaSharedStorageViewModel>()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
