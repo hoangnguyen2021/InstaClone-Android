@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import myapp.hoang.media.models.PostForm
 import myapp.hoang.media.models.SelectMediaMode
+import myapp.hoang.media.repositories.ImageFilterRepository
 import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.media.repositories.MediaSharedStorageRepository
 import myapp.hoang.media.repositories.PostRepository
@@ -28,14 +29,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MediaSharedStorageViewModel @Inject constructor(
     private val mediaSharedStorageRepository: MediaSharedStorageRepository,
+    private val imageFilterRepository: ImageFilterRepository,
     private val imageUploadRepository: ImageUploadRepository,
     private val postRepository: PostRepository,
     private val userPreferences: DataStore<UserPreferences>
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(MediaStoreUiState())
+    private val _uiState = MutableStateFlow(MediaSharedStorageUiState())
     val uiState = _uiState.asStateFlow()
 
-    private var state: MediaStoreUiState
+    private var state: MediaSharedStorageUiState
         get() = _uiState.value
         set(newState) {
             _uiState.update { newState }
@@ -43,16 +45,21 @@ class MediaSharedStorageViewModel @Inject constructor(
 
     private var getAllMediaJob: Job? = null
     private var getBitmapFromUriJob: Job? = null
+    private var getAllImageFiltersJob: Job? = null
     private var uploadPostImageAndCreatePostJob: Job? = null
 
     fun getAllMedia() {
         getAllMediaJob?.cancel()
 
+        state = state.copy(
+            isLoading = true
+        )
         getAllMediaJob = viewModelScope.launch {
             try {
                 val mediaList = mediaSharedStorageRepository.getAllMedia()
                 state = state.copy(
-                    mediaList = mediaList
+                    mediaList = mediaList,
+                    isLoading = false
                 )
                 // auto-select first media after load
                 if (mediaList.isNotEmpty()) {
@@ -61,6 +68,18 @@ class MediaSharedStorageViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
             }
+        }
+    }
+
+    fun toggleSelectMediaMode() {
+        state = if (state.selectMediaMode == SelectMediaMode.SINGLE) {
+            state.copy(
+                selectMediaMode = SelectMediaMode.MULTIPLE
+            )
+        } else {
+            state.copy(
+                selectMediaMode = SelectMediaMode.SINGLE
+            )
         }
     }
 
@@ -132,7 +151,8 @@ class MediaSharedStorageViewModel @Inject constructor(
                         index = it.index,
                         crop = true,
                         originalBitmap = it.originalBitmap,
-                        croppedBitmap = it.croppedBitmap
+                        croppedBitmap = it.croppedBitmap,
+                        filteredBitmap = it.filteredBitmap
                     )
                 }
         )
@@ -148,7 +168,8 @@ class MediaSharedStorageViewModel @Inject constructor(
                             index = it.index,
                             crop = false,
                             originalBitmap = it.originalBitmap,
-                            croppedBitmap = croppedImageBitmap
+                            croppedBitmap = croppedImageBitmap,
+                            filteredBitmap = croppedImageBitmap
                         )
                     else it
                 }
@@ -162,6 +183,46 @@ class MediaSharedStorageViewModel @Inject constructor(
         }
     }
 
+    fun getAllImageFilters(unfilteredBitmap: ImageBitmap) {
+        getAllImageFiltersJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        getAllImageFiltersJob = viewModelScope.launch {
+            val imageFilterList = imageFilterRepository.getAllImageFilters(unfilteredBitmap.asAndroidBitmap())
+            state = state.copy(
+                imageFilterList = imageFilterList,
+                isLoading = false
+            )
+        }
+    }
+
+    fun selectImageFilter(filterIndex: Int) {
+        state = state.copy(
+            focusedImageFilterIndex = filterIndex
+        )
+    }
+
+    fun applyImageFilter(index: Int, filteredBitmap: ImageBitmap?) {
+        if (filteredBitmap != null) {
+            state = state.copy(
+                selectedMediaList = state.selectedMediaList
+                    .map {
+                        if (index == it.index)
+                            SelectedMedia(
+                                index = it.index,
+                                crop = it.crop,
+                                originalBitmap = it.originalBitmap,
+                                croppedBitmap = it.croppedBitmap,
+                                filteredBitmap = filteredBitmap
+                            )
+                        else it
+                    }
+            )
+        }
+    }
+
     fun uploadPostImagesAndCreatePost(caption: String) {
         state = state.copy(
             isLoading = true
@@ -170,7 +231,7 @@ class MediaSharedStorageViewModel @Inject constructor(
         uploadPostImageAndCreatePostJob = viewModelScope.launch {
             state = try {
                 val mediaPaths = imageUploadRepository.uploadPostImages(
-                    state.selectedMediaList.mapNotNull { it.croppedBitmap?.asAndroidBitmap() }
+                    state.selectedMediaList.mapNotNull { it.filteredBitmap?.asAndroidBitmap() }
                 )
                 val postForm = PostForm(
                     caption = caption,
@@ -190,18 +251,6 @@ class MediaSharedStorageViewModel @Inject constructor(
                     isLoading = false
                 )
             }
-        }
-    }
-
-    fun toggleSelectMediaMode() {
-        state = if (state.selectMediaMode == SelectMediaMode.SINGLE) {
-            state.copy(
-                selectMediaMode = SelectMediaMode.MULTIPLE
-            )
-        } else {
-            state.copy(
-                selectMediaMode = SelectMediaMode.SINGLE
-            )
         }
     }
 

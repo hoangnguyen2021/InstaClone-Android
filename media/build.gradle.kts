@@ -14,4 +14,6 @@ dependencies {
     "implementation"(Ktor.clientContentNegotiation)
     "implementation"(Ktor.clientLogging)
     "implementation"(Ktor.serializationKotlinxJson)
+
+    "implementation"(CyberAgent.gpuImage)
 }

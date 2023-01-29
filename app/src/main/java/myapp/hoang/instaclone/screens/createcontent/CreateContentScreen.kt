@@ -64,7 +64,7 @@ fun CreateContentScreen(
             arguments = listOf(
                 navArgument(INDEX) {
                     type = NavType.IntType
-                    defaultValue = 1
+                    defaultValue = 0
                     nullable = false
                 }
             )

@@ -197,11 +197,11 @@ class OnBoardingActivity : ComponentActivity() {
                 }
             }
         }
-//        startActivity(
-//            Intent(
-//                this@OnBoardingActivity,
-//                MainActivity::class.java
-//            )
-//        )
+        startActivity(
+            Intent(
+                this@OnBoardingActivity,
+                MainActivity::class.java
+            )
+        )
     }
 }

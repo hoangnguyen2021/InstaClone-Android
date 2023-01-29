@@ -107,6 +107,8 @@ dependencies {
     implementation(Ktor.clientLogging)
     implementation(Ktor.serializationKotlinxJson)
 
+    implementation(CyberAgent.gpuImage)
+
     testImplementation(Testing.junit4)
     testImplementation(Testing.junitAndroidExt)
     testImplementation(Testing.truth)

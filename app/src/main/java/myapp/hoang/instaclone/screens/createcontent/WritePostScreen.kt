@@ -72,7 +72,7 @@ fun WritePostScreen(
                 .fillMaxWidth()
                 .weight(0.92f)
         ) {
-            uiState.selectedMediaList.firstOrNull()?.croppedBitmap?.let { bitmap ->
+            uiState.selectedMediaList.firstOrNull()?.filteredBitmap?.let { bitmap ->
                 WritePostCaptionTextField(
                     value = caption,
                     onValueChange = { caption = it },

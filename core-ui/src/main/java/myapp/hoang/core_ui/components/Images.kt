@@ -1,5 +1,6 @@
 package myapp.hoang.core_ui.components
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -123,6 +124,22 @@ fun BottomAppBarProfilePic(
             }
             .clip(CircleShape)
             .clickable(onClick = onClick)
+    )
+}
+
+@Composable
+fun ImageEditPreview(
+    bitmap: Bitmap,
+    modifier: Modifier
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(bitmap)
+            .crossfade(true)
+            .build(),
+        contentDescription = "Image edit preview",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
     )
 }
 

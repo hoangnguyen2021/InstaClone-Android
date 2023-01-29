@@ -54,7 +54,7 @@ fun EditImagesScreen(
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             ImagesEditPreview(
-                bitmaps = uiState.selectedMediaList.mapNotNull { it.croppedBitmap },
+                bitmaps = uiState.selectedMediaList.mapNotNull { it.filteredBitmap },
                 onImageClick = onImageClick,
                 modifier = Modifier.fillMaxSize()
             )

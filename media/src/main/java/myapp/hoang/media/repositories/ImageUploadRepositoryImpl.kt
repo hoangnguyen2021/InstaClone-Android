@@ -10,9 +10,9 @@ import javax.inject.Inject
 class ImageUploadRepositoryImpl @Inject constructor(
     private val imageUploadService: ImageUploadService,
     private val dispatcherProvider: DispatcherProvider
-): ImageUploadRepository {
+) : ImageUploadRepository {
     override suspend fun uploadProfilePic(imageFile: File): String {
-        return  withContext(dispatcherProvider.io) {
+        return withContext(dispatcherProvider.io) {
             imageUploadService.uploadProfilePic(imageFile)
         }
     }

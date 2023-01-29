@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import jp.co.cyberagent.android.gpuimage.GPUImage
 import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.media.datasources.MediaSharedStorageDataSource
 import myapp.hoang.media.datasources.PostRemoteDataSource
@@ -20,6 +21,15 @@ object RepositoryModule {
         mediaSharedStorageDataSource: MediaSharedStorageDataSource
     ): MediaSharedStorageRepository {
         return MediaSharedStorageRepositoryImpl(mediaSharedStorageDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageFilterRepository(
+        gpuImage: GPUImage,
+        dispatcherProvider: DispatcherProvider
+    ): ImageFilterRepository {
+        return ImageFilterRepositoryImpl(gpuImage, dispatcherProvider)
     }
 
     @Provides
