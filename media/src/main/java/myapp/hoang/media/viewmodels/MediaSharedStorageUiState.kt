@@ -12,7 +12,6 @@ data class MediaSharedStorageUiState(
     val selectMediaMode: SelectMediaMode = SelectMediaMode.SINGLE,
     val selectedMediaList: List<SelectedMedia> = emptyList(),
     val imageFilterList: List<ImageFilter> = emptyList(),
-    val focusedImageFilterIndex: Int = 0,
     val isLoading: Boolean = false,
     val nextScreenEvent: StateEvent = consumed,
     val showLimitAlert: StateEvent = consumed

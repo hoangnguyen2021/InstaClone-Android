@@ -36,8 +36,10 @@ fun EditImageScreen(
     var selectedTabIndex by remember { mutableStateOf(0) }
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val selectedMedia = uiState.selectedMediaList[selectedMediaListIndex]
+
     var previewBitmap by remember {
-        mutableStateOf(uiState.selectedMediaList[selectedMediaListIndex].croppedBitmap)
+        mutableStateOf(selectedMedia.croppedBitmap)
     }
 
     LaunchedEffect(key1 = true) {
@@ -47,7 +49,7 @@ fun EditImageScreen(
     LaunchedEffect(key1 = uiState.imageFilterList) {
         if (uiState.imageFilterList.isNotEmpty())
             previewBitmap = uiState
-                .imageFilterList[uiState.focusedImageFilterIndex]
+                .imageFilterList[selectedMedia.filterIndex]
                 .filterPreview
                 .asImageBitmap()
     }
@@ -73,7 +75,10 @@ fun EditImageScreen(
                     )
                 SelectMediaMode.MULTIPLE ->
                     CloseIconButton(
-                        onClick = onBack,
+                        onClick = {
+                            viewModel.selectImageFilter(selectedMedia.index, 0)
+                            onBack()
+                        },
                         modifier = Modifier.weight(0.1f)
                     )
             }
@@ -86,7 +91,7 @@ fun EditImageScreen(
                     NextIconButton(
                         onClick = {
                             viewModel.applyImageFilter(
-                                uiState.selectedMediaList[selectedMediaListIndex].index,
+                                selectedMedia.index,
                                 previewBitmap
                             )
                             onNextScreen()
@@ -97,7 +102,7 @@ fun EditImageScreen(
                     CheckMarkIconButton(
                         onClick = {
                             viewModel.applyImageFilter(
-                                uiState.selectedMediaList[selectedMediaListIndex].index,
+                                selectedMedia.index,
                                 previewBitmap
                             )
                             onBack()
@@ -106,7 +111,14 @@ fun EditImageScreen(
                     )
             }
         }
-        if (!uiState.isLoading) {
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.92f)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+            )
+        } else {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
@@ -145,9 +157,12 @@ fun EditImageScreen(
                             previewBitmap?.let {
                                 FilterPreviews(
                                     imageFilterList = uiState.imageFilterList,
-                                    focusedImageFilterIndex = uiState.focusedImageFilterIndex,
+                                    focusedImageFilterIndex = selectedMedia.filterIndex,
                                     onFilterSelect = { filterIndex ->
-                                        viewModel.selectImageFilter(filterIndex)
+                                        viewModel.selectImageFilter(
+                                            selectedMedia.index,
+                                            filterIndex
+                                        )
                                         previewBitmap = uiState
                                             .imageFilterList[filterIndex]
                                             .filterPreview

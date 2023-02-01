@@ -136,6 +136,7 @@ class MediaSharedStorageViewModel @Inject constructor(
         return SelectedMedia(
             index = index,
             crop = false,
+            filterIndex = 0,
             originalBitmap = mediaSharedStorageRepository
                 .getBitmapFromUri(state.mediaList[index].contentUri)
                 .asImageBitmap(),
@@ -150,6 +151,7 @@ class MediaSharedStorageViewModel @Inject constructor(
                     SelectedMedia(
                         index = it.index,
                         crop = true,
+                        filterIndex = it.filterIndex,
                         originalBitmap = it.originalBitmap,
                         croppedBitmap = it.croppedBitmap,
                         filteredBitmap = it.filteredBitmap
@@ -167,6 +169,7 @@ class MediaSharedStorageViewModel @Inject constructor(
                         SelectedMedia(
                             index = it.index,
                             crop = false,
+                            filterIndex = it.filterIndex,
                             originalBitmap = it.originalBitmap,
                             croppedBitmap = croppedImageBitmap,
                             filteredBitmap = croppedImageBitmap
@@ -190,7 +193,8 @@ class MediaSharedStorageViewModel @Inject constructor(
             isLoading = true
         )
         getAllImageFiltersJob = viewModelScope.launch {
-            val imageFilterList = imageFilterRepository.getAllImageFilters(unfilteredBitmap.asAndroidBitmap())
+            val imageFilterList =
+                imageFilterRepository.getAllImageFilters(unfilteredBitmap.asAndroidBitmap())
             state = state.copy(
                 imageFilterList = imageFilterList,
                 isLoading = false
@@ -198,9 +202,21 @@ class MediaSharedStorageViewModel @Inject constructor(
         }
     }
 
-    fun selectImageFilter(filterIndex: Int) {
+    fun selectImageFilter(index: Int, filterIndex: Int) {
         state = state.copy(
-            focusedImageFilterIndex = filterIndex
+            selectedMediaList = state.selectedMediaList
+                .map {
+                    if (index == it.index)
+                        SelectedMedia(
+                            index = it.index,
+                            crop = it.crop,
+                            filterIndex = filterIndex,
+                            originalBitmap = it.originalBitmap,
+                            croppedBitmap = it.croppedBitmap,
+                            filteredBitmap = it.filteredBitmap
+                        )
+                    else it
+                }
         )
     }
 
@@ -213,6 +229,7 @@ class MediaSharedStorageViewModel @Inject constructor(
                             SelectedMedia(
                                 index = it.index,
                                 crop = it.crop,
+                                filterIndex = it.filterIndex,
                                 originalBitmap = it.originalBitmap,
                                 croppedBitmap = it.croppedBitmap,
                                 filteredBitmap = filteredBitmap
