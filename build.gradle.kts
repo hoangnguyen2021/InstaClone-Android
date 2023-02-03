@@ -4,15 +4,10 @@ buildscript {
         google()
         mavenCentral()
     }
-//    dependencies {
-//        classpath(Build.hiltAndroidGradlePlugin)
-//        classpath(Build.androidGradlePlugin)
-//        classpath(Build.kotlinGradlePlugin)
-//    }
 }
 
 plugins {
-    id("org.jetbrains.kotlin.android") version Kotlin.version apply false
+    id("org.jetbrains.kotlin.android") version "1.8.0" apply false
     id("com.android.application") version Build.androidGradlePluginVersion apply false
     id("com.android.library") version Build.androidGradlePluginVersion apply false
     id("com.google.dagger.hilt.android") version DaggerHilt.version apply false

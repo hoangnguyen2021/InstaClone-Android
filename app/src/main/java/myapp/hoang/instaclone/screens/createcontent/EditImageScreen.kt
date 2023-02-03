@@ -76,7 +76,7 @@ fun EditImageScreen(
                 SelectMediaMode.MULTIPLE ->
                     CloseIconButton(
                         onClick = {
-                            viewModel.selectImageFilter(selectedMedia.index, 0)
+                            viewModel.resetImageFilter(selectedMedia.index)
                             onBack()
                         },
                         modifier = Modifier.weight(0.1f)

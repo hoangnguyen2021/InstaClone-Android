@@ -71,6 +71,7 @@ dependencies {
     implementation(Compose.animation)
     implementation(Compose.compiler)
     implementation(Compose.ui)
+    implementation("androidx.core:core-ktx:+")
     debugImplementation(Compose.uiTooling)
     implementation(Compose.uiToolingPreview)
     implementation(Compose.hiltNavigation)
