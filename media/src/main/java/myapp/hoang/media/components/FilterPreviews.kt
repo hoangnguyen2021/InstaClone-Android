@@ -4,9 +4,11 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,11 +20,18 @@ import myapp.hoang.media.models.ImageFilter
 @Composable
 fun FilterPreviews(
     imageFilterList: List<ImageFilter>,
-    focusedImageFilterIndex: Int,
+    filterIndex: Int,
     onFilterSelect: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val lazyListState = rememberLazyListState()
+
+    LaunchedEffect(key1 = filterIndex) {
+        lazyListState.animateScrollToItem(filterIndex, -200)
+    }
+
     LazyRow(
+        state = lazyListState,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.small),
         contentPadding = PaddingValues(
@@ -36,8 +45,8 @@ fun FilterPreviews(
                 modifier = Modifier
                     .wrapContentWidth()
                     .fillMaxHeight(0.5f)
-                    .clickable{ onFilterSelect(i) },
-                selected = focusedImageFilterIndex == i
+                    .clickable { onFilterSelect(i) },
+                selected = filterIndex == i
             )
         }
     }

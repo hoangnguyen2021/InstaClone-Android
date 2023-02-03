@@ -34,18 +34,18 @@ fun EditImageScreen(
     viewModel: MediaSharedStorageViewModel = hiltViewModel()
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val selectedMedia = uiState.selectedMediaList[selectedMediaListIndex]
 
-    var previewBitmap by remember {
-        mutableStateOf(selectedMedia.croppedBitmap)
-    }
+    var previewBitmap by remember { mutableStateOf(selectedMedia.croppedBitmap) }
 
+    // get all image filters
     LaunchedEffect(key1 = true) {
         previewBitmap?.let { viewModel.getAllImageFilters(it) }
     }
 
+    // after loading all filters, show preview bitmap with filter applied
     LaunchedEffect(key1 = uiState.imageFilterList) {
         if (uiState.imageFilterList.isNotEmpty())
             previewBitmap = uiState
@@ -113,11 +113,14 @@ fun EditImageScreen(
         }
         if (uiState.isLoading) {
             Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(0.92f)
                     .background(MaterialTheme.colorScheme.surfaceVariant)
-            )
+            ) {
+                InstaCloneCircularProgressIndicator()
+            }
         } else {
             Box(
                 contentAlignment = Alignment.Center,
@@ -157,7 +160,7 @@ fun EditImageScreen(
                             previewBitmap?.let {
                                 FilterPreviews(
                                     imageFilterList = uiState.imageFilterList,
-                                    focusedImageFilterIndex = selectedMedia.filterIndex,
+                                    filterIndex = selectedMedia.filterIndex,
                                     onFilterSelect = { filterIndex ->
                                         viewModel.selectImageFilter(
                                             selectedMedia.index,

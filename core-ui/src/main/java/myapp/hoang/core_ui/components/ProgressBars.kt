@@ -16,3 +16,12 @@ fun OnBoardingProgressIndicator() {
         modifier = Modifier.size(LocalDimension.current.large),
     )
 }
+
+@Composable
+fun InstaCloneCircularProgressIndicator() {
+    CircularProgressIndicator(
+        color = MaterialTheme.colorScheme.onPrimary,
+        strokeWidth = 3.dp,
+        modifier = Modifier.size(LocalDimension.current.threeExtraLarge),
+    )
+}
