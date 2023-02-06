@@ -7,11 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,13 +24,16 @@ fun LoginScreen(
     onCreateAccount: () -> Unit,
     onLogin: () -> Unit
 ) {
-    val viewModel = hiltViewModel<LoginViewModel>()
-
+    // can be username, email, or mobile number
     var user by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    // missing fields
     var isDialog1Shown by remember { mutableStateOf(false) }
+    // can't find account
     var isDialog2Shown by remember { mutableStateOf(false) }
 
+    val viewModel = hiltViewModel<LoginViewModel>()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     EventEffect(
@@ -62,61 +62,103 @@ fun LoginScreen(
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    0.0f to Color(0xFF223234),
-                    0.6f to Color(0xFF1C2E3D),
-                )
-            )
-            .padding(
-                horizontal = LocalDimension.current.mediumSmall
-            )
+            .background(brush = onBoardingBackgroundBrush)
+            .padding(horizontal = LocalDimension.current.mediumSmall)
     ) {
-        Spacer(Modifier.height(LocalDimension.current.large))
-        Text(
-            text = "English (US)",
-            color = MaterialTheme.colorScheme.onSecondary,
-            style = MaterialTheme.typography.bodySmall
-        )
-        Spacer(Modifier.height(LocalDimension.current.eightExtraLarge))
-        GradientInstagramIcon(
-            modifier = Modifier.size(LocalDimension.current.sevenExtraLarge)
-        )
-        Spacer(Modifier.height(LocalDimension.current.nineExtraLarge))
-        OnBoardingTextField(
-            value = user,
-            onValueChange = { user = it },
-            label = stringResource(R.string.login_label_1),
-            keyboardType = KeyboardType.Text
-        )
-        Spacer(Modifier.height(LocalDimension.current.small))
-        OnBoardingPasswordField(
-            value = password,
-            onValueChange = { password = it },
-            label = stringResource(R.string.login_label_2)
-        )
-        Spacer(Modifier.height(LocalDimension.current.small))
-        OnBoardingFilledButton(
-            text = stringResource(R.string.login_button_1),
-            onClick = { viewModel.logIn(user, password) },
-            isLoading = uiState.isLoading
-        )
-        Spacer(Modifier.height(LocalDimension.current.small))
-        Text(
-            text = stringResource(R.string.login_label_3),
-            color = White,
-            style = MaterialTheme.typography.displayMedium,
-        )
-        Spacer(Modifier.height(128.dp))
-        CreateAccountButton(
-            text = stringResource(R.string.login_button_2),
-            onClick = onCreateAccount
-        )
-        MetaIcon(
-            color = AliceBlue,
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
-                .size(LocalDimension.current.sixExtraLarge)
-        )
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            Text(
+                text = "English (US)",
+                color = MaterialTheme.colorScheme.onSecondary,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.25f)
+        ) {
+            GradientInstagramIcon(
+                modifier = Modifier.size(LocalDimension.current.sevenExtraLarge)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            OnBoardingTextField(
+                value = user,
+                onValueChange = { user = it },
+                label = stringResource(R.string.login_label_1),
+                keyboardType = KeyboardType.Text
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            OnBoardingPasswordField(
+                value = password,
+                onValueChange = { password = it },
+                label = stringResource(R.string.login_label_2)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            OnBoardingFilledButton(
+                text = stringResource(R.string.login_button_1),
+                onClick = { viewModel.logIn(user, password) },
+                isLoading = uiState.isLoading
+            )
+        }
+        Box(
+            contentAlignment = Alignment.TopCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.2f)
+        ) {
+            Text(
+                text = stringResource(R.string.login_label_3),
+                color = White,
+                style = MaterialTheme.typography.displayMedium,
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.05f)
+        ) {
+            CreateAccountButton(
+                text = stringResource(R.string.login_button_2),
+                onClick = onCreateAccount
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            MetaIcon(
+                color = AliceBlue,
+                modifier = Modifier
+                    .size(LocalDimension.current.sixExtraLarge)
+            )
+        }
     }
     if (isDialog1Shown) {
         AlertDialog(
