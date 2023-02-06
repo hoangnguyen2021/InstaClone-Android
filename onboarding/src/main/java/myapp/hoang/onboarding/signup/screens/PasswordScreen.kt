@@ -30,6 +30,8 @@ fun PasswordScreen(
     var isError by remember { mutableStateOf(false) }
     var errorSupportingText by remember { mutableStateOf("") }
 
+    val showError = isError && errorSupportingText.isNotEmpty()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -41,54 +43,77 @@ fun PasswordScreen(
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+        Box(
+            contentAlignment = Alignment.TopStart,
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .weight(0.05f)
         ) {
             BackIcon(
                 color = White,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .clickable(onClick = onBackClick)
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
-            Spacer(Modifier.height(LocalDimension.current.mediumSmall))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.07f)
+        ) {
             Text(
                 text = stringResource(R.string.password_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start,
-                modifier = Modifier.align(Alignment.Start)
+                textAlign = TextAlign.Start
             )
-            Spacer(Modifier.height(LocalDimension.current.small))
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.08f)
+        ) {
             Text(
                 text = stringResource(R.string.password_label_1),
                 color = White,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small)
+                modifier = Modifier.padding(end = LocalDimension.current.small)
             )
-            Spacer(Modifier.height(LocalDimension.current.extraLarge))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingPasswordField(
                 value = password,
                 onValueChange = { password = it },
                 label = "Password",
                 isError = isError
             )
-            if (isError && errorSupportingText.isNotEmpty()) {
-                Spacer(Modifier.height(LocalDimension.current.extraSmall))
+        }
+        if (showError) {
+            Box(
+                contentAlignment = Alignment.TopStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.05f)
+            ) {
                 Text(
                     text = errorSupportingText,
                     color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.align(Alignment.Start)
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
-            Spacer(Modifier.height(LocalDimension.current.mediumLarge))
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
                 onClick = {
@@ -105,10 +130,17 @@ fun PasswordScreen(
                 }
             )
         }
-        AlreadyHaveAccountClickableText(
-            isDialogShown = isDialogShown,
-            onIsDialogShownChange = { isDialogShown = it },
-            onBackClick = onBackClick
-        )
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(if (showError) 0.5f else 0.55f)
+        ) {
+            AlreadyHaveAccountClickableText(
+                isDialogShown = isDialogShown,
+                onIsDialogShownChange = { isDialogShown = it },
+                onBackClick = onBackClick
+            )
+        }
     }
 }

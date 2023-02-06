@@ -29,6 +29,8 @@ fun FullNameScreen(
     var isError by remember { mutableStateOf(false) }
     var errorSupportingText by remember { mutableStateOf("") }
 
+    val showError = isError && errorSupportingText.isNotEmpty()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -40,44 +42,63 @@ fun FullNameScreen(
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+        Box(
+            contentAlignment = Alignment.TopStart,
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .weight(0.05f)
         ) {
             BackIcon(
                 color = White,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .clickable(onClick = onBackClick)
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
-            Spacer(Modifier.height(LocalDimension.current.mediumSmall))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.07f)
+        ) {
             Text(
                 text = stringResource(R.string.full_name_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start,
-                modifier = Modifier.align(Alignment.Start)
+                textAlign = TextAlign.Start
             )
-            Spacer(Modifier.height(LocalDimension.current.extraLarge))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
                 label = "Full name",
                 isError = isError
             )
-            if (isError && errorSupportingText.isNotEmpty()) {
-                Spacer(Modifier.height(LocalDimension.current.extraSmall))
+        }
+        if (showError) {
+            Box(
+                contentAlignment = Alignment.TopStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.05f)
+            ) {
                 Text(
                     text = errorSupportingText,
                     color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.align(Alignment.Start)
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
-            Spacer(Modifier.height(LocalDimension.current.mediumLarge))
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
                 onClick = {
@@ -91,10 +112,17 @@ fun FullNameScreen(
                 }
             )
         }
-        AlreadyHaveAccountClickableText(
-            isDialogShown = isDialogShown,
-            onIsDialogShownChange = { isDialogShown = it },
-            onBackClick = onBackClick
-        )
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(if (showError) 0.63f else 0.68f)
+        ) {
+            AlreadyHaveAccountClickableText(
+                isDialogShown = isDialogShown,
+                onIsDialogShownChange = { isDialogShown = it },
+                onBackClick = onBackClick
+            )
+        }
     }
 }

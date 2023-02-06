@@ -119,6 +119,8 @@ fun ConfirmationCodeContent(
     onNextClick: () -> Unit,
     onExpandDrawer: () -> Unit
 ) {
+    val showError = isError && errorSupportingText.isNotEmpty()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
@@ -130,59 +132,104 @@ fun ConfirmationCodeContent(
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        BackIcon(
-            color = White,
+        Box(
+            contentAlignment = Alignment.TopStart,
             modifier = Modifier
-                .align(Alignment.Start)
-                .clickable(onClick = onBackClick)
-        )
-        Spacer(Modifier.height(LocalDimension.current.mediumSmall))
-        Text(
-            text = stringResource(R.string.confirmation_code_title_1),
-            color = White,
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Spacer(Modifier.height(LocalDimension.current.small))
-        Text(
-            text = stringResource(R.string.confirmation_code_label_1) +
-                    "${if (type == "phone") signupForm.mobileNumber else signupForm.email}.",
-            color = White,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(end = LocalDimension.current.small)
-        )
-        Spacer(Modifier.height(LocalDimension.current.extraLarge))
-        OnBoardingTextField(
-            value = confirmationCode,
-            onValueChange = { onConfirmationCodeChange(it) },
-            label = "Confirmation code",
-            keyboardType = KeyboardType.Number,
-            isError = isError,
-        )
-        if (isError && errorSupportingText.isNotEmpty()) {
-            Spacer(Modifier.height(LocalDimension.current.extraSmall))
-            Text(
-                text = errorSupportingText,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.align(Alignment.Start)
+                .fillMaxWidth()
+                .weight(0.05f)
+        ) {
+            BackIcon(
+                color = White,
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
         }
-        Spacer(Modifier.height(LocalDimension.current.mediumLarge))
-        OnBoardingFilledButton(
-            text = stringResource(R.string.next),
-            onClick = onNextClick,
-            isLoading = isLoading
-        )
-        Spacer(Modifier.height(LocalDimension.current.medium))
-        OnBoardingOutlinedButton(
-            text = stringResource(R.string.confirmation_code_button_1),
-            onClick = onExpandDrawer
-        )
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.07f)
+        ) {
+            Text(
+                text = stringResource(R.string.confirmation_code_title_1),
+                color = White,
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Start
+            )
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.08f)
+        ) {
+            Text(
+                text = stringResource(R.string.confirmation_code_label_1) +
+                        "${if (type == "phone") signupForm.mobileNumber else signupForm.email}.",
+                color = White,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .padding(end = LocalDimension.current.small)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            OnBoardingTextField(
+                value = confirmationCode,
+                onValueChange = { onConfirmationCodeChange(it) },
+                label = "Confirmation code",
+                keyboardType = KeyboardType.Number,
+                isError = isError,
+            )
+        }
+        if (showError) {
+            Box(
+                contentAlignment = Alignment.TopStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.05f)
+            ) {
+                Text(
+                    text = errorSupportingText,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            OnBoardingFilledButton(
+                text = stringResource(R.string.next),
+                onClick = onNextClick,
+                isLoading = isLoading
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            OnBoardingOutlinedButton(
+                text = stringResource(R.string.confirmation_code_button_1),
+                onClick = onExpandDrawer
+            )
+        }
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(if (showError) 0.45f else 0.5f)
+        ) {
+        }
     }
 }
 
