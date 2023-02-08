@@ -31,35 +31,47 @@ fun PolicyScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = onBoardingBackgroundBrush
-            )
+            .background(brush = onBoardingBackgroundBrush)
             .padding(
                 vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.05f)
         ) {
             BackIcon(
                 color = White,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .clickable(onClick = onBackClick)
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
-            Spacer(Modifier.height(LocalDimension.current.medium))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.12f)
+        ) {
             Text(
                 text = stringResource(R.string.policy_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
-                maxLines = 2,
-                modifier = Modifier.align(Alignment.Start)
+                maxLines = 2
             )
-            Spacer(Modifier.height(LocalDimension.current.medium))
+        }
+        Column(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.spacedBy(
+                space = LocalDimension.current.medium,
+                alignment = Alignment.Top
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.38f)
+        ) {
             PartiallyClickableText(
                 unclickableText = stringResource(R.string.policy_body_1),
                 clickableText = stringResource(R.string.learn_more),
@@ -68,29 +80,42 @@ fun PolicyScreen(
                     .padding(end = LocalDimension.current.small),
                 onClick = {}
             )
-            Spacer(Modifier.height(LocalDimension.current.medium))
             PolicyBody2(
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small)
-            ) {}
-            Spacer(Modifier.height(LocalDimension.current.medium))
+                    .padding(end = LocalDimension.current.small),
+                onClick = {}
+            )
             PolicyBody3(
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small)
-            ) {}
-            Spacer(Modifier.height(LocalDimension.current.mediumLarge))
+                    .padding(end = LocalDimension.current.small),
+                onClick = {}
+            )
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingFilledButton(
                 text = "I agree",
                 onClick = { onNextClick() }
             )
         }
-        AlreadyHaveAccountClickableText(
-            isDialogShown = isDialogShown,
-            onIsDialogShownChange = { isDialogShown = it },
-            onBackClick = onBackClick
-        )
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.35f)
+        ) {
+            AlreadyHaveAccountClickableText(
+                isDialogShown = isDialogShown,
+                onIsDialogShownChange = { isDialogShown = it },
+                onBackClick = onBackClick
+            )
+        }
     }
 }
 

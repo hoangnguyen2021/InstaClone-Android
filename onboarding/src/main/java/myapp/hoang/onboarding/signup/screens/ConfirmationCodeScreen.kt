@@ -153,7 +153,8 @@ fun ConfirmationCodeContent(
                 text = stringResource(R.string.confirmation_code_title_1),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                maxLines = 1
             )
         }
         Box(

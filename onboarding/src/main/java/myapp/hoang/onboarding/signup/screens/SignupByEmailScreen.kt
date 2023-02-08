@@ -76,8 +76,7 @@ fun SignupByEmailScreen(
         ) {
             BackIcon(
                 color = White,
-                modifier = Modifier
-                    .clickable(onClick = onBackClick)
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
         }
         Box(
@@ -91,6 +90,7 @@ fun SignupByEmailScreen(
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
+                maxLines = 1
             )
         }
         Box(

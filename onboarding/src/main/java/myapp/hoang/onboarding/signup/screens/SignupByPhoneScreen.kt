@@ -87,7 +87,8 @@ fun SignupByPhoneScreen(
                 text = stringResource(R.string.signup_by_phone_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                maxLines = 1
             )
         }
         Box(

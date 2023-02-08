@@ -63,7 +63,8 @@ fun FullNameScreen(
                 text = stringResource(R.string.full_name_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                maxLines = 1
             )
         }
         Box(

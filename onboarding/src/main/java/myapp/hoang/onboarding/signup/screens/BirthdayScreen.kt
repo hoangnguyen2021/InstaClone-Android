@@ -75,59 +75,85 @@ fun BirthdayContent(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = onBoardingBackgroundBrush
-            )
+            .background(brush = onBoardingBackgroundBrush)
             .padding(
                 vertical = LocalDimension.current.large,
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
-            modifier = Modifier.wrapContentHeight()
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.05f)
         ) {
             BackIcon(
                 color = White,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .clickable(onClick = onBackClick)
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
-            Spacer(Modifier.height(LocalDimension.current.mediumSmall))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.07f)
+        ) {
             Text(
                 text = stringResource(R.string.birthday_title_1),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Start,
-                modifier = Modifier.align(Alignment.Start)
+                maxLines = 1
             )
-            Spacer(Modifier.height(LocalDimension.current.small))
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.14f)
+        ) {
             PartiallyClickableText(
                 unclickableText = stringResource(R.string.birthday_label_1),
                 clickableText = stringResource(R.string.birthday_label_2),
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small),
+                modifier = Modifier.padding(end = LocalDimension.current.small),
                 onClick = onExpandDrawer
             )
-            Spacer(Modifier.height(LocalDimension.current.extraLarge))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingBirthdayField(
                 value = birthday,
                 onValueChange = { onBirthdayChange(it) },
                 label = "Birthday ($age years old)"
             )
-            Spacer(Modifier.height(LocalDimension.current.mediumLarge))
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingFilledButton(
                 text = stringResource(R.string.next),
                 onClick = onNextClick
             )
         }
-        AlreadyHaveAccountClickableText(
-            isDialogShown = isDialogShown,
-            onIsDialogShownChange = { isDialogShown = it },
-            onBackClick = onBackClick
-        )
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.54f)
+        ) {
+            AlreadyHaveAccountClickableText(
+                isDialogShown = isDialogShown,
+                onIsDialogShownChange = { isDialogShown = it },
+                onBackClick = onBackClick
+            )
+        }
     }
 }
 

@@ -64,7 +64,8 @@ fun PasswordScreen(
                 text = stringResource(R.string.password_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start
+                textAlign = TextAlign.Start,
+                maxLines = 1
             )
         }
         Box(
@@ -134,7 +135,7 @@ fun PasswordScreen(
             contentAlignment = Alignment.BottomCenter,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(if (showError) 0.5f else 0.55f)
+                .weight(if (showError) 0.55f else 0.6f)
         ) {
             AlreadyHaveAccountClickableText(
                 isDialogShown = isDialogShown,

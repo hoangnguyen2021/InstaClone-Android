@@ -44,28 +44,36 @@ fun SaveLoginInfoScreen(
                 horizontal = LocalDimension.current.mediumSmall
             )
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+        Box(
+            contentAlignment = Alignment.TopStart,
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight()
+                .weight(0.05f)
         ) {
             BackIcon(
                 color = White,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .clickable(onClick = onBackClick)
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
-            Spacer(Modifier.height(LocalDimension.current.mediumSmall))
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.07f)
+        ) {
             Text(
                 text = stringResource(R.string.save_login_info_title),
                 color = White,
                 style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Start,
-                modifier = Modifier.align(Alignment.Start)
+                textAlign = TextAlign.Start
             )
-            Spacer(Modifier.height(LocalDimension.current.small))
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.08f)
+        ) {
             Text(
                 text = buildAnnotatedString {
                     append(stringResource(R.string.save_login_info_label_1))
@@ -77,25 +85,43 @@ fun SaveLoginInfoScreen(
                 color = White,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(end = LocalDimension.current.small)
+                modifier = Modifier.padding(end = LocalDimension.current.small)
             )
-            Spacer(Modifier.height(LocalDimension.current.mediumLarge))
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingFilledButton(
                 text = stringResource(R.string.save_login_info_button_1),
                 onClick = onNextClick
             )
-            Spacer(Modifier.height(LocalDimension.current.medium))
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
             OnBoardingOutlinedButton(
                 text = stringResource(R.string.save_login_info_button_2),
                 onClick = onNextClick
             )
         }
-        AlreadyHaveAccountClickableText(
-            isDialogShown = isDialogShown,
-            onIsDialogShownChange = { isDialogShown = it },
-            onBackClick = onBackClick
-        )
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.6f)
+        ) {
+            AlreadyHaveAccountClickableText(
+                isDialogShown = isDialogShown,
+                onIsDialogShownChange = { isDialogShown = it },
+                onBackClick = onBackClick
+            )
+        }
     }
 }
