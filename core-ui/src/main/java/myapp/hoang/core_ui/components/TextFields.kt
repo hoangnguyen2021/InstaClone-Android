@@ -57,7 +57,7 @@ fun OnBoardingTextField(
             .height(LocalDimension.current.sevenExtraLarge)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .border(
-                width = 1.dp,
+                width = LocalDimension.current.unit,
                 color = if (isError) MaterialTheme.colorScheme.error
                 else if (isFocused) AliceBlue
                 else GrayBlue,
@@ -129,7 +129,7 @@ fun OnBoardingPasswordField(
             .height(LocalDimension.current.sevenExtraLarge)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .border(
-                width = 1.dp,
+                width = LocalDimension.current.unit,
                 color = if (isError) MaterialTheme.colorScheme.error
                 else if (isFocused) AliceBlue
                 else GrayBlue,
@@ -226,7 +226,7 @@ fun OnBoardingBirthdayField(
                 .height(LocalDimension.current.sevenExtraLarge)
                 .background(MaterialTheme.colorScheme.primaryContainer)
                 .border(
-                    width = 1.dp,
+                    width = LocalDimension.current.unit,
                     color = AliceBlue,
                     shape = RoundedCornerShape(LocalDimension.current.extraSmall)
                 )

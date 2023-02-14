@@ -7,7 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.unit.dp
 import myapp.hoang.core_ui.*
 
 @Composable
@@ -19,9 +18,6 @@ fun OnBoardingFilledButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(LocalDimension.current.sixExtraLarge),
         enabled = isEnabled,
         shape = RoundedCornerShape(LocalDimension.current.extraSmall),
         colors = ButtonDefaults.buttonColors(
@@ -33,7 +29,10 @@ fun OnBoardingFilledButton(
             top = LocalDimension.current.extraSmall,
             end = LocalDimension.current.sixExtraLarge,
             bottom = LocalDimension.current.extraSmall
-        )
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.sixExtraLarge),
     ) {
         if (isLoading) {
             OnBoardingProgressIndicator()
@@ -42,7 +41,7 @@ fun OnBoardingFilledButton(
                 text = text,
                 color = MaterialTheme.colorScheme.onTertiaryContainer,
                 style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.padding(vertical = 0.dp)
+                modifier = Modifier.padding(vertical = LocalDimension.current.zero)
             )
         }
     }
@@ -57,13 +56,10 @@ fun CreateAccountButton(
     OutlinedButton(
         onClick = onClick,
         enabled = isEnabled,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(LocalDimension.current.fourExtraLarge),
         shape = RoundedCornerShape(LocalDimension.current.extraSmall),
         colors = ButtonDefaults.outlinedButtonColors(),
         border = BorderStroke(
-            width = 1.dp,
+            width = LocalDimension.current.unit,
             color = MaterialTheme.colorScheme.outline,
         ),
         contentPadding = PaddingValues(
@@ -71,13 +67,16 @@ fun CreateAccountButton(
             top = LocalDimension.current.extraSmall,
             end = LocalDimension.current.sixExtraLarge,
             bottom = LocalDimension.current.extraSmall
-        )
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.fourExtraLarge),
     ) {
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             style = MaterialTheme.typography.displayMedium,
-            modifier = Modifier.padding(vertical = 0.dp)
+            modifier = Modifier.padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -94,7 +93,7 @@ fun OnBoardingEditButton(
             .height(LocalDimension.current.twoExtraLarge),
         shape = RoundedCornerShape(LocalDimension.current.extraSmall),
         border = BorderStroke(
-            width = 1.dp,
+            width = LocalDimension.current.unit,
             color = MaterialTheme.colorScheme.outline,
         ),
         contentPadding = PaddingValues(
@@ -107,7 +106,7 @@ fun OnBoardingEditButton(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             style = MaterialTheme.typography.displayMedium,
-            modifier = Modifier.padding(vertical = 0.dp)
+            modifier = Modifier.padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -127,7 +126,7 @@ fun OnBoardingOutlinedButton(
         shape = RoundedCornerShape(LocalDimension.current.extraSmall),
         colors = ButtonDefaults.outlinedButtonColors(),
         border = BorderStroke(
-            width = 1.dp,
+            width = LocalDimension.current.unit,
             color = MaterialTheme.colorScheme.outline,
         ),
         contentPadding = PaddingValues(
@@ -141,7 +140,7 @@ fun OnBoardingOutlinedButton(
             text = text,
             color = MaterialTheme.colorScheme.onTertiaryContainer,
             style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(vertical = 0.dp)
+            modifier = Modifier.padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -180,7 +179,7 @@ fun BottomSheetTopButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 0.dp)
+                .padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -216,7 +215,7 @@ fun BottomSheetMiddleButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 0.dp)
+                .padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -255,7 +254,7 @@ fun BottomSheetBottomButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 0.dp)
+                .padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -286,7 +285,7 @@ fun PrimaryButton(
         Text(
             text = text,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(vertical = 0.dp)
+            modifier = Modifier.padding(vertical = LocalDimension.current.zero)
         )
     }
 }
@@ -318,7 +317,7 @@ fun SecondaryButton(
             text = text,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             style = MaterialTheme.typography.displayMedium,
-            modifier = Modifier.padding(vertical = 0.dp)
+            modifier = Modifier.padding(vertical = LocalDimension.current.zero)
         )
     }
 }

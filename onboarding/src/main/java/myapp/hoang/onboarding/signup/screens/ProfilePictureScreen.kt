@@ -196,38 +196,61 @@ fun ProfilePictureContent(
             )
             .verticalScroll(scrollState)
     ) {
-        BackIcon(
-            color = White,
+        Box(
+            contentAlignment = Alignment.TopStart,
             modifier = Modifier
-                .align(Alignment.Start)
-                .clickable(onClick = onBackClick)
-        )
-        Spacer(Modifier.height(LocalDimension.current.mediumSmall))
-        Text(
-            text = stringResource(R.string.profile_pic_title),
-            color = White,
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Spacer(Modifier.height(LocalDimension.current.small))
-        Text(
-            text = stringResource(R.string.profile_pic_label_1),
-            color = White,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Start,
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(end = LocalDimension.current.small)
-        )
-        Spacer(Modifier.height(LocalDimension.current.large))
-        OnBoardingProfilePicture(imageUri = imageUri)
-        if (imageUri != null) {
-            Spacer(Modifier.height(LocalDimension.current.large))
-            OnBoardingEditButton(
-                text = "Edit",
-                onClick = onCrop
+                .fillMaxWidth()
+                .weight(0.06f)
+        ) {
+            BackIcon(
+                color = White,
+                modifier = Modifier.clickable(onClick = onBackClick)
             )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            Text(
+                text = stringResource(R.string.profile_pic_title),
+                color = White,
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Start
+            )
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.12f)
+        ) {
+            Text(
+                text = stringResource(R.string.profile_pic_label_1),
+                color = White,
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Start,
+                modifier = Modifier.padding(end = LocalDimension.current.small)
+            )
+        }
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = LocalDimension.current.large,
+                alignment = Alignment.Top
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.72f)
+        ) {
+            OnBoardingProfilePicture(imageUri = imageUri)
+            if (imageUri != null) {
+                OnBoardingEditButton(
+                    text = "Edit",
+                    onClick = onCrop
+                )
+            }
         }
     }
 }
@@ -253,7 +276,10 @@ fun BottomBar(
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
+            verticalArrangement = Arrangement.spacedBy(
+                space = LocalDimension.current.mediumSmall,
+                alignment = Alignment.CenterVertically
+            ),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
@@ -261,32 +287,45 @@ fun BottomBar(
                     horizontal = LocalDimension.current.mediumSmall
                 )
         ) {
-            if (imageUri == null) {
-                OnBoardingFilledButton(
-                    text = stringResource(
-                        R.string.profile_pic_button_1
-                    ),
-                    onClick = onAddPicture,
-                    isLoading = isLoading
-                )
-            } else {
-                OnBoardingFilledButton(
-                    text = stringResource(R.string.profile_pic_button_3),
-                    onClick = { onNextClick(imageUri) },
-                    isLoading = isLoading
-                )
+            Box(
+                contentAlignment = Alignment.TopStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                if (imageUri == null) {
+                    OnBoardingFilledButton(
+                        text = stringResource(
+                            R.string.profile_pic_button_1
+                        ),
+                        onClick = onAddPicture,
+                        isLoading = isLoading
+                    )
+                } else {
+                    OnBoardingFilledButton(
+                        text = stringResource(R.string.profile_pic_button_3),
+                        onClick = { onNextClick(imageUri) },
+                        isLoading = isLoading
+                    )
+                }
             }
-            Spacer(Modifier.height(LocalDimension.current.mediumSmall))
-            if (imageUri == null) {
-                OnBoardingOutlinedButton(
-                    text = stringResource(R.string.profile_pic_button_2),
-                    onClick = { onNextClick(null) }
-                )
-            } else {
-                OnBoardingOutlinedButton(
-                    text = stringResource(R.string.profile_pic_button_4),
-                    onClick = onAddPicture
-                )
+            Box(
+                contentAlignment = Alignment.TopStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                if (imageUri == null) {
+                    OnBoardingOutlinedButton(
+                        text = stringResource(R.string.profile_pic_button_2),
+                        onClick = { onNextClick(null) }
+                    )
+                } else {
+                    OnBoardingOutlinedButton(
+                        text = stringResource(R.string.profile_pic_button_4),
+                        onClick = onAddPicture
+                    )
+                }
             }
         }
     }
@@ -309,58 +348,117 @@ fun ProfilePictureDrawer(
             .background(brush = onBoardingDrawerBrush)
             .padding(horizontal = LocalDimension.current.mediumSmall)
     ) {
-        SwipeIndicatorIcon(
-            color = Color(0xFFCBD2DA),
+        Box(
+            contentAlignment = Alignment.TopCenter,
             modifier = Modifier
-                .size(LocalDimension.current.fourExtraLarge)
-                .offset(y = (-12).dp)
-        )
-        CancelIcon(
-            color = White,
+                .fillMaxWidth()
+                .weight(0.05f)
+        ) {
+            SwipeIndicatorIcon(
+                color = Color(0xFFCBD2DA),
+                modifier = Modifier
+                    .size(LocalDimension.current.fourExtraLarge)
+                    .offset((-8).dp)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
             modifier = Modifier
-                .size(LocalDimension.current.medium)
-                .align(Alignment.Start)
-                .clickable(onClick = onCloseDrawer)
-        )
-        Spacer(Modifier.height(LocalDimension.current.large))
-        Text(
-            text = stringResource(R.string.confirmation_code_title_2),
-            color = White,
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Spacer(Modifier.height(LocalDimension.current.large))
-        BottomSheetTopButton(
-            text = stringResource(R.string.profile_pic_button_5),
-            onClick = {
-                onCloseDrawer()
-                onChooseFromGallery()
-            }
-        )
+                .fillMaxWidth()
+                .weight(0.05f)
+        ) {
+            CancelIcon(
+                color = White,
+                modifier = Modifier
+                    .size(LocalDimension.current.medium)
+                    .clickable(onClick = onCloseDrawer)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            Text(
+                text = stringResource(R.string.confirmation_code_title_2),
+                color = White,
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Start
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.08f)
+        ) {
+            BottomSheetTopButton(
+                text = stringResource(R.string.profile_pic_button_5),
+                onClick = {
+                    onCloseDrawer()
+                    onChooseFromGallery()
+                }
+            )
+        }
         if (imageUri == null) {
-            BottomSheetBottomButton(
-                text = stringResource(R.string.profile_pic_button_6),
-                onClick = {
-                    onCloseDrawer()
-                    onTakePhoto()
-                }
-            )
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.08f)
+            ) {
+                BottomSheetBottomButton(
+                    text = stringResource(R.string.profile_pic_button_6),
+                    onClick = {
+                        onCloseDrawer()
+                        onTakePhoto()
+                    }
+                )
+            }
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.64f)
+            ) {
+            }
         } else {
-            BottomSheetMiddleButton(
-                text = stringResource(R.string.profile_pic_button_6),
-                onClick = {
-                    onCloseDrawer()
-                    onTakePhoto()
-                }
-            )
-            BottomSheetBottomButton(
-                text = stringResource(R.string.profile_pic_button_7),
-                onClick = {
-                    onCloseDrawer()
-                    onRemovePhoto()
-                }
-            )
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.08f)
+            ) {
+                BottomSheetMiddleButton(
+                    text = stringResource(R.string.profile_pic_button_6),
+                    onClick = {
+                        onCloseDrawer()
+                        onTakePhoto()
+                    }
+                )
+            }
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.08f)
+            ) {
+                BottomSheetBottomButton(
+                    text = stringResource(R.string.profile_pic_button_7),
+                    onClick = {
+                        onCloseDrawer()
+                        onRemovePhoto()
+                    }
+                )
+            }
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(0.56f)
+            ) {
+            }
         }
     }
 }

@@ -167,43 +167,60 @@ fun BirthdayDrawer(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.75f)
-            .background(
-                brush = Brush.verticalGradient(
-                    0.0f to Color(0xFF213536),
-                    0.6f to Color(0xFF1C2E3D),
-                )
-            )
+            .background(brush = onBoardingDrawerBrush)
             .padding(horizontal = LocalDimension.current.mediumSmall)
     ) {
-        SwipeIndicatorIcon(
-            color = Color(0xFFCBD2DA),
+        Box(
+            contentAlignment = Alignment.TopCenter,
             modifier = Modifier
-                .size(LocalDimension.current.fourExtraLarge)
-                .offset(y = (-12).dp)
-        )
-        CancelIcon(
-            color = White,
+                .fillMaxWidth()
+                .weight(0.05f)
+        ) {
+            SwipeIndicatorIcon(
+                color = Color(0xFFCBD2DA),
+                modifier = Modifier
+                    .size(LocalDimension.current.fourExtraLarge)
+                    .offset((-8).dp)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
             modifier = Modifier
-                .size(LocalDimension.current.medium)
-                .align(Alignment.Start)
-                .clickable(onClick = onCloseDrawer)
-        )
-        Spacer(Modifier.height(LocalDimension.current.large))
-        Text(
-            text = stringResource(id = R.string.birthday_title_2),
-            color = White,
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.align(Alignment.Start)
-        )
-        Spacer(Modifier.height(LocalDimension.current.mediumSmall))
-        PartiallyClickableText(
-            unclickableText = stringResource(R.string.birthday_body_1),
-            clickableText = stringResource(R.string.learn_more),
+                .fillMaxWidth()
+                .weight(0.05f)
+        ) {
+            CancelIcon(
+                color = White,
+                modifier = Modifier
+                    .size(LocalDimension.current.medium)
+                    .clickable(onClick = onCloseDrawer)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
             modifier = Modifier
-                .align(Alignment.Start)
-                .padding(end = LocalDimension.current.small),
-            onClick = {}
-        )
+                .fillMaxWidth()
+                .weight(0.1f)
+        ) {
+            Text(
+                text = stringResource(R.string.birthday_title_2),
+                color = White,
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Start
+            )
+        }
+        Box(
+            contentAlignment = Alignment.TopStart,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.8f)
+        ) {
+            PartiallyClickableText(
+                unclickableText = stringResource(R.string.birthday_body_1),
+                clickableText = stringResource(R.string.learn_more),
+                modifier = Modifier.padding(end = LocalDimension.current.small),
+                onClick = {}
+            )
+        }
     }
 }
