@@ -123,7 +123,7 @@ class SignupViewModel @Inject constructor(
         sendVerificationJob?.cancel()
         sendVerificationJob = viewModelScope.launch {
             state = try {
-                //signupRepository.sendVerificationCode(recipient)
+                signupRepository.sendVerificationCode(recipient)
                 state.copy(
                     isLoading = false,
                     nextScreenEvent = triggered
@@ -144,7 +144,7 @@ class SignupViewModel @Inject constructor(
         checkVerificationJob?.cancel()
         checkVerificationJob = viewModelScope.launch {
             state = try {
-                //signupRepository.checkVerificationCode(recipient, confirmationCode)
+                signupRepository.checkVerificationCode(recipient, confirmationCode)
                 state.copy(
                     isLoading = false,
                     hideErrorSupportingTextEvent = triggered,
