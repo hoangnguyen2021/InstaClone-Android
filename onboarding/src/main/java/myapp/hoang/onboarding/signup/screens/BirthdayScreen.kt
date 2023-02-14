@@ -14,17 +14,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import kotlinx.datetime.toJavaLocalDate
 import myapp.hoang.core.utils.DateUtils
 import myapp.hoang.core.utils.DateUtils.getToday
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.bottomsheet.*
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 import java.time.LocalDate
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BirthdayScreen(
+    viewModel: SignupViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: (LocalDate) -> Unit
 ) {
@@ -33,6 +40,13 @@ fun BirthdayScreen(
 
     var birthday by remember { mutableStateOf(getToday()) }
     val age by remember { derivedStateOf { DateUtils.calculateAge(birthday) } }
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // recover birthday when navigating back
+    LaunchedEffect(key1 = uiState.signupForm.birthday) {
+        uiState.signupForm.birthday?.let { birthday = it.toJavaLocalDate() }
+    }
 
     BottomDrawer(
         drawerContent = {

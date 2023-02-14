@@ -11,14 +11,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.datetime.toJavaLocalDate
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.AlreadyHaveAccountClickableText
 import myapp.hoang.core_ui.components.OnBoardingFilledButton
 import myapp.hoang.core_ui.components.OnBoardingTextField
 import myapp.hoang.onboarding.R
+import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UsernameScreen(
+    viewModel: SignupViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: (String) -> Unit
 ) {
@@ -30,6 +37,13 @@ fun UsernameScreen(
     var errorSupportingText by remember { mutableStateOf("") }
 
     val showError = isError && errorSupportingText.isNotEmpty()
+
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // recover username when navigating back
+    LaunchedEffect(key1 = uiState.signupForm.username) {
+        uiState.signupForm.username?.let { username = it }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

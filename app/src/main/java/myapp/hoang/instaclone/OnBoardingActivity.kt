@@ -123,6 +123,7 @@ class OnBoardingActivity : ComponentActivity() {
                         }
                         composable(route = OnBoardingScreen.FullNameScreen.route) {
                             FullNameScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
                                     viewModel.setFullName(it)
@@ -148,6 +149,7 @@ class OnBoardingActivity : ComponentActivity() {
                         }
                         composable(route = OnBoardingScreen.BirthdayScreen.route) {
                             BirthdayScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
                                     viewModel.setBirthday(it.toKotlinLocalDate())
@@ -157,6 +159,7 @@ class OnBoardingActivity : ComponentActivity() {
                         }
                         composable(route = OnBoardingScreen.UsernameScreen.route) {
                             UsernameScreen(
+                                viewModel = viewModel,
                                 onBackClick = { navController.navigateUp() },
                                 onNextClick = {
                                     viewModel.setUsername(it)
