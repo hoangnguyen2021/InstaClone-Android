@@ -66,10 +66,8 @@ fun ProfileScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(LocalDimension.current.sixExtraLarge)
-                .padding(
-                    horizontal = LocalDimension.current.medium
-                )
+                .weight(0.08f)
+                .padding(horizontal = LocalDimension.current.medium)
         ) {
             ProfileUsername(
                 username = "username",
@@ -87,70 +85,80 @@ fun ProfileScreen(
             }
         }
         FeedDivider()
-        Spacer(modifier = Modifier.height(LocalDimension.current.medium))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(LocalDimension.current.tenExtraLarge)
-                .padding(horizontal = LocalDimension.current.medium)
+                .weight(0.28f)
+                .padding(
+                    top = LocalDimension.current.medium,
+                    bottom = LocalDimension.current.mediumLarge,
+                    start = LocalDimension.current.medium,
+                    end = LocalDimension.current.medium
+                )
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Start,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
+                    .height(LocalDimension.current.tenExtraLarge)
             ) {
-                ProfilePic(
-                    size = LocalDimension.current.nineExtraLarge,
-                    onClick = { }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                ) {
+                    ProfilePic(
+                        size = LocalDimension.current.nineExtraLarge,
+                        onClick = { }
+                    )
+                    ProfileStat(value = 0, unit = "Posts")
+                    ProfileStat(value = 0, unit = "Followers")
+                    ProfileStat(value = 0, unit = "Following")
+                }
+            }
+            Text(
+                text = "Display Name",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(modifier = Modifier.height(LocalDimension.current.mediumLarge))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = LocalDimension.current.extraSmall,
+                    alignment = Alignment.Start
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(LocalDimension.current.twoExtraLarge)
+            ) {
+                SecondaryButton(
+                    text = stringResource(R.string.edit_profile),
+                    onClick = { },
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .fillMaxHeight()
                 )
-                ProfileStat(value = 0, unit = "Posts")
-                ProfileStat(value = 0, unit = "Followers")
-                ProfileStat(value = 0, unit = "Following")
+                ToggleDiscoverPeopleIconButton(
+                    checked = isDiscoverPeopleChecked,
+                    onCheckedChange = { isDiscoverPeopleChecked = it },
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
             }
         }
-        Text(
-            text = "Display Name",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier
-                .padding(horizontal = LocalDimension.current.medium)
-                .align(Alignment.Start)
-        )
-        Spacer(modifier = Modifier.height(LocalDimension.current.mediumLarge))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(LocalDimension.current.twoExtraLarge)
-                .padding(
-                    horizontal = LocalDimension.current.medium
-                )
-        ) {
-            SecondaryButton(
-                text = stringResource(R.string.edit_profile),
-                onClick = { },
-                modifier = Modifier
-                    .fillMaxWidth(0.9f)
-                    .fillMaxHeight()
-            )
-            Spacer(modifier = Modifier.width(LocalDimension.current.extraSmall))
-            ToggleDiscoverPeopleIconButton(
-                checked = isDiscoverPeopleChecked,
-                onCheckedChange = { isDiscoverPeopleChecked = it },
-                modifier = Modifier
-                    .fillMaxSize()
-            )
-        }
-        Spacer(modifier = Modifier.height(LocalDimension.current.large))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(0.64f)
         ) {
             ProfileTabRow(
                 tabs = profileTabs,
