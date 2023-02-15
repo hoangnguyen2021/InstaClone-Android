@@ -8,6 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -18,6 +21,7 @@ import myapp.hoang.core_ui.TagIcon
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.models.ProfileTab
 import myapp.hoang.instaclone.R
+import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
 val profileTabs = listOf(
     ProfileTab(
@@ -30,7 +34,10 @@ val profileTabs = listOf(
     )
 )
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(
+    ExperimentalPagerApi::class,
+    ExperimentalLifecycleComposeApi::class
+)
 @Composable
 fun ProfileScreen(
     onProfileUsernameClick: () -> Unit
@@ -40,6 +47,14 @@ fun ProfileScreen(
     }
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
+
+    val postsViewModel = hiltViewModel<InstaClonePostsViewModel>()
+
+    val uiState by postsViewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(key1 = true) {
+        postsViewModel.getAllPostsByUser()
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

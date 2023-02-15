@@ -1,5 +1,6 @@
 package myapp.hoang.media.datasources
 
+import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
 import myapp.hoang.media.services.PostService
 import javax.inject.Inject
@@ -9,5 +10,9 @@ class PostRemoteDataSourceImpl @Inject constructor(
 ): PostRemoteDataSource {
     override suspend fun createPost(postForm: PostForm): String {
         return postService.createPost(postForm)
+    }
+
+    override suspend fun getPostsByUser(authorUsername: String): List<InstaClonePost> {
+        return postService.getPostsByUser(authorUsername)
     }
 }

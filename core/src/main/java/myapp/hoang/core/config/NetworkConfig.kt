@@ -15,4 +15,5 @@ object NetworkConfig {
     const val ROUTE_GET_PROFILE_PIC = "$ROUTE_MEDIA/$ROUTE_PROFILE_PIC/get-profile-pic"
     const val ROUTE_UPLOAD_IMAGES = "$ROUTE_MEDIA/$ROUTE_POST/upload-images"
     const val ROUTE_CREATE_POST = "$ROUTE_MEDIA/$ROUTE_POST/create"
+    const val ROUTE_GET_POSTS_BY_USER = "$ROUTE_MEDIA/$ROUTE_POST/posts-by-user"
 }
