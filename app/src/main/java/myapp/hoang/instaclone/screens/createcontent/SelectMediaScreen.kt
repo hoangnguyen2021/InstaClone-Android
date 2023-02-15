@@ -20,7 +20,7 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
 import myapp.hoang.media.components.CropperCarousel
 import myapp.hoang.media.components.MediaCollectionSelect
-import myapp.hoang.media.components.MediaGrid
+import myapp.hoang.media.components.SelectMediaGrid
 import myapp.hoang.media.models.SelectMediaMode
 import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
@@ -177,7 +177,7 @@ fun SelectMediaScreen(
                     .fillMaxWidth()
                     .weight(0.35f)
             ) {
-                MediaGrid(
+                SelectMediaGrid(
                     mediaList = uiState.mediaList,
                     selectMediaMode = uiState.selectMediaMode,
                     selectedMediaList = uiState.selectedMediaList,

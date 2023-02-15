@@ -21,16 +21,15 @@ import myapp.hoang.core_ui.TagIcon
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.core_ui.components.models.ProfileTab
 import myapp.hoang.instaclone.R
+import myapp.hoang.media.components.PostsGrid
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
 val profileTabs = listOf(
     ProfileTab(
-        icon = { GridIcon(modifier = Modifier.size(LocalDimension.current.mediumLarge)) },
-        emptyContent = { GridTabEmptyContent() }
+        icon = { GridIcon(modifier = Modifier.size(LocalDimension.current.mediumLarge)) }
     ),
     ProfileTab(
-        icon = { TagIcon(modifier = Modifier.size(LocalDimension.current.extraLarge)) },
-        emptyContent = { TagTabEmptyContent() }
+        icon = { TagIcon(modifier = Modifier.size(LocalDimension.current.extraLarge)) }
     )
 )
 
@@ -100,26 +99,18 @@ fun ProfileScreen(
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(LocalDimension.current.tenExtraLarge)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                ) {
-                    ProfilePic(
-                        size = LocalDimension.current.nineExtraLarge,
-                        onClick = { }
-                    )
-                    ProfileStat(value = 0, unit = "Posts")
-                    ProfileStat(value = 0, unit = "Followers")
-                    ProfileStat(value = 0, unit = "Following")
-                }
+                ProfilePic(
+                    size = LocalDimension.current.nineExtraLarge,
+                    onClick = { }
+                )
+                ProfileStat(value = 0, unit = "Posts")
+                ProfileStat(value = 0, unit = "Followers")
+                ProfileStat(value = 0, unit = "Following")
             }
             Text(
                 text = "Display Name",
@@ -148,8 +139,7 @@ fun ProfileScreen(
                 ToggleDiscoverPeopleIconButton(
                     checked = isDiscoverPeopleChecked,
                     onCheckedChange = { isDiscoverPeopleChecked = it },
-                    modifier = Modifier
-                        .fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }
@@ -173,7 +163,25 @@ fun ProfileScreen(
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
-                profileTabs[page].emptyContent()
+                when (page) {
+                    0 -> {
+                        if (uiState.posts.isEmpty()) {
+                            GridTabEmptyContent()
+                        } else {
+                            PostsGrid(
+                                posts = uiState.posts,
+                                onPostSelect = {},
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(LocalDimension.current.unit)
+                            )
+                        }
+                    }
+                    1 -> {
+                        TagTabEmptyContent()
+                    }
+                    else -> {}
+                }
             }
         }
     }

@@ -25,16 +25,14 @@ import coil.compose.AsyncImage
 import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import coil.request.videoFrameMillis
+import myapp.hoang.core.utils.ServiceUtils
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.White
-import myapp.hoang.media.models.Image
-import myapp.hoang.media.models.Media
-import myapp.hoang.media.models.SelectMediaMode
-import myapp.hoang.media.models.Video
+import myapp.hoang.media.models.*
 import myapp.hoang.media.viewmodels.SelectedMedia
 
 @Composable
-fun MediaGrid(
+fun SelectMediaGrid(
     mediaList: List<Media>,
     selectMediaMode: SelectMediaMode,
     selectedMediaList: List<SelectedMedia>,
@@ -162,5 +160,53 @@ fun MultipleMediaIndicator(
                 style = MaterialTheme.typography.bodySmall
             )
         }
+    }
+}
+
+@Composable
+fun PostsGrid(
+    posts: List<InstaClonePost>,
+    onPostSelect: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(count = 3),
+        verticalArrangement = Arrangement.spacedBy(LocalDimension.current.unit),
+        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.unit),
+        modifier = modifier
+    ) {
+        itemsIndexed(items = posts) { i, item ->
+            PostPreview(
+                mediaPath = item.mediaPaths.first(),
+                onClick = { onPostSelect(i) }
+            )
+        }
+    }
+}
+
+@Composable
+fun PostPreview(
+    mediaPath: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val previewUrl = ServiceUtils.buildAmazonS3ObjectUrl(mediaPath)
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(previewUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = "Post preview",
+            contentScale = ContentScale.Crop,
+            modifier = modifier
+                .wrapContentSize()
+                .aspectRatio(1f)
+                .clip(RectangleShape)
+                .clickable(onClick = onClick)
+        )
     }
 }
