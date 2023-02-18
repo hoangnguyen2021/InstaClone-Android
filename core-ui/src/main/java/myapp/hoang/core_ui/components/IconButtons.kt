@@ -353,3 +353,22 @@ fun EditImageButton(
         icon()
     }
 }
+
+@Composable
+fun MoreIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    ) {
+        MoreIcon(
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}

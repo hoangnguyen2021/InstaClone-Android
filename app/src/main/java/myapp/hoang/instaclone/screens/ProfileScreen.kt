@@ -1,6 +1,5 @@
 package myapp.hoang.instaclone.screens
 
-import android.util.Log
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -45,7 +44,9 @@ val profileTabs = listOf(
 )
 @Composable
 fun ProfileScreen(
-    onProfileUsernameClick: () -> Unit
+    postsViewModel: InstaClonePostsViewModel = hiltViewModel(),
+    onProfileUsernameClick: () -> Unit,
+    onPostClick: (String) -> Unit
 ) {
     val density = LocalDensity.current
     val profileBannerHeight = density.run { 200.dp.toPx() }
@@ -56,8 +57,6 @@ fun ProfileScreen(
     val scrollState = rememberScrollState()
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
-
-    val postsViewModel = hiltViewModel<InstaClonePostsViewModel>()
 
     val uiState by postsViewModel.uiState.collectAsStateWithLifecycle()
 
@@ -214,7 +213,7 @@ fun ProfileScreen(
                             } else {
                                 PostsGrid(
                                     posts = uiState.posts,
-                                    onPostSelect = {},
+                                    onPostSelect = onPostClick,
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .padding(LocalDimension.current.twoExtraSmall)

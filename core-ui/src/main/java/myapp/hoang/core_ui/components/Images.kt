@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import myapp.hoang.core.utils.ServiceUtils
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.R
 import myapp.hoang.core_ui.utils.applyIf
@@ -94,6 +95,25 @@ fun ProfilePic(
         contentScale = ContentScale.Crop,
         modifier = modifier
             .size(size)
+            .aspectRatio(1f)
+            .clip(CircleShape)
+            .clickable(onClick = onClick)
+    )
+}
+
+@Composable
+fun ProfilePic(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(R.drawable.profile_pic_placeholder)
+            .crossfade(true)
+            .build(),
+        contentDescription = "Profile pic",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
             .aspectRatio(1f)
             .clip(CircleShape)
             .clickable(onClick = onClick)
@@ -185,7 +205,7 @@ fun ImagesEditPreview(
         itemsIndexed(items = bitmaps) { index, bitmap ->
             ImageEditPreview(
                 bitmap = bitmap,
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxHeight()
                     .aspectRatio(1f)
                     .clip(RectangleShape)
@@ -193,4 +213,24 @@ fun ImagesEditPreview(
             )
         }
     }
+}
+
+@Composable
+fun PostImage(
+    path: String,
+    modifier: Modifier = Modifier
+) {
+    val url = ServiceUtils.buildAmazonS3ObjectUrl(path)
+
+    AsyncImage(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(url)
+            .crossfade(true)
+            .build(),
+        contentDescription = "Post image",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .aspectRatio(1f)
+            .clip(RectangleShape)
+    )
 }

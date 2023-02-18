@@ -12,4 +12,6 @@
 
     <string name="select_media_limit_alert">The limit is 10 photos or videos.</string>
     <string name="write_caption_prompt">Write a caption…</string>
+
+    <string name="posts">Posts</string>
 </resources>
