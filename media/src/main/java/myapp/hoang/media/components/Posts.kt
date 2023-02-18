@@ -21,6 +21,7 @@ import myapp.hoang.media.models.InstaClonePost
 @Composable
 fun InstaClonePosts(
     posts: List<InstaClonePost>,
+    authorUsername: String,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -31,6 +32,7 @@ fun InstaClonePosts(
         items(items = posts) { post ->
             InstaClonePost(
                 post = post,
+                authorUsername = authorUsername,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -43,6 +45,7 @@ fun InstaClonePosts(
 @Composable
 fun InstaClonePost(
     post: InstaClonePost,
+    authorUsername: String,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState()
@@ -77,7 +80,7 @@ fun InstaClonePost(
                     .weight(0.8f)
             ) {
                 Text(
-                    text = "hoang__ng_",
+                    text = authorUsername,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold
                 )

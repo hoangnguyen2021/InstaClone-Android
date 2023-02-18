@@ -32,7 +32,6 @@ class InstaClonePostsViewModel @Inject constructor(
     private var getAllPostsByUserJob: Job? = null
 
     fun getAllPostsByUser() {
-        Log.d(TAG, "getAllPostsByUser")
         getAllPostsByUserJob?.cancel()
 
         state = state.copy(

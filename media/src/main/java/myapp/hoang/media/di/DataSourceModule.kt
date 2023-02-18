@@ -27,7 +27,10 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providePostRemoteDataSource(postService: PostService): PostRemoteDataSource {
-        return PostRemoteDataSourceImpl(postService)
+    fun providePostRemoteDataSource(
+        postService: PostService,
+        dispatcherProvider: DispatcherProvider
+    ): PostRemoteDataSource {
+        return PostRemoteDataSourceImpl(postService, dispatcherProvider)
     }
 }
