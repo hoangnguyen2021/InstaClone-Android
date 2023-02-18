@@ -1,13 +1,19 @@
 package myapp.hoang.instaclone.screens
 
+import android.util.Log
+import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -41,9 +47,13 @@ val profileTabs = listOf(
 fun ProfileScreen(
     onProfileUsernameClick: () -> Unit
 ) {
+    val density = LocalDensity.current
+    val profileBannerHeight = density.run { 200.dp.toPx() }
+
     var isDiscoverPeopleChecked by remember {
         mutableStateOf(false)
     }
+    val scrollState = rememberScrollState()
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
 
@@ -56,16 +66,18 @@ fun ProfileScreen(
     }
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.08f)
+                .height(LocalDimension.current.sixExtraLarge)
                 .padding(horizontal = LocalDimension.current.medium)
         ) {
             ProfileUsername(
@@ -84,103 +96,136 @@ fun ProfileScreen(
             }
         }
         FeedDivider()
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(0.28f)
-                .padding(
-                    top = LocalDimension.current.medium,
-                    bottom = LocalDimension.current.mediumLarge,
-                    start = LocalDimension.current.medium,
-                    end = LocalDimension.current.medium
-                )
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+        if (scrollState.value > profileBannerHeight) {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(LocalDimension.current.tenExtraLarge)
+                    .wrapContentHeight()
             ) {
-                ProfilePic(
-                    size = LocalDimension.current.nineExtraLarge,
-                    onClick = { }
-                )
-                ProfileStat(value = 0, unit = "Posts")
-                ProfileStat(value = 0, unit = "Followers")
-                ProfileStat(value = 0, unit = "Following")
-            }
-            Text(
-                text = "Display Name",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.align(Alignment.Start)
-            )
-            Spacer(modifier = Modifier.height(LocalDimension.current.mediumLarge))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(
-                    space = LocalDimension.current.extraSmall,
-                    alignment = Alignment.Start
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(LocalDimension.current.twoExtraLarge)
-            ) {
-                SecondaryButton(
-                    text = stringResource(R.string.edit_profile),
-                    onClick = { },
+                ProfileTabRow(
+                    tabs = profileTabs,
+                    pagerState = pagerState,
+                    onScrollToPage = { scope.launch { pagerState.animateScrollToPage(it) } },
                     modifier = Modifier
-                        .fillMaxWidth(0.9f)
-                        .fillMaxHeight()
-                )
-                ToggleDiscoverPeopleIconButton(
-                    checked = isDiscoverPeopleChecked,
-                    onCheckedChange = { isDiscoverPeopleChecked = it },
-                    modifier = Modifier.fillMaxSize()
+                        .fillMaxWidth()
+                        .height(LocalDimension.current.fiveExtraLarge)
                 )
             }
         }
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.64f)
+                .wrapContentHeight()
+                .verticalScroll(
+                    state = scrollState,
+                    flingBehavior = ScrollableDefaults.flingBehavior(),
+                    enabled = true
+                )
         ) {
-            ProfileTabRow(
-                tabs = profileTabs,
-                pagerState = pagerState,
-                onScrollToPage = { scope.launch { pagerState.animateScrollToPage(it) } },
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(LocalDimension.current.fiveExtraLarge)
-            )
-            HorizontalPager(
-                count = profileTabs.size,
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { page ->
-                when (page) {
-                    0 -> {
-                        if (uiState.posts.isEmpty()) {
-                            GridTabEmptyContent()
-                        } else {
-                            PostsGrid(
-                                posts = uiState.posts,
-                                onPostSelect = {},
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(LocalDimension.current.unit)
-                            )
+                    .height(200.dp)
+                    .padding(
+                        top = LocalDimension.current.medium,
+                        bottom = LocalDimension.current.mediumLarge,
+                        start = LocalDimension.current.medium,
+                        end = LocalDimension.current.medium
+                    )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(LocalDimension.current.tenExtraLarge)
+                ) {
+                    ProfilePic(
+                        size = LocalDimension.current.nineExtraLarge,
+                        onClick = { }
+                    )
+                    ProfileStat(value = 0, unit = "Posts")
+                    ProfileStat(value = 0, unit = "Followers")
+                    ProfileStat(value = 0, unit = "Following")
+                }
+                Text(
+                    text = "Display Name",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+                Spacer(modifier = Modifier.height(LocalDimension.current.mediumLarge))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = LocalDimension.current.extraSmall,
+                        alignment = Alignment.Start
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(LocalDimension.current.twoExtraLarge)
+                ) {
+                    SecondaryButton(
+                        text = stringResource(R.string.edit_profile),
+                        onClick = { },
+                        modifier = Modifier
+                            .fillMaxWidth(0.9f)
+                            .fillMaxHeight()
+                    )
+                    ToggleDiscoverPeopleIconButton(
+                        checked = isDiscoverPeopleChecked,
+                        onCheckedChange = { isDiscoverPeopleChecked = it },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
+                if (scrollState.value < profileBannerHeight) {
+                    ProfileTabRow(
+                        tabs = profileTabs,
+                        pagerState = pagerState,
+                        onScrollToPage = { scope.launch { pagerState.animateScrollToPage(it) } },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(LocalDimension.current.fiveExtraLarge)
+                    )
+                }
+                HorizontalPager(
+                    count = profileTabs.size,
+                    state = pagerState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(600.dp)
+                ) { page ->
+                    when (page) {
+                        0 -> {
+                            if (uiState.posts.isEmpty()) {
+                                GridTabEmptyContent()
+                            } else {
+                                PostsGrid(
+                                    posts = uiState.posts,
+                                    onPostSelect = {},
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(LocalDimension.current.twoExtraSmall)
+                                )
+                            }
                         }
+                        1 -> {
+                            TagTabEmptyContent()
+                        }
+                        else -> {}
                     }
-                    1 -> {
-                        TagTabEmptyContent()
-                    }
-                    else -> {}
                 }
             }
         }

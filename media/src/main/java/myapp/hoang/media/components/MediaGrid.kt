@@ -171,8 +171,8 @@ fun PostsGrid(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(count = 3),
-        verticalArrangement = Arrangement.spacedBy(LocalDimension.current.unit),
-        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.unit),
+        verticalArrangement = Arrangement.spacedBy(LocalDimension.current.twoExtraSmall),
+        horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.twoExtraSmall),
         modifier = modifier
     ) {
         itemsIndexed(items = posts) { i, item ->

@@ -80,7 +80,14 @@ fun CreateContentScreen(
         composable(route = CreateContentScreen.WritePostScreen.route) {
             WritePostScreen(
                 onBack = { navController.navigateUp() },
-                onClose = onClose,
+                onClose = {
+                    navController.navigate(CreateContentScreen.SelectMediaScreen.route) {
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                    }
+                    onClose()
+                },
                 viewModel = viewModel
             )
         }

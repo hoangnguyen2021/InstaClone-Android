@@ -5,6 +5,7 @@ object Compose {
     private const val hiltNavigationVersion = "1.0.0"
     private const val pagingVersion = "1.0.0-rc1"
     private const val coilVersion = "2.2.2"
+    private const val constraintLayoutVersion = "1.1.0-alpha07"
     private const val stateEventsVersion = "1.2.3"
     private const val composeCropperVersion = "0.2.4"
 
@@ -23,6 +24,7 @@ object Compose {
     const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${Lifecycle.version}"
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-compose:${Lifecycle.lifecycleRuntimeComposeVersion}"
     const val pagingCompose = "androidx.paging:paging-compose:$pagingVersion"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutVersion"
 
     const val coil = "io.coil-kt:coil-compose:$coilVersion"
     const val coilVideo = "io.coil-kt:coil-video:$coilVersion"
