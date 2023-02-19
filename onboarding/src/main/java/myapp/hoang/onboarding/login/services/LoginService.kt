@@ -5,4 +5,5 @@ import myapp.hoang.onboarding.login.models.LoginForm
 
 interface LoginService {
     suspend fun logIn(loginForm: LoginForm): AuthResponse
+    suspend fun authenticate(token: String)
 }

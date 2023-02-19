@@ -10,6 +10,7 @@ import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import myapp.hoang.core.utils.Validator
@@ -33,6 +34,7 @@ class LoginViewModel @Inject constructor(
         }
 
     private var loginJob: Job? = null
+    private var autoLoginJob: Job? = null
 
     fun logIn(user: String, password: String) {
         state = state.copy(
@@ -86,6 +88,36 @@ class LoginViewModel @Inject constructor(
                         isLoading = false
                     )
                 }
+            }
+        }
+    }
+
+    fun autoLogin() {
+        Log.d(TAG, "autoLogin()")
+        state = state.copy(
+            isLoading = true
+        )
+
+        autoLoginJob?.cancel()
+        autoLoginJob = viewModelScope.launch {
+            state = try {
+                val token = userPreferences.data.first().authToken
+                if (token != null) {
+                    loginRepository.authenticate(token)
+                    state.copy(
+                        isLoading = false,
+                        loginEvent = triggered
+                    )
+                } else {
+                    state.copy(
+                        isLoading = false
+                    )
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state.copy(
+                    isLoading = false
+                )
             }
         }
     }

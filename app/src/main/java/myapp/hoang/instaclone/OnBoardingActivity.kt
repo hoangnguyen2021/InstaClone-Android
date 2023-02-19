@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
@@ -16,22 +17,36 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
+import de.palm.composestateevents.consumed
+import de.palm.composestateevents.triggered
 import kotlinx.datetime.toKotlinLocalDate
 import myapp.hoang.core.utils.FileUtils
 import myapp.hoang.core_ui.*
 import myapp.hoang.core.navigation.OnBoardingScreen
 import myapp.hoang.onboarding.login.screens.LoginScreen
+import myapp.hoang.onboarding.login.viewmodels.LoginViewModel
 import myapp.hoang.onboarding.signup.screens.*
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 import java.io.File
 
 @AndroidEntryPoint
 class OnBoardingActivity : ComponentActivity() {
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        installSplashScreen()
+        loginViewModel.autoLogin()
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { loginViewModel.uiState.value.isLoading }
+            setOnExitAnimationListener {
+                if (loginViewModel.uiState.value.loginEvent == triggered) {
+                    startMainActivity()
+                    loginViewModel.onConsumedLoginEvent()
+                }
+                it.remove()
+            }
+        }
         setContent {
             OnBoardingTheme {
                 val navController = rememberNavController()
@@ -50,14 +65,7 @@ class OnBoardingActivity : ComponentActivity() {
                                 onCreateAccount = {
                                     navController.navigate(OnBoardingScreen.SignupByPhoneScreen.route)
                                 },
-                                onLogin = {
-                                    startActivity(
-                                        Intent(
-                                            this@OnBoardingActivity,
-                                            MainActivity::class.java
-                                        )
-                                    )
-                                }
+                                onLogin = { startMainActivity() }
                             )
                         }
                         composable(route = OnBoardingScreen.SignupByPhoneScreen.route) {
@@ -200,11 +208,13 @@ class OnBoardingActivity : ComponentActivity() {
                 }
             }
         }
-//        startActivity(
-//            Intent(
-//                this@OnBoardingActivity,
-//                MainActivity::class.java
-//            )
-//        )
+    }
+    private fun startMainActivity() {
+        startActivity(
+            Intent(
+                this@OnBoardingActivity,
+                MainActivity::class.java
+            )
+        )
     }
 }

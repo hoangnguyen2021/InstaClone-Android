@@ -10,4 +10,8 @@ class LoginRepositoryImpl(
     override suspend fun logIn(loginForm: LoginForm): AuthResponse {
         return loginRemoteDataSource.logIn(loginForm)
     }
+
+    override suspend fun authenticate(token: String) {
+        loginRemoteDataSource.authenticate(token)
+    }
 }

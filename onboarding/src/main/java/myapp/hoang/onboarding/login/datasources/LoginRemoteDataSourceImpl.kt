@@ -16,4 +16,10 @@ class LoginRemoteDataSourceImpl @Inject constructor(
             loginService.logIn(loginForm)
         }
     }
+
+    override suspend fun authenticate(token: String) {
+        withContext(dispatcherProvider.io) {
+            loginService.authenticate(token)
+        }
+    }
 }

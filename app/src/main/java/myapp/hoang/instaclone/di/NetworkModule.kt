@@ -27,6 +27,7 @@ object NetworkModule {
                     host = HOST
                     port = 8080
                 }
+                contentType(ContentType.Application.Json)
             }
             install(ContentNegotiation) {
                 json()
