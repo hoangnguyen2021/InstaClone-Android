@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    namespace = "myapp.hoang.instaclone"
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
