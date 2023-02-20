@@ -68,7 +68,9 @@ dependencies {
     implementation(AndroidX.appCompat)
     implementation(AndroidX.coreSplashScreen)
 
+    implementation(platform(Compose.bom))
     implementation(Compose.animation)
+    implementation(Compose.foundation)
     implementation(Compose.compiler)
     implementation(Compose.ui)
     debugImplementation(Compose.uiTooling)

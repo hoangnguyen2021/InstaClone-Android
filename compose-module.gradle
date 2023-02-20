@@ -50,6 +50,9 @@ dependencies {
     implementation Kotlinx.serialization
     implementation Kotlinx.dateTime
 
+    implementation platform(Compose.bom)
+    implementation Compose.animation
+    implementation Compose.foundation
     implementation Compose.compiler
     implementation Compose.ui
     debugImplementation Compose.uiTooling

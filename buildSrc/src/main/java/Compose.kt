@@ -1,6 +1,8 @@
 object Compose {
+    private const val bomVersion = "2023.01.00"
+
     const val version = "1.3.3"
-    const val compilerVersion = "1.4.0"
+    const val compilerVersion = "1.4.2"
     private const val material3Version = "1.0.1"
     private const val hiltNavigationVersion = "1.0.0"
     private const val pagingVersion = "1.0.0-rc1"
@@ -9,14 +11,17 @@ object Compose {
     private const val stateEventsVersion = "1.2.3"
     private const val composeCropperVersion = "0.2.4"
 
-    const val animation = "androidx.compose.animation:animation:$version"
+    const val bom = "androidx.compose:compose-bom:$bomVersion"
+
+    const val animation = "androidx.compose.animation:animation"
+    const val foundation = "androidx.compose.foundation:foundation"
     const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
-    const val material3 = "androidx.compose.material3:material3:$material3Version"
-    const val runtime = "androidx.compose.runtime:runtime:$version"
-    const val ui = "androidx.compose.ui:ui:$version"
-    const val uiUtil = "androidx.compose.ui:ui-util:$version"
-    const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
-    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
+    const val material3 = "androidx.compose.material3:material3"
+    const val runtime = "androidx.compose.runtime:runtime"
+    const val ui = "androidx.compose.ui:ui"
+    const val uiUtil = "androidx.compose.ui:ui-util"
+    const val uiTooling = "androidx.compose.ui:ui-tooling"
+    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
 
     const val navigation = "androidx.navigation:navigation-compose:${Navigation.version}"
     const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:$hiltNavigationVersion"
