@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +27,7 @@ import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import coil.request.videoFrameMillis
 import myapp.hoang.core.utils.ServiceUtils
+import myapp.hoang.core_ui.MultipleFillIcon
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.White
 import myapp.hoang.media.models.*
@@ -175,9 +177,9 @@ fun PostsGrid(
         horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.twoExtraSmall),
         modifier = modifier
     ) {
-        itemsIndexed(items = posts) { i, item ->
+        items(items = posts) { item ->
             PostPreview(
-                mediaPath = item.mediaPaths.first(),
+                mediaPaths = item.mediaPaths,
                 onClick = { onPostSelect(item._id) }
             )
         }
@@ -186,27 +188,41 @@ fun PostsGrid(
 
 @Composable
 fun PostPreview(
-    mediaPath: String,
+    mediaPaths: List<String>,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val previewUrl = ServiceUtils.buildAmazonS3ObjectUrl(mediaPath)
+    if (mediaPaths.isNotEmpty()) {
+        val previewUrl = ServiceUtils.buildAmazonS3ObjectUrl(mediaPaths.first())
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(previewUrl)
-                .crossfade(true)
-                .build(),
-            contentDescription = "Post preview",
-            contentScale = ContentScale.Crop,
-            modifier = modifier
-                .wrapContentSize()
-                .aspectRatio(1f)
-                .clip(RectangleShape)
-                .clickable(onClick = onClick)
-        )
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(previewUrl)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Post preview",
+                contentScale = ContentScale.Crop,
+                modifier = modifier
+                    .wrapContentSize()
+                    .aspectRatio(1f)
+                    .clip(RectangleShape)
+                    .clickable(onClick = onClick)
+            )
+            if (mediaPaths.size > 1) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(LocalDimension.current.small)
+                        .size(LocalDimension.current.medium)
+                ) {
+                    MultipleFillIcon(
+                        color = White.copy(alpha = 0.98f)
+                    )
+                }
+            }
+        }
     }
 }

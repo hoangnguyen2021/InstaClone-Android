@@ -511,3 +511,13 @@ fun MoreIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun MultipleFillIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_multiple_fill),
+        contentDescription = "Multiple",
+        modifier = modifier,
+        tint = color
+    )
+}

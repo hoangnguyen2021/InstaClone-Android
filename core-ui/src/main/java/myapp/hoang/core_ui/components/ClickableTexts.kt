@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import myapp.hoang.core_ui.ChevronDownIcon
 import myapp.hoang.core_ui.LinkBlue
@@ -113,4 +114,45 @@ fun ProfileUsername(
                 .size(LocalDimension.current.mediumSmall)
         )
     }
+}
+
+@Composable
+fun UsernameAndCaption(
+    username: String,
+    caption: String,
+    onUsernameClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val annotatedText = buildAnnotatedString {
+        pushStringAnnotation(tag = "username", annotation = "username")
+        withStyle(style = SpanStyle(
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onPrimary
+        )) {
+            append(username)
+        }
+        pop()
+        append(" ")
+        withStyle(style = SpanStyle(
+            fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colorScheme.onPrimary
+        )) {
+            append(caption)
+        }
+    }
+    ClickableText(
+        text = annotatedText,
+        style = MaterialTheme.typography.bodyMedium,
+        onClick = { offset ->
+            annotatedText.getStringAnnotations(
+                tag = "username",
+                start = offset,
+                end = offset
+            )
+                .firstOrNull()?.let {
+                    onUsernameClick()
+                }
+        },
+        modifier = modifier
+    )
 }

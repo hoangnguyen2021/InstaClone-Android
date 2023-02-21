@@ -10,12 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.MoreIconButton
-import myapp.hoang.core_ui.components.PostImage
 import myapp.hoang.core_ui.components.ProfilePic
+import myapp.hoang.core_ui.components.UsernameAndCaption
 import myapp.hoang.media.models.InstaClonePost
 
 @Composable
@@ -60,7 +59,10 @@ fun InstaClonePost(
             horizontalArrangement = Arrangement.spacedBy(
                 space = LocalDimension.current.mediumSmall,
                 alignment = Alignment.Start
-            )
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -102,15 +104,24 @@ fun InstaClonePost(
                 .fillMaxWidth()
                 .aspectRatio(1f)
         ) {
-            HorizontalPager(
-                count = post.mediaPaths.size,
-                state = pagerState
-            ) {  page ->
-                PostImage(
-                    path = post.mediaPaths[page],
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+            PostSlideshow(
+                mediaPaths = post.mediaPaths,
+                pagerState = pagerState
+            )
+        }
+        Column(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(LocalDimension.current.small)
+        ) {
+            UsernameAndCaption(
+                username = authorUsername,
+                caption = post.caption,
+                onUsernameClick = { }
+            )
         }
     }
 }
