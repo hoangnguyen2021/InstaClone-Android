@@ -12,10 +12,9 @@ import androidx.compose.ui.text.font.FontWeight
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import myapp.hoang.core.models.InstaCloneUser
+import myapp.hoang.core_ui.LikeIcon
 import myapp.hoang.core_ui.LocalDimension
-import myapp.hoang.core_ui.components.MoreIconButton
-import myapp.hoang.core_ui.components.ProfilePic
-import myapp.hoang.core_ui.components.UsernameAndCaption
+import myapp.hoang.core_ui.components.*
 import myapp.hoang.media.models.InstaClonePost
 
 @Composable
@@ -80,8 +79,9 @@ fun InstaClonePost(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(LocalDimension.current.small)
+                .padding(horizontal = LocalDimension.current.mediumSmall)
         ) {
+            InstaClonePostFooter()
             UsernameAndCaption(
                 username = author.username,
                 caption = post.caption,
@@ -104,7 +104,7 @@ fun InstaClonePostHeader(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(horizontal = LocalDimension.current.small)
+            .padding(horizontal = LocalDimension.current.mediumSmall)
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -142,4 +142,59 @@ fun InstaClonePostHeader(
             )
         }
     }
+}
+
+@Composable
+fun InstaClonePostFooter() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.mediumSmall,
+            alignment = Alignment.Start
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.1f)
+        ) {
+            LikeIconButton(onClick = {})
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.1f)
+        ) {
+            CommentIconButton(onClick = {})
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.1f)
+        ) {
+            SendIconButton(onClick = {})
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.6f)
+        ) {
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.1f)
+        ) {
+
+        }
+    }
+
 }

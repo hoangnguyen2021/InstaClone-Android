@@ -19,7 +19,7 @@ fun NewPostIcon(color: Color, modifier: Modifier = Modifier) {
 @Composable
 fun HeartIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_heart),
+        painter = painterResource(id = R.drawable.ic_like),
         contentDescription = "Heart",
         tint = color,
         modifier = modifier
@@ -193,22 +193,6 @@ fun PlusIcon(color: Color, modifier: Modifier = Modifier) {
         contentDescription = "Add",
         tint = color,
         modifier = modifier
-    )
-}
-
-@Composable
-fun LikeIcon() {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_heart_outline),
-        contentDescription = "Like"
-    )
-}
-
-@Composable
-fun UnlikeIcon() {
-    Icon(
-        painter = painterResource(id = R.drawable.ic_heart_fill),
-        contentDescription = "Unlike"
     )
 }
 
@@ -503,6 +487,16 @@ fun SharpenIcon(color: Color, modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun MultipleFillIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_multiple_fill),
+        contentDescription = "Multiple",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
 fun MoreIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_more),
@@ -513,10 +507,40 @@ fun MoreIcon(color: Color, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MultipleFillIcon(color: Color, modifier: Modifier = Modifier) {
+fun LikeIcon(color: Color, modifier: Modifier = Modifier) {
     Icon(
-        painter = painterResource(id = R.drawable.ic_multiple_fill),
-        contentDescription = "Multiple",
+        painter = painterResource(id = R.drawable.ic_heart_outline),
+        contentDescription = "Like",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun UnlikeIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_heart_fill),
+        contentDescription = "Unlike",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun CommentIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_comment),
+        contentDescription = "Comment",
+        modifier = modifier,
+        tint = color
+    )
+}
+
+@Composable
+fun SendIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_send),
+        contentDescription = "Send",
         modifier = modifier,
         tint = color
     )
