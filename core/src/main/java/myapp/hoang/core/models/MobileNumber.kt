@@ -1,10 +1,10 @@
-package myapp.hoang.settings.models
+package myapp.hoang.core.models
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Email(
+data class MobileNumber(
     val _id: String,
-    val email: String,
+    val number: Long,
     val isVerified: Boolean = false
 )

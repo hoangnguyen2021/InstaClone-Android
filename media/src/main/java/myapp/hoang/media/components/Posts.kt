@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
+import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.MoreIconButton
 import myapp.hoang.core_ui.components.ProfilePic
@@ -20,7 +21,7 @@ import myapp.hoang.media.models.InstaClonePost
 @Composable
 fun InstaClonePosts(
     posts: List<InstaClonePost>,
-    authorUsername: String,
+    author: InstaCloneUser,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -31,7 +32,7 @@ fun InstaClonePosts(
         items(items = posts) { post ->
             InstaClonePost(
                 post = post,
-                authorUsername = authorUsername,
+                author = author,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -44,7 +45,7 @@ fun InstaClonePosts(
 @Composable
 fun InstaClonePost(
     post: InstaClonePost,
-    authorUsername: String,
+    author: InstaCloneUser,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState()
@@ -54,50 +55,14 @@ fun InstaClonePost(
         verticalArrangement = Arrangement.Top,
         modifier = modifier
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(
-                space = LocalDimension.current.mediumSmall,
-                alignment = Alignment.Start
-            ),
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(0.1f)
-            ) {
-                ProfilePic(
-                    onClick = {},
-                    modifier = Modifier.fillMaxSize(0.8f)
-                )
-            }
-            Box(
-                contentAlignment = Alignment.CenterStart,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(0.8f)
-            ) {
-                Text(
-                    text = authorUsername,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-            Box(
-                contentAlignment = Alignment.CenterStart,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(0.1f)
-            ) {
-                MoreIconButton(
-                    onClick = {},
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+            InstaClonePostHeader(
+                author = author
+            )
         }
         Box(
             modifier = Modifier
@@ -118,9 +83,62 @@ fun InstaClonePost(
                 .padding(LocalDimension.current.small)
         ) {
             UsernameAndCaption(
-                username = authorUsername,
+                username = author.username,
                 caption = post.caption,
                 onUsernameClick = { }
+            )
+        }
+    }
+}
+
+@Composable
+fun InstaClonePostHeader(
+    author: InstaCloneUser
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.mediumSmall,
+            alignment = Alignment.Start
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(horizontal = LocalDimension.current.small)
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.1f)
+        ) {
+            ProfilePic(
+                path = author.profilePicPath,
+                onClick = {},
+                modifier = Modifier.fillMaxSize(0.8f)
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.8f)
+        ) {
+            Text(
+                text = author.username,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+        Box(
+            contentAlignment = Alignment.CenterStart,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.1f)
+        ) {
+            MoreIconButton(
+                onClick = {},
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

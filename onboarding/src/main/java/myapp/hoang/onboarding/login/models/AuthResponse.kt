@@ -2,8 +2,8 @@ package myapp.hoang.onboarding.login.models
 
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
-import myapp.hoang.settings.models.Email
-import myapp.hoang.settings.models.MobileNumber
+import myapp.hoang.core.models.Email
+import myapp.hoang.core.models.MobileNumber
 
 @Serializable
 data class AuthResponse(

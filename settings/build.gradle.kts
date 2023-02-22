@@ -3,7 +3,8 @@ apply {
 }
 
 dependencies {
-    "implementation"(DataStore.protobuf)
+    "implementation"(project(Module.core))
 
     "implementation"(Kotlinx.collectionsImmutable)
+    "implementation"(DataStore.protobuf)
 }

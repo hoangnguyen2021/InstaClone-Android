@@ -103,12 +103,17 @@ fun ProfilePic(
 
 @Composable
 fun ProfilePic(
+    path: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val data: Any =
+        if (path == null) R.drawable.profile_pic_placeholder
+        else ServiceUtils.buildAmazonS3ObjectUrl(path)
+
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
-            .data(R.drawable.profile_pic_placeholder)
+            .data(data)
             .crossfade(true)
             .build(),
         contentDescription = "Profile pic",

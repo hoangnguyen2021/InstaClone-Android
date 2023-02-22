@@ -2,6 +2,8 @@ package myapp.hoang.settings.models
 
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
+import myapp.hoang.core.models.Email
+import myapp.hoang.core.models.MobileNumber
 
 @Serializable
 data class UserPreferences(

@@ -1,6 +1,6 @@
 package myapp.hoang.instaclone.features.users.viewmodels
 
-import myapp.hoang.instaclone.models.InstaCloneUser
+import myapp.hoang.core.models.InstaCloneUser
 
 data class InstaCloneUsersUiState(
     val user: InstaCloneUser? = null,

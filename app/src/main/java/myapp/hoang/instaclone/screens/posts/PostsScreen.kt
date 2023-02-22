@@ -67,7 +67,7 @@ fun PostsScreen(
             }
             InstaClonePosts(
                 posts = postsUiState.posts,
-                authorUsername = usersUiState.user!!.username,
+                author = usersUiState.user!!,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()

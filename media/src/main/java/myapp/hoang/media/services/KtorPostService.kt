@@ -16,7 +16,6 @@ class KtorPostService @Inject constructor(
     override suspend fun createPost(postForm: PostForm): String {
         return client.post {
             url(ROUTE_CREATE_POST)
-            contentType(ContentType.Application.Json)
             setBody(postForm)
         }.body()
     }

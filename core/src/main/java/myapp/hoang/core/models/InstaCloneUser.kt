@@ -1,9 +1,7 @@
-package myapp.hoang.instaclone.models
+package myapp.hoang.core.models
 
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
-import myapp.hoang.settings.models.Email
-import myapp.hoang.settings.models.MobileNumber
 
 @Serializable
 data class InstaCloneUser(
