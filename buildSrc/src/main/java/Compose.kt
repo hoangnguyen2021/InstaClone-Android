@@ -10,6 +10,7 @@ object Compose {
     private const val constraintLayoutVersion = "1.1.0-alpha07"
     private const val stateEventsVersion = "1.2.3"
     private const val composeCropperVersion = "0.2.4"
+    private const val pagerIndicatorVersion = "2.2"
 
     const val bom = "androidx.compose:compose-bom:$bomVersion"
 
@@ -36,4 +37,5 @@ object Compose {
 
     const val stateEvents = "com.github.leonard-palm:compose-state-events:$stateEventsVersion"
     const val composeCropper = "com.github.SmartToolFactory:Compose-Cropper:$composeCropperVersion"
+    const val pagerIndicator = "com.github.talhatek:pager_indicator:$pagerIndicatorVersion"
 }

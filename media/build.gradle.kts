@@ -8,6 +8,7 @@ dependencies {
     "implementation"(project(Module.settings))
 
     "implementation"(Compose.composeCropper)
+    "implementation"(Compose.pagerIndicator)
 
     "implementation"(Ktor.clientCore)
     "implementation"(Ktor.clientAndroid)

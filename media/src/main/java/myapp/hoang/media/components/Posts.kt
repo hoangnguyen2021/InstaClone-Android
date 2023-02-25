@@ -1,5 +1,6 @@
 package myapp.hoang.media.components
 
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -9,10 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
+import com.tek.pagerindicator.DotAnimation
+import com.tek.pagerindicator.DotStyle
+import com.tek.pagerindicator.PagerIndicator
 import myapp.hoang.core.models.InstaCloneUser
-import myapp.hoang.core_ui.LikeIcon
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.media.models.InstaClonePost
@@ -60,7 +64,11 @@ fun InstaClonePost(
                 .wrapContentHeight()
         ) {
             InstaClonePostHeader(
-                author = author
+                author = author,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(LocalDimension.current.fiveExtraLarge)
+                    .padding(horizontal = LocalDimension.current.mediumSmall)
             )
         }
         Box(
@@ -81,7 +89,37 @@ fun InstaClonePost(
                 .wrapContentHeight()
                 .padding(horizontal = LocalDimension.current.mediumSmall)
         ) {
-            InstaClonePostFooter()
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
+                InstaClonePostFooter(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(LocalDimension.current.fiveExtraLarge)
+                )
+                if (post.mediaPaths.size > 1) {
+                    PagerIndicator(
+                        pagerState = pagerState,
+                        dotStyle = DotStyle(
+                            currentDotRadius = 8f,
+                            notLastDotRadius = 2f,
+                            regularDotRadius = 7f,
+                            dotMargin = 12f,
+                            visibleDotCount = 7,
+                            currentDotColor = MaterialTheme.colorScheme.primaryContainer,
+                            regularDotColor = MaterialTheme.colorScheme.tertiaryContainer
+                        ),
+                        dotAnimation = DotAnimation.defaultDotAnimation,
+                        orientation = Orientation.Vertical,
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .height(LocalDimension.current.mediumLarge)
+                    )
+                }
+            }
             UsernameAndCaption(
                 username = author.username,
                 caption = post.caption,
@@ -93,7 +131,8 @@ fun InstaClonePost(
 
 @Composable
 fun InstaClonePostHeader(
-    author: InstaCloneUser
+    author: InstaCloneUser,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -101,10 +140,7 @@ fun InstaClonePostHeader(
             space = LocalDimension.current.mediumSmall,
             alignment = Alignment.Start
         ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .padding(horizontal = LocalDimension.current.mediumSmall)
+        modifier = modifier
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -145,16 +181,16 @@ fun InstaClonePostHeader(
 }
 
 @Composable
-fun InstaClonePostFooter() {
+fun InstaClonePostFooter(
+    modifier: Modifier = Modifier
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(
             space = LocalDimension.current.mediumSmall,
             alignment = Alignment.Start
         ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+        modifier = modifier
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -162,7 +198,10 @@ fun InstaClonePostFooter() {
                 .fillMaxHeight()
                 .weight(0.1f)
         ) {
-            LikeIconButton(onClick = {})
+            LikeIconButton(
+                onClick = {},
+                modifier = Modifier.size(LocalDimension.current.large)
+            )
         }
         Box(
             contentAlignment = Alignment.Center,
@@ -170,7 +209,10 @@ fun InstaClonePostFooter() {
                 .fillMaxHeight()
                 .weight(0.1f)
         ) {
-            CommentIconButton(onClick = {})
+            CommentIconButton(
+                onClick = {},
+                modifier = Modifier.size(LocalDimension.current.large)
+            )
         }
         Box(
             contentAlignment = Alignment.Center,
@@ -178,7 +220,10 @@ fun InstaClonePostFooter() {
                 .fillMaxHeight()
                 .weight(0.1f)
         ) {
-            SendIconButton(onClick = {})
+            SendIconButton(
+                onClick = {},
+                modifier = Modifier.size(LocalDimension.current.large)
+            )
         }
         Box(
             contentAlignment = Alignment.Center,
@@ -193,7 +238,10 @@ fun InstaClonePostFooter() {
                 .fillMaxHeight()
                 .weight(0.1f)
         ) {
-
+            SaveIconButton(
+                onClick = {},
+                modifier = Modifier.size(22.dp)
+            )
         }
     }
 

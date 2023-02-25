@@ -545,3 +545,13 @@ fun SendIcon(color: Color, modifier: Modifier = Modifier) {
         tint = color
     )
 }
+
+@Composable
+fun SaveIcon(color: Color, modifier: Modifier = Modifier) {
+    Icon(
+        painter = painterResource(id = R.drawable.ic_save_outline),
+        contentDescription = "Save",
+        modifier = modifier,
+        tint = color
+    )
+}

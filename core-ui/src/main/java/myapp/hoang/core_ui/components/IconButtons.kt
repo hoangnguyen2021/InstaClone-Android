@@ -429,3 +429,22 @@ fun SendIconButton(
         )
     }
 }
+
+@Composable
+fun SaveIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    ) {
+        SaveIcon(
+            color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
