@@ -120,6 +120,12 @@ fun InstaClonePost(
                     )
                 }
             }
+            if (post.likes > 0) {
+                Likes(
+                    value = post.likes,
+                    onClick = {}
+                )
+            }
             UsernameAndCaption(
                 username = author.username,
                 caption = post.caption,
@@ -163,7 +169,7 @@ fun InstaClonePostHeader(
             Text(
                 text = author.username,
                 style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = FontWeight.Medium
             )
         }
         Box(
@@ -244,5 +250,4 @@ fun InstaClonePostFooter(
             )
         }
     }
-
 }

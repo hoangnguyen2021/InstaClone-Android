@@ -117,6 +117,30 @@ fun ProfileUsername(
 }
 
 @Composable
+fun Likes(
+    value: Int,
+    onClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    ClickableText(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            ) {
+                append("$value like")
+                if (value > 1) append("s")
+            }
+        },
+        style = MaterialTheme.typography.bodyMedium,
+        onClick = onClick,
+        modifier = modifier
+    )
+}
+
+@Composable
 fun UsernameAndCaption(
     username: String,
     caption: String,
@@ -125,18 +149,22 @@ fun UsernameAndCaption(
 ) {
     val annotatedText = buildAnnotatedString {
         pushStringAnnotation(tag = "username", annotation = "username")
-        withStyle(style = SpanStyle(
-            fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.colorScheme.onPrimary
-        )) {
+        withStyle(
+            style = SpanStyle(
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        ) {
             append(username)
         }
         pop()
         append(" ")
-        withStyle(style = SpanStyle(
-            fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.onPrimary
-        )) {
+        withStyle(
+            style = SpanStyle(
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        ) {
             append(caption)
         }
     }
