@@ -7,6 +7,7 @@ import myapp.hoang.core.models.MobileNumber
 
 @Serializable
 data class UserPreferences(
+    val id: String? = null,
     val username: String? = null,
     val authToken: String? = null,
     val mobileNumber: MobileNumber? = null,

@@ -22,4 +22,18 @@ class PostRemoteDataSourceImpl @Inject constructor(
             postService.getPostsByUser(authorUsername)
         }
     }
+
+    override suspend fun likePost(postId: String, userId: String): String {
+        return withContext(dispatcherProvider.io) {
+            postService.likePost(postId, userId)
+        }
+    }
+
+    override suspend fun unlikePost(postId: String, userId: String): String {
+        return withContext(dispatcherProvider.io) {
+            postService.unlikePost(postId, userId)
+        }
+    }
+
+
 }

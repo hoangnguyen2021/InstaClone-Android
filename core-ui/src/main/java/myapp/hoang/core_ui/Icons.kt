@@ -517,12 +517,12 @@ fun LikeIcon(color: Color, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun UnlikeIcon(color: Color, modifier: Modifier = Modifier) {
+fun UnlikeIcon(modifier: Modifier = Modifier) {
     Icon(
         painter = painterResource(id = R.drawable.ic_heart_fill),
         contentDescription = "Unlike",
         modifier = modifier,
-        tint = color
+        tint = HeartColor
     )
 }
 

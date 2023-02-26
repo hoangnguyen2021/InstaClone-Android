@@ -67,7 +67,10 @@ fun PostsScreen(
             }
             InstaClonePosts(
                 posts = postsUiState.posts,
+                areLiked = postsUiState.areLiked,
                 author = usersUiState.user!!,
+                onLike = { postsViewModel.likePost(it) },
+                onUnlike = { postsViewModel.unlikePost(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()

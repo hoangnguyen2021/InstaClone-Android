@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,7 +12,6 @@ import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -23,7 +21,7 @@ import myapp.hoang.media.repositories.ImageFilterRepository
 import myapp.hoang.media.repositories.ImageUploadRepository
 import myapp.hoang.media.repositories.MediaSharedStorageRepository
 import myapp.hoang.media.repositories.PostRepository
-import myapp.hoang.settings.models.UserPreferences
+import myapp.hoang.settings.repositories.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,7 +30,7 @@ class MediaSharedStorageViewModel @Inject constructor(
     private val imageFilterRepository: ImageFilterRepository,
     private val imageUploadRepository: ImageUploadRepository,
     private val postRepository: PostRepository,
-    private val userPreferences: DataStore<UserPreferences>
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(MediaSharedStorageUiState())
     val uiState = _uiState.asStateFlow()
@@ -223,25 +221,27 @@ class MediaSharedStorageViewModel @Inject constructor(
         )
         uploadPostImageAndCreatePostJob?.cancel()
         uploadPostImageAndCreatePostJob = viewModelScope.launch {
-            state = try {
-                val mediaPaths = imageUploadRepository.uploadPostImages(
-                    state.selectedMediaList.mapNotNull { it.filteredBitmap?.asAndroidBitmap() }
-                )
-                val postForm = PostForm(
-                    caption = caption,
-                    authorUsername = userPreferences.data.first().username,
-                    createdAt = Clock.System.now(),
-                    lastEditedAt = Clock.System.now(),
-                    mediaPaths = mediaPaths
-                )
-                postRepository.createPost(postForm)
-                state.copy(
-                    isLoading = false,
-                    nextScreenEvent = triggered
-                )
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val mediaPaths = imageUploadRepository.uploadPostImages(
+                        state.selectedMediaList.mapNotNull { it.filteredBitmap?.asAndroidBitmap() }
+                    )
+                    val postForm = PostForm(
+                        caption = caption,
+                        authorUsername = userPreferences.username,
+                        createdAt = Clock.System.now(),
+                        lastEditedAt = Clock.System.now(),
+                        mediaPaths = mediaPaths
+                    )
+                    postRepository.createPost(postForm)
+                    state = state.copy(
+                        isLoading = false,
+                        nextScreenEvent = triggered
+                    )
+                }
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
-                state.copy(
+                state = state.copy(
                     isLoading = false
                 )
             }

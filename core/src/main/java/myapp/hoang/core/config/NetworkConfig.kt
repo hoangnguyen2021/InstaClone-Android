@@ -17,6 +17,8 @@ object NetworkConfig {
     const val ROUTE_UPLOAD_IMAGES = "$ROUTE_MEDIA/$ROUTE_POST/upload-images"
     const val ROUTE_CREATE_POST = "$ROUTE_MEDIA/$ROUTE_POST/create"
     const val ROUTE_GET_POSTS_BY_USER = "$ROUTE_MEDIA/$ROUTE_POST/posts-by-user"
+    const val ROUTE_LIKE_POST = "$ROUTE_MEDIA/$ROUTE_POST/like"
+    const val ROUTE_UNLIKE_POST = "$ROUTE_MEDIA/$ROUTE_POST/unlike"
 
     const val ROUTE_USERS = "users"
 }

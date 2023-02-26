@@ -3,7 +3,7 @@ package myapp.hoang.media.components
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -24,7 +24,10 @@ import myapp.hoang.media.models.InstaClonePost
 @Composable
 fun InstaClonePosts(
     posts: List<InstaClonePost>,
+    areLiked: List<Boolean>,
     author: InstaCloneUser,
+    onLike: (String) -> Unit,
+    onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -32,10 +35,13 @@ fun InstaClonePosts(
         verticalArrangement = Arrangement.Top,
         modifier = modifier
     ) {
-        items(items = posts) { post ->
+        itemsIndexed(items = posts) {i, post ->
             InstaClonePost(
                 post = post,
+                isLiked = areLiked[i],
                 author = author,
+                onLike = onLike,
+                onUnlike = onUnlike,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -48,7 +54,10 @@ fun InstaClonePosts(
 @Composable
 fun InstaClonePost(
     post: InstaClonePost,
+    isLiked: Boolean,
     author: InstaCloneUser,
+    onLike: (String) -> Unit,
+    onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState()
@@ -96,6 +105,10 @@ fun InstaClonePost(
                     .wrapContentHeight()
             ) {
                 InstaClonePostFooter(
+                    post = post,
+                    isLiked = isLiked,
+                    onLike = onLike,
+                    onUnlike = onUnlike,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(LocalDimension.current.fiveExtraLarge)
@@ -120,9 +133,9 @@ fun InstaClonePost(
                     )
                 }
             }
-            if (post.likes > 0) {
+            if (post.likes.isNotEmpty()) {
                 Likes(
-                    value = post.likes,
+                    value = post.likes.size,
                     onClick = {}
                 )
             }
@@ -188,6 +201,10 @@ fun InstaClonePostHeader(
 
 @Composable
 fun InstaClonePostFooter(
+    post: InstaClonePost,
+    isLiked: Boolean,
+    onLike: (String) -> Unit,
+    onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -204,10 +221,18 @@ fun InstaClonePostFooter(
                 .fillMaxHeight()
                 .weight(0.1f)
         ) {
-            LikeIconButton(
-                onClick = {},
-                modifier = Modifier.size(LocalDimension.current.large)
-            )
+            if (isLiked) {
+                UnlikeIconButton(
+                    onClick = { onUnlike(post._id) },
+                    modifier = Modifier.size(LocalDimension.current.large)
+                )
+            } else {
+                LikeIconButton(
+                    onClick = { onLike(post._id) },
+                    modifier = Modifier.size(LocalDimension.current.large)
+                )
+            }
+
         }
         Box(
             contentAlignment = Alignment.Center,

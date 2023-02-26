@@ -393,6 +393,23 @@ fun LikeIconButton(
 }
 
 @Composable
+fun UnlikeIconButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = HeartColor
+        ),
+        modifier = modifier
+    ) {
+        UnlikeIcon()
+    }
+}
+
+@Composable
 fun CommentIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier

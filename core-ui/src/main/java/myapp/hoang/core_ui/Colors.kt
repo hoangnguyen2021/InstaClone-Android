@@ -28,3 +28,5 @@ val Gray500 = Color(0xFF404040)
 val Gray300 = Color(0xFF808080)
 val Gray200 = Color(0xFF999999)
 val Gray100 = Color(0xFFA8A8A8)
+
+val HeartColor = Color(0xFFFF3040)

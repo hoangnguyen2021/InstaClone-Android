@@ -1,7 +1,6 @@
 package myapp.hoang.onboarding.login.viewmodels
 
 import android.util.Log
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,19 +9,19 @@ import de.palm.composestateevents.triggered
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import myapp.hoang.core.utils.Validator
 import myapp.hoang.onboarding.login.models.LoginForm
+import myapp.hoang.onboarding.login.models.mapToUserPreferences
 import myapp.hoang.onboarding.login.repositories.LoginRepository
-import myapp.hoang.settings.models.UserPreferences
+import myapp.hoang.settings.repositories.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
-    private val userPreferences: DataStore<UserPreferences>
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState = _uiState.asStateFlow()
@@ -59,18 +58,7 @@ class LoginViewModel @Inject constructor(
         loginJob = viewModelScope.launch {
             state = try {
                 val authResponse = loginRepository.logIn(loginForm)
-                userPreferences.updateData {
-                    it.copy(
-                        authToken = authResponse.token,
-                        username = authResponse.username,
-                        mobileNumber = authResponse.mobileNumber,
-                        email = authResponse.email,
-                        fullName = authResponse.fullName,
-                        birthday = authResponse.birthday,
-                        agreedToPolicy = authResponse.agreedToPolicy,
-                        profilePicPath = authResponse.profilePicPath
-                    )
-                }
+                userPreferencesRepository.updateUserPreferences(authResponse.mapToUserPreferences())
                 state.copy(
                     isLoading = false,
                     authResponse = authResponse,
@@ -100,22 +88,24 @@ class LoginViewModel @Inject constructor(
 
         autoLoginJob?.cancel()
         autoLoginJob = viewModelScope.launch {
-            state = try {
-                val token = userPreferences.data.first().authToken
-                if (token != null) {
-                    loginRepository.authenticate(token)
-                    state.copy(
-                        isLoading = false,
-                        loginEvent = triggered
-                    )
-                } else {
-                    state.copy(
-                        isLoading = false
-                    )
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val token = userPreferences.authToken
+                    state = if (token != null) {
+                        loginRepository.authenticate(token)
+                        state.copy(
+                            isLoading = false,
+                            loginEvent = triggered
+                        )
+                    } else {
+                        state.copy(
+                            isLoading = false
+                        )
+                    }
                 }
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
-                state.copy(
+                state = state.copy(
                     isLoading = false
                 )
             }
