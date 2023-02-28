@@ -23,7 +23,8 @@ import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 @Composable
 fun PostsScreen(
     postsViewModel: InstaClonePostsViewModel = hiltViewModel(),
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onComment: (String) -> Unit,
 ) {
     val usersViewModel = hiltViewModel<InstaCloneUsersViewModel>()
 
@@ -71,6 +72,7 @@ fun PostsScreen(
                 author = usersUiState.user!!,
                 onLike = { postsViewModel.likePost(it) },
                 onUnlike = { postsViewModel.unlikePost(it) },
+                onComment = onComment,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()

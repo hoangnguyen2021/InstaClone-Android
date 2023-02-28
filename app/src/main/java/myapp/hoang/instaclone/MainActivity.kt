@@ -43,9 +43,7 @@ class MainActivity : ComponentActivity() {
                             0 -> CreateContentScreen(
                                 onClose = { scope.launch { pagerState.animateScrollToPage(1) } }
                             )
-                            1 -> MainScreen(
-
-                            )
+                            1 -> MainScreen()
                         }
                     }
                 }

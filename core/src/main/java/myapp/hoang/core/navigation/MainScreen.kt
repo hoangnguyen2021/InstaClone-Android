@@ -7,6 +7,9 @@ sealed class MainScreen(val route: String) {
     object ShopScreen : MainScreen("shop")
     object ProfileScreen : MainScreen("profile")
     object PostsScreen : MainScreen("posts")
+    object CommentsScreen : MainScreen("comments") {
+        const val POST_ID = "post-id"
+    }
 
     fun withArgs(vararg args: String): String {
         return buildString {

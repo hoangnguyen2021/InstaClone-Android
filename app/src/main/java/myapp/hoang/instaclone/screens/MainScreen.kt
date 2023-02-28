@@ -10,13 +10,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import myapp.hoang.core.navigation.MainScreen
+import myapp.hoang.core.navigation.MainScreen.CommentsScreen.POST_ID
 import myapp.hoang.core_ui.Black
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.InstaCloneBottomAppBar
@@ -25,6 +28,7 @@ import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerState
 import myapp.hoang.core_ui.components.bottomsheet.BottomDrawerValue
 import myapp.hoang.core_ui.components.bottomsheet.rememberBottomDrawerState
 import myapp.hoang.core_ui.components.models.MainScreenDrawer
+import myapp.hoang.instaclone.screens.comments.CommentsScreen
 import myapp.hoang.instaclone.screens.posts.PostsScreen
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
@@ -107,6 +111,26 @@ fun MainScreenContent(
                     composable(route = MainScreen.PostsScreen.route) {
                         PostsScreen(
                             postsViewModel = postsViewModel,
+                            onBack = { navController.navigateUp() },
+                            onComment = {
+                                navController.navigate(MainScreen.CommentsScreen.withArgs(it))
+                            }
+                        )
+                    }
+                    composable(
+                        route = "${MainScreen.CommentsScreen.route}/{$POST_ID}",
+                        arguments = listOf(
+                            navArgument(POST_ID) {
+                                type = NavType.StringType
+                                defaultValue = ""
+                                nullable = false
+                            }
+                        )
+                    ) { entry ->
+                        val postId = entry.arguments?.getString(POST_ID, "") ?: ""
+                        CommentsScreen(
+                            postsViewModel = postsViewModel,
+                            postId = postId,
                             onBack = { navController.navigateUp() }
                         )
                     }

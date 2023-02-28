@@ -28,6 +28,7 @@ fun InstaClonePosts(
     author: InstaCloneUser,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
+    onComment: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -42,6 +43,7 @@ fun InstaClonePosts(
                 author = author,
                 onLike = onLike,
                 onUnlike = onUnlike,
+                onComment = onComment,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -58,6 +60,7 @@ fun InstaClonePost(
     author: InstaCloneUser,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
+    onComment: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pagerState = rememberPagerState()
@@ -109,6 +112,7 @@ fun InstaClonePost(
                     isLiked = isLiked,
                     onLike = onLike,
                     onUnlike = onUnlike,
+                    onComment = onComment,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(LocalDimension.current.fiveExtraLarge)
@@ -205,6 +209,7 @@ fun InstaClonePostFooter(
     isLiked: Boolean,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
+    onComment: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -241,7 +246,7 @@ fun InstaClonePostFooter(
                 .weight(0.1f)
         ) {
             CommentIconButton(
-                onClick = {},
+                onClick = { onComment(post._id) },
                 modifier = Modifier.size(LocalDimension.current.large)
             )
         }

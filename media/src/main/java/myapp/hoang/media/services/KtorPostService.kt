@@ -4,7 +4,8 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import myapp.hoang.core.config.NetworkConfig.ROUTE_CREATE_POST
-import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POSTS_BY_USER
+import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POSTS_BY_USER_ID
+import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POST_BY_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_POST
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_POST
 import myapp.hoang.media.models.InstaClonePost
@@ -21,10 +22,10 @@ class KtorPostService @Inject constructor(
         }.body()
     }
 
-    override suspend fun getPostsByUser(authorUsername: String): List<InstaClonePost> {
+    override suspend fun getPostsByUserId(userId: String): List<InstaClonePost> {
         return client.get {
-            url(ROUTE_GET_POSTS_BY_USER)
-            parameter("authorUsername", authorUsername)
+            url(ROUTE_GET_POSTS_BY_USER_ID)
+            parameter("userId", userId)
         }.body()
     }
 
@@ -41,6 +42,13 @@ class KtorPostService @Inject constructor(
             url(ROUTE_UNLIKE_POST)
             parameter("postId", postId)
             parameter("userId", userId)
+        }.body()
+    }
+
+    override suspend fun getPostById(id: String): InstaClonePost {
+        return client.get {
+            url(ROUTE_GET_POST_BY_ID)
+            parameter("id", id)
         }.body()
     }
 }

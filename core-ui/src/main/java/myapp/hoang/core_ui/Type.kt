@@ -19,6 +19,12 @@ val ArabotoFamily = FontFamily(
     Font(R.font.araboto_medium, FontWeight.Medium, FontStyle.Normal),
 )
 
+val RobotoFamily = FontFamily(
+    Font(R.font.roboto_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.roboto_medium, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.roboto_bold, FontWeight.Bold, FontStyle.Normal),
+)
+
 val ShoikaFontFamily = FontFamily(
     Font(R.font.shoika_medium, FontWeight.Medium, FontStyle.Normal),
     Font(R.font.shoika_medium_italic, FontWeight.Medium, FontStyle.Italic),
@@ -82,8 +88,15 @@ val MainTypography = Typography(
         lineHeight = 20.sp,
         letterSpacing = 0.sp,
     ),
+    bodySmall = TextStyle(
+        fontFamily = RobotoFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.4.sp,
+    ),
     bodyMedium = TextStyle(
-        fontFamily = ArabotoFamily,
+        fontFamily = RobotoFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 18.sp,

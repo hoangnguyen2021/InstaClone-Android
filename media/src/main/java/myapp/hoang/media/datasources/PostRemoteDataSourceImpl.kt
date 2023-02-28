@@ -17,9 +17,9 @@ class PostRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPostsByUser(authorUsername: String): List<InstaClonePost> {
+    override suspend fun getPostsByUserId(userId: String): List<InstaClonePost> {
         return withContext(dispatcherProvider.io) {
-            postService.getPostsByUser(authorUsername)
+            postService.getPostsByUserId(userId)
         }
     }
 
@@ -35,5 +35,9 @@ class PostRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-
+    override suspend fun getPostById(id: String): InstaClonePost {
+        return withContext(dispatcherProvider.io) {
+            postService.getPostById(id)
+        }
+    }
 }

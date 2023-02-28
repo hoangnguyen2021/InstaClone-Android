@@ -11,8 +11,8 @@ class PostRepositoryImpl(
         return postRemoteDataSource.createPost(postForm)
     }
 
-    override suspend fun getPostsByUser(authorUsername: String): List<InstaClonePost> {
-        return postRemoteDataSource.getPostsByUser(authorUsername)
+    override suspend fun getPostsByUserId(userId: String): List<InstaClonePost> {
+        return postRemoteDataSource.getPostsByUserId(userId)
     }
 
     override suspend fun likePost(postId: String, userId: String): String {
@@ -21,5 +21,9 @@ class PostRepositoryImpl(
 
     override suspend fun unlikePost(postId: String, userId: String): String {
         return postRemoteDataSource.unlikePost(postId, userId)
+    }
+
+    override suspend fun getPostById(id: String): InstaClonePost {
+        return postRemoteDataSource.getPostById(id)
     }
 }

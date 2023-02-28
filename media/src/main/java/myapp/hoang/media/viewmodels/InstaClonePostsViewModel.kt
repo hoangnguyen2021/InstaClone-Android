@@ -28,6 +28,7 @@ class InstaClonePostsViewModel @Inject constructor(
     private var getAllPostsByUserJob: Job? = null
     private var likePostJob: Job? = null
     private var unlikePostJob: Job? = null
+    private var getPostJob: Job? = null
 
     fun getAllPostsByUser() {
         getAllPostsByUserJob?.cancel()
@@ -38,13 +39,13 @@ class InstaClonePostsViewModel @Inject constructor(
         getAllPostsByUserJob = viewModelScope.launch {
             try {
                 userPreferencesRepository.getUserPreferences().collect { userPreferences ->
-                    val authorUsername = userPreferences.username
-                    if (authorUsername == null) {
+                    val userId = userPreferences.id
+                    if (userId == null) {
                         state = state.copy(
                             isLoading = false
                         )
                     } else {
-                        val posts = postRepository.getPostsByUser(authorUsername)
+                        val posts = postRepository.getPostsByUserId(userId)
                         state = state.copy(
                             posts = posts,
                             areLiked = posts.map { it.likes.contains(userPreferences.id) },
@@ -112,6 +113,29 @@ class InstaClonePostsViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
                 state = state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun getPost(id: String) {
+        getPostJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        getPostJob = viewModelScope.launch {
+            state = try {
+                val post = postRepository.getPostById(id)
+                Log.d(TAG, post.toString())
+                state.copy(
+                    post = post,
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state.copy(
                     isLoading = false
                 )
             }

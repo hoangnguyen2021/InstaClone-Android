@@ -8,6 +8,7 @@ data class Comment(
     val _id: String,
     val authorId: String,
     val content: String,
+    val isEdited: Boolean = false,
     val createdAt: Instant,
     val lastEditedAt: Instant,
     val likes: Int = 0,
