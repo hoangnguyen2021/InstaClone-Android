@@ -1,6 +1,7 @@
 package myapp.hoang.media.repositories
 
 import myapp.hoang.media.datasources.PostRemoteDataSource
+import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
 
@@ -25,5 +26,9 @@ class PostRepositoryImpl(
 
     override suspend fun getPostById(id: String): InstaClonePost {
         return postRemoteDataSource.getPostById(id)
+    }
+
+    override suspend fun commentOnPost(commentForm: CommentForm): String {
+        return postRemoteDataSource.commentOnPost(commentForm)
     }
 }

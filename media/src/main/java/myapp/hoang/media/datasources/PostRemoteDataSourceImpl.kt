@@ -2,6 +2,7 @@ package myapp.hoang.media.datasources
 
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
+import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
 import myapp.hoang.media.services.PostService
@@ -38,6 +39,12 @@ class PostRemoteDataSourceImpl @Inject constructor(
     override suspend fun getPostById(id: String): InstaClonePost {
         return withContext(dispatcherProvider.io) {
             postService.getPostById(id)
+        }
+    }
+
+    override suspend fun commentOnPost(commentForm: CommentForm): String {
+        return withContext(dispatcherProvider.io) {
+            postService.commentOnPost(commentForm)
         }
     }
 }

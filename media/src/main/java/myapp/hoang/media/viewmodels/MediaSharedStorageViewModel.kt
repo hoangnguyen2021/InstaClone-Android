@@ -228,7 +228,7 @@ class MediaSharedStorageViewModel @Inject constructor(
                     )
                     val postForm = PostForm(
                         caption = caption,
-                        authorUsername = userPreferences.username,
+                        authorUsername = userPreferences.username!!,
                         createdAt = Clock.System.now(),
                         lastEditedAt = Clock.System.now(),
                         mediaPaths = mediaPaths

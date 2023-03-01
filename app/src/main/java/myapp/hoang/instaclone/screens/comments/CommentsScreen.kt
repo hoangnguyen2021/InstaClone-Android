@@ -19,10 +19,7 @@ import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.settings.models.UserPreferences
 import myapp.hoang.core.utils.toRelativeTimeString
 import myapp.hoang.core_ui.LocalDimension
-import myapp.hoang.core_ui.components.BackIconButton
-import myapp.hoang.core_ui.components.CommentTextField
-import myapp.hoang.core_ui.components.FeedDivider
-import myapp.hoang.core_ui.components.ProfilePic
+import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
 import myapp.hoang.instaclone.features.users.viewmodels.InstaCloneUsersViewModel
 import myapp.hoang.media.models.InstaClonePost
@@ -40,6 +37,8 @@ fun CommentsScreen(
 
     val postsUiState by postsViewModel.uiState.collectAsStateWithLifecycle()
     val usersUiState by usersViewModel.uiState.collectAsStateWithLifecycle()
+
+    var comment by remember { mutableStateOf("") }
 
     LaunchedEffect(key1 = true) {
         postsViewModel.getPost(postId)
@@ -107,6 +106,12 @@ fun CommentsScreen(
             CommentFooter(
                 userPreferences = userPreferences,
                 author = usersUiState.user!!,
+                comment = comment,
+                onCommentChange = { comment = it },
+                onComment = {
+                    postsViewModel.commentOnPost(postsUiState.post!!._id, comment)
+                    comment = ""
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -184,10 +189,11 @@ fun Caption(
 fun CommentFooter(
     userPreferences: UserPreferences,
     author: InstaCloneUser,
+    comment: String,
+    onCommentChange: (String) -> Unit,
+    onComment: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var comment by remember { mutableStateOf("") }
-
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.small),
@@ -195,12 +201,25 @@ fun CommentFooter(
     ) {
         CommentTextField(
             value = comment,
-            onValueChange = { comment = it },
+            onValueChange = { onCommentChange(it) },
             label = "Add a comment for ${author.username}...",
             profilePicPath = userPreferences.profilePicPath,
             modifier = Modifier
-                .fillMaxWidth(0.8f)
+                .weight(0.85f)
                 .wrapContentHeight()
         )
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .weight(0.15f)
+                .wrapContentHeight()
+        ) {
+            TransparentButton(
+                text = stringResource(R.string.post),
+                isEnabled = comment.isNotEmpty(),
+                onClick = onComment,
+                modifier = Modifier.wrapContentSize()
+            )
+        }
     }
 }

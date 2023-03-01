@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.repositories.PostRepository
 import myapp.hoang.settings.repositories.UserPreferencesRepository
 import javax.inject.Inject
@@ -29,6 +31,7 @@ class InstaClonePostsViewModel @Inject constructor(
     private var likePostJob: Job? = null
     private var unlikePostJob: Job? = null
     private var getPostJob: Job? = null
+    private var commentOnPostJob: Job? = null
 
     fun getAllPostsByUser() {
         getAllPostsByUserJob?.cancel()
@@ -136,6 +139,43 @@ class InstaClonePostsViewModel @Inject constructor(
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
                 state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun commentOnPost(postId: String, content: String) {
+        commentOnPostJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        commentOnPostJob = viewModelScope.launch {
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    if (userId == null) {
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        val commentForm = CommentForm(
+                            authorId = userId,
+                            postId = postId,
+                            content = content,
+                            createdAt = Clock.System.now(),
+                            lastEditedAt = Clock.System.now()
+                        )
+                        postRepository.commentOnPost(commentForm)
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state = state.copy(
                     isLoading = false
                 )
             }

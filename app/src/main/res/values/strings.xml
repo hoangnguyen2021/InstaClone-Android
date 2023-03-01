@@ -14,5 +14,6 @@
     <string name="write_caption_prompt">Write a caption…</string>
 
     <string name="posts">Posts</string>
+    <string name="post">Post</string>
     <string name="comments">Comments</string>
 </resources>

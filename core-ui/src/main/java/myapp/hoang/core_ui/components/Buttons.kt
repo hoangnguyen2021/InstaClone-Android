@@ -6,7 +6,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
 import myapp.hoang.core_ui.*
 
 @Composable
@@ -318,6 +320,37 @@ fun SecondaryButton(
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             style = MaterialTheme.typography.displayMedium,
             modifier = Modifier.padding(vertical = LocalDimension.current.zero)
+        )
+    }
+}
+
+@Composable
+fun TransparentButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    isEnabled: Boolean = false,
+) {
+    Button(
+        onClick = onClick,
+        enabled = isEnabled,
+        shape = RectangleShape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.primaryContainer,
+            disabledContainerColor = Transparent,
+            disabledContentColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        contentPadding = PaddingValues(LocalDimension.current.zero),
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colorScheme.primaryContainer,
+            maxLines = 1,
+            modifier = Modifier.wrapContentSize()
         )
     }
 }

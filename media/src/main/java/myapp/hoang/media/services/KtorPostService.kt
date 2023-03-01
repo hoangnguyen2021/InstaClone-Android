@@ -3,11 +3,13 @@ package myapp.hoang.media.services
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import myapp.hoang.core.config.NetworkConfig.ROUTE_COMMENT_ON_POST
 import myapp.hoang.core.config.NetworkConfig.ROUTE_CREATE_POST
 import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POSTS_BY_USER_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POST_BY_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_POST
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_POST
+import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
 import javax.inject.Inject
@@ -49,6 +51,13 @@ class KtorPostService @Inject constructor(
         return client.get {
             url(ROUTE_GET_POST_BY_ID)
             parameter("id", id)
+        }.body()
+    }
+
+    override suspend fun commentOnPost(commentForm: CommentForm): String {
+        return client.post {
+            url(ROUTE_COMMENT_ON_POST)
+            setBody(commentForm)
         }.body()
     }
 }

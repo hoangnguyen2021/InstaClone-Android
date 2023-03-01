@@ -352,7 +352,7 @@ fun CommentTextField(
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = MaterialTheme.colorScheme.onPrimary,
                     placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    containerColor = Transparent,
                     cursorColor = Turquoise,
                     selectionColors = TextSelectionColors(Turquoise, Verdigris),
                     focusedIndicatorColor = Transparent,
@@ -374,6 +374,7 @@ fun CommentTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
+                    .padding(top = LocalDimension.current.twoExtraSmall)
             )
         }
     }
