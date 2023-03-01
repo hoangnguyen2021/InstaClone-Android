@@ -313,3 +313,61 @@ fun WritePostCaptionTextField(
             .wrapContentHeight()
     )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CommentTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    profilePicPath: String?,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start,
+        modifier = modifier
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(0.2f)
+        ) {
+            ProfilePic(
+                path = profilePicPath,
+                onClick = { },
+                modifier = Modifier.fillMaxSize(0.8f)
+            )
+        }
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = MaterialTheme.colorScheme.onPrimary,
+                placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                cursorColor = Turquoise,
+                selectionColors = TextSelectionColors(Turquoise, Verdigris),
+                focusedIndicatorColor = Transparent,
+                unfocusedIndicatorColor = Transparent,
+                disabledIndicatorColor = Transparent
+            ),
+            textStyle = MaterialTheme.typography.bodyMedium,
+            placeholder = {
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Normal
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text
+            ),
+            shape = RectangleShape,
+            modifier = Modifier
+                .weight(0.8f)
+                .wrapContentHeight()
+        )
+    }
+}

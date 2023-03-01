@@ -31,9 +31,12 @@ import myapp.hoang.core_ui.components.models.MainScreenDrawer
 import myapp.hoang.instaclone.screens.comments.CommentsScreen
 import myapp.hoang.instaclone.screens.posts.PostsScreen
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
+import myapp.hoang.settings.models.UserPreferences
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    userPreferences: UserPreferences
+) {
     val drawerState = rememberBottomDrawerState(BottomDrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var currentDrawer by remember {
@@ -51,6 +54,7 @@ fun MainScreen() {
         gesturesEnabled = drawerState.isOpen
     ) {
         MainScreenContent(
+            userPreferences = userPreferences,
             drawerState = drawerState,
             scope = scope,
             onCurrentDrawerChange = { currentDrawer = it }
@@ -61,6 +65,7 @@ fun MainScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreenContent(
+    userPreferences: UserPreferences,
     drawerState: BottomDrawerState,
     scope: CoroutineScope,
     onCurrentDrawerChange: (MainScreenDrawer) -> Unit
@@ -129,6 +134,7 @@ fun MainScreenContent(
                     ) { entry ->
                         val postId = entry.arguments?.getString(POST_ID, "") ?: ""
                         CommentsScreen(
+                            userPreferences = userPreferences,
                             postsViewModel = postsViewModel,
                             postId = postId,
                             onBack = { navController.navigateUp() }
@@ -138,18 +144,20 @@ fun MainScreenContent(
             }
         },
         bottomBar = {
-            InstaCloneBottomAppBar(
-                currentDestination = currentDestination,
-                onClick = { mainScreen ->
-                    navController.navigate(mainScreen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+            if (currentDestination?.route?.contains(MainScreen.CommentsScreen.route) == false) {
+                InstaCloneBottomAppBar(
+                    currentDestination = currentDestination,
+                    onClick = { mainScreen ->
+                        navController.navigate(mainScreen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+            }
         }
     )
 }

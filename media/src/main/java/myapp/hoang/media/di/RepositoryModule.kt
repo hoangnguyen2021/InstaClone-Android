@@ -1,6 +1,5 @@
 package myapp.hoang.media.di
 
-import androidx.datastore.core.DataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,9 +10,6 @@ import myapp.hoang.media.datasources.MediaSharedStorageDataSource
 import myapp.hoang.media.datasources.PostRemoteDataSource
 import myapp.hoang.media.repositories.*
 import myapp.hoang.media.services.ImageUploadService
-import myapp.hoang.settings.models.UserPreferences
-import myapp.hoang.settings.repositories.UserPreferencesRepository
-import myapp.hoang.settings.repositories.UserPreferencesRepositoryImpl
 import javax.inject.Singleton
 
 @Module
