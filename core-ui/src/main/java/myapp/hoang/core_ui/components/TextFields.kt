@@ -287,9 +287,6 @@ fun WritePostCaptionTextField(
                     unfocusedIndicatorColor = Transparent,
                     disabledIndicatorColor = Transparent
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 placeholder = {
                     Text(
@@ -301,7 +298,10 @@ fun WritePostCaptionTextField(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = keyboardType
                 ),
-                shape = RectangleShape
+                shape = RectangleShape,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
             )
         }
     }
@@ -331,43 +331,50 @@ fun CommentTextField(
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .fillMaxHeight()
                 .weight(0.2f)
+                .wrapContentHeight()
         ) {
             ProfilePic(
                 path = profilePicPath,
                 onClick = { },
-                modifier = Modifier.fillMaxSize(0.8f)
+                modifier = Modifier.size(LocalDimension.current.threeExtraLarge)
             )
         }
-        TextField(
-            value = value,
-            onValueChange = onValueChange,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colorScheme.onPrimary,
-                placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                cursorColor = Turquoise,
-                selectionColors = TextSelectionColors(Turquoise, Verdigris),
-                focusedIndicatorColor = Transparent,
-                unfocusedIndicatorColor = Transparent,
-                disabledIndicatorColor = Transparent
-            ),
-            textStyle = MaterialTheme.typography.bodyMedium,
-            placeholder = {
-                Text(
-                    text = label,
-                    style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.Normal
-                )
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text
-            ),
-            shape = RectangleShape,
+        Box(
             modifier = Modifier
                 .weight(0.8f)
-                .wrapContentHeight()
-        )
+                .heightIn(min = LocalDimension.current.sixExtraLarge),
+            contentAlignment = Alignment.Center,
+        ) {
+            TextField(
+                value = value,
+                onValueChange = onValueChange,
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colorScheme.onPrimary,
+                    placeholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    cursorColor = Turquoise,
+                    selectionColors = TextSelectionColors(Turquoise, Verdigris),
+                    focusedIndicatorColor = Transparent,
+                    unfocusedIndicatorColor = Transparent,
+                    disabledIndicatorColor = Transparent
+                ),
+                textStyle = MaterialTheme.typography.bodyMedium,
+                placeholder = {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Normal
+                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text
+                ),
+                shape = RectangleShape,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            )
+        }
     }
 }

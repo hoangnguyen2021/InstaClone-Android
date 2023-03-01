@@ -41,9 +41,7 @@ fun PostsScreen(
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
+            modifier = Modifier.fillMaxSize()
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -58,12 +56,16 @@ fun PostsScreen(
             ) {
                 BackIconButton(
                     onClick = onBack,
-                    modifier = Modifier.weight(0.1f)
+                    modifier = Modifier
+                        .weight(0.1f)
+                        .wrapContentHeight()
                 )
                 Text(
                     text = stringResource(R.string.posts),
                     style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.weight(0.9f)
+                    modifier = Modifier
+                        .weight(0.9f)
+                        .wrapContentHeight()
                 )
             }
             InstaClonePosts(
@@ -73,9 +75,7 @@ fun PostsScreen(
                 onLike = { postsViewModel.likePost(it) },
                 onUnlike = { postsViewModel.unlikePost(it) },
                 onComment = onComment,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

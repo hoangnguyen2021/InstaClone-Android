@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -90,7 +91,8 @@ fun InstaClonePost(
         ) {
             PostSlideshow(
                 mediaPaths = post.mediaPaths,
-                pagerState = pagerState
+                pagerState = pagerState,
+                modifier = Modifier.fillMaxSize()
             )
         }
         Column(
@@ -140,13 +142,19 @@ fun InstaClonePost(
             if (post.likes.isNotEmpty()) {
                 Likes(
                     value = post.likes.size,
-                    onClick = {}
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                 )
             }
             UsernameAndCaption(
                 username = author.username,
                 caption = post.caption,
-                onUsernameClick = { }
+                onUsernameClick = { },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
             )
         }
     }

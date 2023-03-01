@@ -25,7 +25,8 @@ import myapp.hoang.core_ui.components.PostImage
 @Composable
 fun PostSlideshow(
     mediaPaths: List<String>,
-    pagerState: PagerState
+    pagerState: PagerState,
+    modifier: Modifier = Modifier
 ) {
     var isNumericIndicatorShown by remember { mutableStateOf(mediaPaths.size > 1) }
     // flag to make sure to restart show/hide indicator effect
@@ -49,7 +50,7 @@ fun PostSlideshow(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
     ) {
         HorizontalPager(
             count = mediaPaths.size,

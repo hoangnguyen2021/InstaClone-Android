@@ -68,7 +68,7 @@ fun CommentsScreen(
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(0.07f)
+                        .height(LocalDimension.current.sixExtraLarge)
                         .padding(horizontal = LocalDimension.current.medium)
                 ) {
                     BackIconButton(
@@ -88,9 +88,7 @@ fun CommentsScreen(
                 Column(
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.Top,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(0.93f)
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     Caption(
                         author = usersUiState.user!!,
@@ -111,7 +109,7 @@ fun CommentsScreen(
                 author = usersUiState.user!!,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.1f)
+                    .wrapContentHeight()
                     .align(Alignment.BottomStart)
                     .background(color = MaterialTheme.colorScheme.secondaryContainer)
             )
