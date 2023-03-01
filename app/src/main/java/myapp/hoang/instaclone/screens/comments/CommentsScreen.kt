@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core.models.InstaCloneUser
+import myapp.hoang.core.utils.toRelativeTimeString
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.BackIconButton
 import myapp.hoang.core_ui.components.FeedDivider
@@ -48,7 +49,7 @@ fun CommentsScreen(
         }
     }
 
-    if (usersUiState.user != null) {
+    if (usersUiState.user != null && postsUiState.post != null) {
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
@@ -79,7 +80,7 @@ fun CommentsScreen(
             }
             Caption(
                 author = usersUiState.user!!,
-                post = postsUiState.posts.first(),
+                post = postsUiState.post!!,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -138,9 +139,11 @@ fun Caption(
                             fontWeight = FontWeight.Medium
                         )
                     ) {
-                        append("7h")
-                        append(" • ")
-                        append("Edited")
+                        append(post.createdAt.toRelativeTimeString())
+                        if (post.isEdited) {
+                            append(" • ")
+                            append("Edited")
+                        }
                     }
                 },
                 style = MaterialTheme.typography.bodySmall

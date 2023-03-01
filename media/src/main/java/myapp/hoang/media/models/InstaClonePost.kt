@@ -8,6 +8,7 @@ data class InstaClonePost(
     val _id: String,
     val authorId: String,
     val caption: String,
+    val isEdited: Boolean = false,
     val createdAt: Instant,
     val lastEditedAt: Instant,
     val mediaPaths: List<String>,
