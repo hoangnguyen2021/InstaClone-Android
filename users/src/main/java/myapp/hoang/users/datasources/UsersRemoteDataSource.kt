@@ -1,7 +1,7 @@
-package myapp.hoang.instaclone.features.users.repositories
+package myapp.hoang.users.datasources
 
 import myapp.hoang.core.models.InstaCloneUser
 
-interface UsersRepository {
+interface UsersRemoteDataSource {
     suspend fun getUserById(id: String): InstaCloneUser
 }

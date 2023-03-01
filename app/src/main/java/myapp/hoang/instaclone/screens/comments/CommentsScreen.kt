@@ -8,20 +8,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.settings.models.UserPreferences
-import myapp.hoang.core.utils.toRelativeTimeString
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
-import myapp.hoang.instaclone.features.users.viewmodels.InstaCloneUsersViewModel
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
@@ -33,10 +28,7 @@ fun CommentsScreen(
     postId: String,
     onBack: () -> Unit
 ) {
-    val usersViewModel = hiltViewModel<InstaCloneUsersViewModel>()
-
     val postsUiState by postsViewModel.uiState.collectAsStateWithLifecycle()
-    val usersUiState by usersViewModel.uiState.collectAsStateWithLifecycle()
 
     var comment by remember { mutableStateOf("") }
 
@@ -46,11 +38,11 @@ fun CommentsScreen(
 
     LaunchedEffect(key1 = postsUiState.post) {
         postsUiState.post?.let {
-            usersViewModel.getUserById(it.authorId)
+            postsViewModel.getAuthorById(it.authorId)
         }
     }
 
-    if (usersUiState.user != null && postsUiState.post != null) {
+    if (postsUiState.author != null && postsUiState.post != null) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -90,7 +82,7 @@ fun CommentsScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Caption(
-                        author = usersUiState.user!!,
+                        author = postsUiState.author!!,
                         post = postsUiState.post!!,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -105,7 +97,7 @@ fun CommentsScreen(
             }
             CommentFooter(
                 userPreferences = userPreferences,
-                author = usersUiState.user!!,
+                author = postsUiState.author!!,
                 comment = comment,
                 onCommentChange = { comment = it },
                 onComment = {
@@ -150,31 +142,12 @@ fun Caption(
                 .weight(0.88f)
                 .wrapContentHeight()
         ) {
-            Text(
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            color = MaterialTheme.colorScheme.onPrimary,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(author.username)
-                    }
-                    append(" ")
-                    withStyle(
-                        style = SpanStyle(
-                            color = MaterialTheme.colorScheme.onSecondary,
-                            fontWeight = FontWeight.Medium
-                        )
-                    ) {
-                        append(post.createdAt.toRelativeTimeString())
-                        if (post.isEdited) {
-                            append(" • ")
-                            append("Edited")
-                        }
-                    }
-                },
-                style = MaterialTheme.typography.bodySmall
+            UsernameAndTimestamp(
+                username = author.username,
+                createdAt = post.createdAt,
+                isEdited = post.isEdited,
+                onUsernameClick = {},
+                modifier = Modifier.wrapContentSize()
             )
             Text(
                 text = post.caption,

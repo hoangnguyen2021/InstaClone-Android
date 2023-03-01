@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.features.users.services
+package myapp.hoang.users.services
 
 import io.ktor.client.*
 import io.ktor.client.call.*

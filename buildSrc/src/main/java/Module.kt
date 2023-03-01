@@ -7,4 +7,5 @@ object Module {
     const val onBoarding = ":onboarding"
     const val media = ":media"
     const val settings = ":settings"
+    const val users = ":users"
 }

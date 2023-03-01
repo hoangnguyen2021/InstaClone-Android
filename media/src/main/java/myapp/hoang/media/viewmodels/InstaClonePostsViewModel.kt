@@ -11,11 +11,13 @@ import kotlinx.datetime.Clock
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.repositories.PostRepository
 import myapp.hoang.settings.repositories.UserPreferencesRepository
+import myapp.hoang.users.repositories.UsersRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class InstaClonePostsViewModel @Inject constructor(
     private val postRepository: PostRepository,
+    private val usersRepository: UsersRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(InstaClonePostsUiState())
@@ -31,6 +33,7 @@ class InstaClonePostsViewModel @Inject constructor(
     private var likePostJob: Job? = null
     private var unlikePostJob: Job? = null
     private var getPostJob: Job? = null
+    private var getAuthorByIdJob: Job? = null
     private var commentOnPostJob: Job? = null
 
     fun getAllPostsByUser() {
@@ -141,6 +144,25 @@ class InstaClonePostsViewModel @Inject constructor(
                 state.copy(
                     isLoading = false
                 )
+            }
+        }
+    }
+
+    fun getAuthorById(id: String) {
+        getAuthorByIdJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        getAuthorByIdJob = viewModelScope.launch {
+            try {
+                val author = usersRepository.getUserById(id)
+                state = state.copy(
+                    author = author,
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
             }
         }
     }

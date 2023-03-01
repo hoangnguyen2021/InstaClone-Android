@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.features.users.viewmodels
+package myapp.hoang.users.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

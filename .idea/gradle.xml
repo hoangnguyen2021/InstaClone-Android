@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/media" />
             <option value="$PROJECT_DIR$/onboarding" />
             <option value="$PROJECT_DIR$/settings" />
+            <option value="$PROJECT_DIR$/users" />
           </set>
         </option>
       </GradleProjectSettings>

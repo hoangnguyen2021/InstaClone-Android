@@ -16,9 +16,9 @@ import com.google.accompanist.pager.rememberPagerState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import myapp.hoang.core_ui.InstaCloneTheme
-import myapp.hoang.instaclone.features.users.viewmodels.UserPreferencesViewModel
 import myapp.hoang.instaclone.screens.*
 import myapp.hoang.instaclone.screens.createcontent.CreateContentScreen
+import myapp.hoang.users.viewmodels.UserPreferencesViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

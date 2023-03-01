@@ -1,12 +1,12 @@
-package myapp.hoang.instaclone.di
+package myapp.hoang.users.di
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import myapp.hoang.instaclone.features.users.datasources.UsersRemoteDataSource
-import myapp.hoang.instaclone.features.users.repositories.UsersRepository
-import myapp.hoang.instaclone.features.users.repositories.UsersRepositoryImpl
+import myapp.hoang.users.datasources.UsersRemoteDataSource
+import myapp.hoang.users.repositories.UsersRepository
+import myapp.hoang.users.repositories.UsersRepositoryImpl
 import javax.inject.Singleton
 
 @Module

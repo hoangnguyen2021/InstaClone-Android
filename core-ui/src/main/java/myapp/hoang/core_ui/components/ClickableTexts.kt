@@ -8,10 +8,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import kotlinx.datetime.Instant
+import myapp.hoang.core.utils.toRelativeTimeString
 import myapp.hoang.core_ui.ChevronDownIcon
 import myapp.hoang.core_ui.LinkBlue
 import myapp.hoang.core_ui.LocalDimension
@@ -182,5 +185,61 @@ fun UsernameAndCaption(
                 }
         },
         modifier = modifier
+    )
+}
+
+@Composable
+fun UsernameAndTimestamp(
+    username: String,
+    createdAt: Instant,
+    isEdited: Boolean,
+    onUsernameClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Medium
+                )
+            ) {
+                append(username)
+            }
+            append(" ")
+            withStyle(
+                style = SpanStyle(
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    fontWeight = FontWeight.Medium
+                )
+            ) {
+                append(createdAt.toRelativeTimeString())
+                if (isEdited) {
+                    append(" • ")
+                    append("Edited")
+                }
+            }
+        },
+        style = MaterialTheme.typography.bodySmall,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ReplyClickableText(
+    onClick: (Int) -> Unit
+) {
+    ClickableText(
+        text = buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    fontWeight = FontWeight.Medium
+                )
+            ) {
+                append("Reply")
+            }
+        },
+        onClick = onClick
     )
 }

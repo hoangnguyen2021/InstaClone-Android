@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.features.users.viewmodels
+package myapp.hoang.users.viewmodels
 
 import myapp.hoang.settings.models.UserPreferences
 

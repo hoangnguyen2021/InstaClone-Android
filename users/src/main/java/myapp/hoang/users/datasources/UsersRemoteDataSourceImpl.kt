@@ -1,8 +1,8 @@
-package myapp.hoang.instaclone.features.users.datasources
+package myapp.hoang.users.datasources
 
 import kotlinx.coroutines.withContext
 import myapp.hoang.core.coroutines.DispatcherProvider
-import myapp.hoang.instaclone.features.users.services.UsersService
+import myapp.hoang.users.services.UsersService
 import myapp.hoang.core.models.InstaCloneUser
 import javax.inject.Inject
 

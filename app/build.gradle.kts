@@ -60,6 +60,7 @@ dependencies {
     implementation(project(Module.onBoarding))
     implementation(project(Module.media))
     implementation(project(Module.settings))
+    implementation(project(Module.users))
 
     implementation(Kotlinx.coroutines)
     implementation(Kotlinx.serialization)

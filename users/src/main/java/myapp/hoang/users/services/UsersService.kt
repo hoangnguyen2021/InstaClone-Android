@@ -1,4 +1,4 @@
-package myapp.hoang.instaclone.features.users.services
+package myapp.hoang.users.services
 
 import myapp.hoang.core.models.InstaCloneUser
 

@@ -1,6 +1,6 @@
-package myapp.hoang.instaclone.features.users.repositories
+package myapp.hoang.users.repositories
 
-import myapp.hoang.instaclone.features.users.datasources.UsersRemoteDataSource
+import myapp.hoang.users.datasources.UsersRemoteDataSource
 import myapp.hoang.core.models.InstaCloneUser
 import javax.inject.Inject
 

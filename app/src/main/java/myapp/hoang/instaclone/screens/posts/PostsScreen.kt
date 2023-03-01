@@ -15,7 +15,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.BackIconButton
 import myapp.hoang.instaclone.R
-import myapp.hoang.instaclone.features.users.viewmodels.InstaCloneUsersViewModel
 import myapp.hoang.media.components.InstaClonePosts
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
@@ -26,18 +25,15 @@ fun PostsScreen(
     onBack: () -> Unit,
     onComment: (String) -> Unit,
 ) {
-    val usersViewModel = hiltViewModel<InstaCloneUsersViewModel>()
-
     val postsUiState by postsViewModel.uiState.collectAsStateWithLifecycle()
-    val usersUiState by usersViewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = postsUiState.posts) {
         if (postsUiState.posts.isNotEmpty()) {
-            usersViewModel.getUserById(postsUiState.posts.first().authorId)
+            postsViewModel.getAuthorById(postsUiState.posts.first().authorId)
         }
     }
 
-    if (usersUiState.user != null) {
+    if (postsUiState.author != null) {
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
@@ -71,7 +67,7 @@ fun PostsScreen(
             InstaClonePosts(
                 posts = postsUiState.posts,
                 areLiked = postsUiState.areLiked,
-                author = usersUiState.user!!,
+                author = postsUiState.author!!,
                 onLike = { postsViewModel.likePost(it) },
                 onUnlike = { postsViewModel.unlikePost(it) },
                 onComment = onComment,
