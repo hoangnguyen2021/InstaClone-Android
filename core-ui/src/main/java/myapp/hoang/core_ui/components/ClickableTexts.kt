@@ -240,6 +240,7 @@ fun ReplyClickableText(
                 append("Reply")
             }
         },
+        style = MaterialTheme.typography.bodySmall,
         onClick = onClick
     )
 }

@@ -134,9 +134,11 @@ class InstaClonePostsViewModel @Inject constructor(
         getPostJob = viewModelScope.launch {
             state = try {
                 val post = postRepository.getPostById(id)
+                val commentors = usersRepository.getCommentorsByPostId(id)
                 Log.d(TAG, post.toString())
                 state.copy(
                     post = post,
+                    commenters = commentors,
                     isLoading = false
                 )
             } catch (e: Exception) {
@@ -146,6 +148,10 @@ class InstaClonePostsViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun reloadPost(id: String) {
+        getPost(id)
     }
 
     fun getAuthorById(id: String) {
@@ -193,6 +199,7 @@ class InstaClonePostsViewModel @Inject constructor(
                         state = state.copy(
                             isLoading = false
                         )
+                        reloadPost(postId)
                     }
                 }
             } catch (e: Exception) {

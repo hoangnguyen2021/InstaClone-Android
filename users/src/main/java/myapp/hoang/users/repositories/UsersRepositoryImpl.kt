@@ -10,4 +10,8 @@ class UsersRepositoryImpl @Inject constructor(
     override suspend fun getUserById(id: String): InstaCloneUser {
         return usersRemoteDataSource.getUserById(id)
     }
+
+    override suspend fun getCommentorsByPostId(postId: String): List<InstaCloneUser> {
+        return usersRemoteDataSource.getCommentorsByPostId(postId)
+    }
 }

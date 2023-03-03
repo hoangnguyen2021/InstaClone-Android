@@ -19,7 +19,7 @@ import myapp.hoang.media.models.Comment
 @Composable
 fun Comments(
     comments: List<Comment>,
-    authors: List<InstaCloneUser>,
+    commenters: List<InstaCloneUser>,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -29,8 +29,15 @@ fun Comments(
     ) {
         itemsIndexed(items = comments) { i, comment ->
             Comment(
-                author = authors[i],
-                comment = comment
+                commenter = commenters[i],
+                comment = comment,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(
+                        vertical = LocalDimension.current.small,
+                        horizontal = LocalDimension.current.medium
+                    )
             )
         }
     }
@@ -38,8 +45,8 @@ fun Comments(
 
 @Composable
 fun Comment(
-    author: InstaCloneUser,
     comment: Comment,
+    commenter: InstaCloneUser,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -51,7 +58,7 @@ fun Comment(
         modifier = modifier
     ) {
         ProfilePic(
-            path = author.profilePicPath,
+            path = commenter.profilePicPath,
             onClick = {},
             modifier = Modifier
                 .weight(0.12f)
@@ -65,7 +72,7 @@ fun Comment(
                 .wrapContentHeight()
         ) {
             UsernameAndTimestamp(
-                username = author.username,
+                username = commenter.username,
                 createdAt = comment.createdAt,
                 isEdited = comment.isEdited,
                 onUsernameClick = {},

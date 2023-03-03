@@ -8,5 +8,6 @@ data class InstaClonePostsUiState(
     val areLiked: List<Boolean> = emptyList(),
     val post: InstaClonePost? = null,
     val author: InstaCloneUser? = null,
+    val commenters: List<InstaCloneUser> = emptyList(),
     val isLoading: Boolean = false
 )

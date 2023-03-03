@@ -15,4 +15,10 @@ class UsersRemoteDataSourceImpl @Inject constructor(
             usersService.getUserById(id)
         }
     }
+
+    override suspend fun getCommentorsByPostId(postId: String): List<InstaCloneUser> {
+        return withContext(dispatcherProvider.io) {
+            usersService.getCommentorsByPostId(postId)
+        }
+    }
 }

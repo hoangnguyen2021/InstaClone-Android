@@ -21,6 +21,7 @@ object NetworkConfig {
     const val ROUTE_UNLIKE_POST = "$ROUTE_MEDIA/$ROUTE_POST/unlike"
     const val ROUTE_GET_POST_BY_ID = "$ROUTE_MEDIA/$ROUTE_POST/post-by-id"
     const val ROUTE_COMMENT_ON_POST = "$ROUTE_MEDIA/$ROUTE_POST/comment"
+    const val ROUTE_GET_COMMENTORS_BY_POST_ID = "$ROUTE_MEDIA/$ROUTE_POST/commentors-by-post-id"
 
     const val ROUTE_USERS = "users"
 }

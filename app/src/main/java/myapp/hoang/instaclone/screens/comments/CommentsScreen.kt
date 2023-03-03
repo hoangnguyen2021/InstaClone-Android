@@ -17,6 +17,7 @@ import myapp.hoang.settings.models.UserPreferences
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
+import myapp.hoang.media.components.Comments
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
@@ -79,7 +80,9 @@ fun CommentsScreen(
                 Column(
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.Top,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                 ) {
                     Caption(
                         author = postsUiState.author!!,
@@ -94,6 +97,13 @@ fun CommentsScreen(
                     )
                     FeedDivider()
                 }
+                Comments(
+                    comments = postsUiState.post!!.comments,
+                    commenters = postsUiState.commenters,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                )
             }
             CommentFooter(
                 userPreferences = userPreferences,
