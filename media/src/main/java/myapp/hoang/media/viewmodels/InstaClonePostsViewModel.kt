@@ -52,9 +52,11 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         val posts = postRepository.getPostsByUserId(userId)
+                        val author = usersRepository.getUserById(userId)
                         state = state.copy(
                             posts = posts,
                             areLiked = posts.map { it.likes.contains(userPreferences.id) },
+                            author = author,
                             isLoading = false
                         )
                         Log.d(TAG, posts.toString())

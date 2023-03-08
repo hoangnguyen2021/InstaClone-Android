@@ -4,12 +4,12 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -25,6 +25,7 @@ import myapp.hoang.media.models.InstaClonePost
 @Composable
 fun InstaClonePosts(
     posts: List<InstaClonePost>,
+    postIndex: Int,
     areLiked: List<Boolean>,
     author: InstaCloneUser,
     onLike: (String) -> Unit,
@@ -32,7 +33,12 @@ fun InstaClonePosts(
     onComment: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val state = rememberLazyListState(
+        initialFirstVisibleItemIndex = postIndex
+    )
+
     LazyColumn(
+        state = state,
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
         modifier = modifier

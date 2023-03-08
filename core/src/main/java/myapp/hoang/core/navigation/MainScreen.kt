@@ -6,7 +6,9 @@ sealed class MainScreen(val route: String) {
     object ReelsScreen : MainScreen("reels")
     object ShopScreen : MainScreen("shop")
     object ProfileScreen : MainScreen("profile")
-    object PostsScreen : MainScreen("posts")
+    object PostsScreen : MainScreen("posts") {
+        const val POST_INDEX = "post-index"
+    }
     object CommentsScreen : MainScreen("comments") {
         const val POST_ID = "post-id"
     }

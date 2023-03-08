@@ -168,7 +168,7 @@ fun MultipleMediaIndicator(
 @Composable
 fun PostsGrid(
     posts: List<InstaClonePost>,
-    onPostSelect: (String) -> Unit,
+    onPostClick: (String, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -177,10 +177,10 @@ fun PostsGrid(
         horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.twoExtraSmall),
         modifier = modifier
     ) {
-        items(items = posts) { item ->
+        itemsIndexed(items = posts) { index, item ->
             PostPreview(
                 mediaPaths = item.mediaPaths,
-                onClick = { onPostSelect(item._id) }
+                onClick = { onPostClick(item._id, index) }
             )
         }
     }

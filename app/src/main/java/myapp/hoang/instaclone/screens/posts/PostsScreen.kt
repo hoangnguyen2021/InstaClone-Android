@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,16 +21,11 @@ import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 @Composable
 fun PostsScreen(
     postsViewModel: InstaClonePostsViewModel = hiltViewModel(),
+    postIndex: Int,
     onBack: () -> Unit,
     onComment: (String) -> Unit,
 ) {
     val postsUiState by postsViewModel.uiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = postsUiState.posts) {
-        if (postsUiState.posts.isNotEmpty()) {
-            postsViewModel.getAuthorById(postsUiState.posts.first().authorId)
-        }
-    }
 
     if (postsUiState.author != null) {
         Column(
@@ -66,6 +60,7 @@ fun PostsScreen(
             }
             InstaClonePosts(
                 posts = postsUiState.posts,
+                postIndex = postIndex,
                 areLiked = postsUiState.areLiked,
                 author = postsUiState.author!!,
                 onLike = { postsViewModel.likePost(it) },

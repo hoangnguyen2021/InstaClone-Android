@@ -20,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import myapp.hoang.core.navigation.MainScreen
 import myapp.hoang.core.navigation.MainScreen.CommentsScreen.POST_ID
+import myapp.hoang.core.navigation.MainScreen.PostsScreen.POST_INDEX
 import myapp.hoang.core_ui.Black
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.InstaCloneBottomAppBar
@@ -108,14 +109,25 @@ fun MainScreenContent(
                                     drawerState.expand()
                                 }
                             },
-                            onPostClick = {
-                                navController.navigate(MainScreen.PostsScreen.route)
+                            onPostClick = { _, index ->
+                                navController.navigate(MainScreen.PostsScreen.withArgs(index.toString()))
                             }
                         )
                     }
-                    composable(route = MainScreen.PostsScreen.route) {
+                    composable(
+                        route = "${MainScreen.PostsScreen.route}/{$POST_INDEX}",
+                        arguments = listOf(
+                            navArgument(POST_INDEX) {
+                                type = NavType.IntType
+                                defaultValue = 0
+                                nullable = false
+                            }
+                        )
+                    ) { entry ->
+                        val postIndex = entry.arguments?.getInt(POST_INDEX, 0) ?: 0
                         PostsScreen(
                             postsViewModel = postsViewModel,
+                            postIndex = postIndex,
                             onBack = { navController.navigateUp() },
                             onComment = {
                                 navController.navigate(MainScreen.CommentsScreen.withArgs(it))
