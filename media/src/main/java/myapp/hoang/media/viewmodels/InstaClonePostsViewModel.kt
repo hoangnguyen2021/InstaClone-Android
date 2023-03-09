@@ -151,6 +151,7 @@ class InstaClonePostsViewModel @Inject constructor(
                             post = post,
                             commenters = commenters,
                             areCommentsLiked = post.comments.map { it.likes.contains(userPreferences.id) },
+                            commentsLikes = post.comments.map { it.likes.size },
                             isLoading = false
                         )
                     }
@@ -241,7 +242,21 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         postRepository.likeComment(commentId, userId)
-                        state.post?._id?.let { reloadPost(it) }
+                        if (state.post != null) {
+                            val commentIndex = state.post!!.comments.indexOfFirst { it._id == commentId }
+                            state = state.copy(
+                                areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
+                                    if (commentIndex != -1)
+                                        this[commentIndex] = true
+                                    toList()
+                                },
+                                commentsLikes = state.commentsLikes.toMutableList().apply {
+                                    if (commentIndex != -1)
+                                        this[commentIndex] = this[commentIndex].plus(1)
+                                    toList()
+                                }
+                            )
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -269,7 +284,20 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         postRepository.unlikeComment(commentId, userId)
-                        state.post?._id?.let { reloadPost(it) }
+                        if (state.post != null) {
+                            val commentIndex = state.post!!.comments.indexOfFirst { it._id == commentId }
+                            state = state.copy(
+                                areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
+                                    if (commentIndex != -1) this[commentIndex] = false
+                                    toList()
+                                },
+                                commentsLikes = state.commentsLikes.toMutableList().apply {
+                                    if (commentIndex != -1)
+                                        this[commentIndex] = this[commentIndex].minus(1)
+                                    toList()
+                                }
+                            )
+                        }
                     }
                 }
             } catch (e: Exception) {

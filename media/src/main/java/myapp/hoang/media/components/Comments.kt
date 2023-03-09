@@ -22,6 +22,7 @@ fun Comments(
     comments: List<Comment>,
     commenters: List<InstaCloneUser>,
     areLiked: List<Boolean>,
+    likes: List<Int>,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -36,6 +37,7 @@ fun Comments(
                 commenter = commenters[i],
                 comment = comment,
                 isLiked = areLiked[i],
+                likes = likes[i],
                 onLike = onLike,
                 onUnlike = onUnlike,
                 modifier = Modifier
@@ -55,6 +57,7 @@ fun Comment(
     comment: Comment,
     commenter: InstaCloneUser,
     isLiked: Boolean,
+    likes: Int,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -105,7 +108,7 @@ fun Comment(
         ) {
             LikeIconButtonWithNumber(
                 isLiked = isLiked,
-                number = comment.likes.size,
+                number = likes,
                 onClick = {
                     if (isLiked) onUnlike(comment._id)
                     else onLike(comment._id)

@@ -70,6 +70,7 @@ fun CommentsScreen(
                     comments = postsUiState.post!!.comments,
                     commenters = postsUiState.commenters,
                     areLiked = postsUiState.areCommentsLiked,
+                    likes = postsUiState.commentsLikes,
                     onLike = { postsViewModel.likeComment(it) },
                     onUnlike = { postsViewModel.unlikeComment(it) },
                     modifier = Modifier
