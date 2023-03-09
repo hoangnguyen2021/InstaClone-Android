@@ -34,7 +34,7 @@ class KtorPostService @Inject constructor(
     }
 
     override suspend fun likePost(postId: String, userId: String): String {
-        return client.get {
+        return client.put {
             url(ROUTE_LIKE_POST)
             parameter("postId", postId)
             parameter("userId", userId)
@@ -42,7 +42,7 @@ class KtorPostService @Inject constructor(
     }
 
     override suspend fun unlikePost(postId: String, userId: String): String {
-        return client.get {
+        return client.put {
             url(ROUTE_UNLIKE_POST)
             parameter("postId", postId)
             parameter("userId", userId)
@@ -64,7 +64,7 @@ class KtorPostService @Inject constructor(
     }
 
     override suspend fun likeComment(commentId: String, userId: String): String {
-        return client.get {
+        return client.put {
             url(ROUTE_LIKE_COMMENT)
             parameter("commentId", commentId)
             parameter("userId", userId)
@@ -72,7 +72,7 @@ class KtorPostService @Inject constructor(
     }
 
     override suspend fun unlikeComment(commentId: String, userId: String): String {
-        return client.get {
+        return client.put {
             url(ROUTE_UNLIKE_COMMENT)
             parameter("commentId", commentId)
             parameter("userId", userId)
