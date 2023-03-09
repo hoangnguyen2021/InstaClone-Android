@@ -35,6 +35,8 @@ class InstaClonePostsViewModel @Inject constructor(
     private var getPostJob: Job? = null
     private var getAuthorByIdJob: Job? = null
     private var commentOnPostJob: Job? = null
+    private var likeCommentJob: Job? = null
+    private var unlikeCommentJob: Job? = null
 
     fun getAllPostsByUser() {
         getAllPostsByUserJob?.cancel()
@@ -55,7 +57,7 @@ class InstaClonePostsViewModel @Inject constructor(
                         val author = usersRepository.getUserById(userId)
                         state = state.copy(
                             posts = posts,
-                            areLiked = posts.map { it.likes.contains(userPreferences.id) },
+                            arePostsLiked = posts.map { it.likes.contains(userPreferences.id) },
                             author = author,
                             isLoading = false
                         )
@@ -134,18 +136,28 @@ class InstaClonePostsViewModel @Inject constructor(
             isLoading = true
         )
         getPostJob = viewModelScope.launch {
-            state = try {
-                val post = postRepository.getPostById(id)
-                val commenters = usersRepository.getCommentersByPostId(id)
-                Log.d(TAG, post.toString())
-                state.copy(
-                    post = post,
-                    commenters = commenters,
-                    isLoading = false
-                )
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    state = if (userId == null) {
+                        state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        val post = postRepository.getPostById(id)
+                        val commenters = usersRepository.getCommentersByPostId(id)
+                        Log.d(TAG, post.toString())
+                        state.copy(
+                            post = post,
+                            commenters = commenters,
+                            areCommentsLiked = post.comments.map { it.likes.contains(userPreferences.id) },
+                            isLoading = false
+                        )
+                    }
+                }
             } catch (e: Exception) {
                 Log.d(TAG, e.toString())
-                state.copy(
+                state = state.copy(
                     isLoading = false
                 )
             }
@@ -202,6 +214,62 @@ class InstaClonePostsViewModel @Inject constructor(
                             isLoading = false
                         )
                         reloadPost(postId)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state = state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun likeComment(commentId: String) {
+        likeCommentJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        likeCommentJob = viewModelScope.launch {
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    if (userId == null) {
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        postRepository.likeComment(commentId, userId)
+                        state.post?._id?.let { reloadPost(it) }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state = state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun unlikeComment(commentId: String) {
+        unlikeCommentJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        unlikeCommentJob = viewModelScope.launch {
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    if (userId == null) {
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        postRepository.unlikeComment(commentId, userId)
+                        state.post?._id?.let { reloadPost(it) }
                     }
                 }
             } catch (e: Exception) {

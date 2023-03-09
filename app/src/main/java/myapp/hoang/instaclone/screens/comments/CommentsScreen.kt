@@ -69,6 +69,9 @@ fun CommentsScreen(
                 Comments(
                     comments = postsUiState.post!!.comments,
                     commenters = postsUiState.commenters,
+                    areLiked = postsUiState.areCommentsLiked,
+                    onLike = { postsViewModel.likeComment(it) },
+                    onUnlike = { postsViewModel.unlikeComment(it) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()

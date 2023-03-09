@@ -47,4 +47,16 @@ class PostRemoteDataSourceImpl @Inject constructor(
             postService.commentOnPost(commentForm)
         }
     }
+
+    override suspend fun likeComment(commentId: String, userId: String): String {
+        return withContext(dispatcherProvider.io) {
+            postService.likeComment(commentId, userId)
+        }
+    }
+
+    override suspend fun unlikeComment(commentId: String, userId: String): String {
+        return withContext(dispatcherProvider.io) {
+            postService.unlikeComment(commentId, userId)
+        }
+    }
 }

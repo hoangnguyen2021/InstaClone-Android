@@ -7,7 +7,9 @@ import myapp.hoang.core.config.NetworkConfig.ROUTE_COMMENT_ON_POST
 import myapp.hoang.core.config.NetworkConfig.ROUTE_CREATE_POST
 import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POSTS_BY_USER_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POST_BY_ID
+import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_POST
+import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_POST
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
@@ -58,6 +60,22 @@ class KtorPostService @Inject constructor(
         return client.post {
             url(ROUTE_COMMENT_ON_POST)
             setBody(commentForm)
+        }.body()
+    }
+
+    override suspend fun likeComment(commentId: String, userId: String): String {
+        return client.get {
+            url(ROUTE_LIKE_COMMENT)
+            parameter("commentId", commentId)
+            parameter("userId", userId)
+        }.body()
+    }
+
+    override suspend fun unlikeComment(commentId: String, userId: String): String {
+        return client.get {
+            url(ROUTE_UNLIKE_COMMENT)
+            parameter("commentId", commentId)
+            parameter("userId", userId)
         }.body()
     }
 }

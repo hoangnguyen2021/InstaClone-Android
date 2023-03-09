@@ -477,8 +477,7 @@ fun LikeIconButtonWithNumber(
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
-            containerColor = Transparent,
-            contentColor = MaterialTheme.colorScheme.onPrimary
+            containerColor = Transparent
         ),
         modifier = modifier
     ) {

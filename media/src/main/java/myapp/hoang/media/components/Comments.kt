@@ -21,6 +21,9 @@ import myapp.hoang.media.models.Comment
 fun Comments(
     comments: List<Comment>,
     commenters: List<InstaCloneUser>,
+    areLiked: List<Boolean>,
+    onLike: (String) -> Unit,
+    onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -32,6 +35,9 @@ fun Comments(
             Comment(
                 commenter = commenters[i],
                 comment = comment,
+                isLiked = areLiked[i],
+                onLike = onLike,
+                onUnlike = onUnlike,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -48,6 +54,9 @@ fun Comments(
 fun Comment(
     comment: Comment,
     commenter: InstaCloneUser,
+    isLiked: Boolean,
+    onLike: (String) -> Unit,
+    onUnlike: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -95,9 +104,12 @@ fun Comment(
                 .wrapContentHeight()
         ) {
             LikeIconButtonWithNumber(
-                isLiked = false,
-                number = 0,
-                onClick = {},
+                isLiked = isLiked,
+                number = comment.likes.size,
+                onClick = {
+                    if (isLiked) onUnlike(comment._id)
+                    else onLike(comment._id)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()

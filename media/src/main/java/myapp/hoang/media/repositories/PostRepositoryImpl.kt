@@ -31,4 +31,12 @@ class PostRepositoryImpl(
     override suspend fun commentOnPost(commentForm: CommentForm): String {
         return postRemoteDataSource.commentOnPost(commentForm)
     }
+
+    override suspend fun likeComment(commentId: String, userId: String): String {
+        return postRemoteDataSource.likeComment(commentId, userId)
+    }
+
+    override suspend fun unlikeComment(commentId: String, userId: String): String {
+        return postRemoteDataSource.unlikeComment(commentId, userId)
+    }
 }

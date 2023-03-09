@@ -61,7 +61,7 @@ fun PostsScreen(
             InstaClonePosts(
                 posts = postsUiState.posts,
                 postIndex = postIndex,
-                areLiked = postsUiState.areLiked,
+                areLiked = postsUiState.arePostsLiked,
                 author = postsUiState.author!!,
                 onLike = { postsViewModel.likePost(it) },
                 onUnlike = { postsViewModel.unlikePost(it) },

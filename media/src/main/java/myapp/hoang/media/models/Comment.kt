@@ -11,7 +11,7 @@ data class Comment(
     val isEdited: Boolean = false,
     val createdAt: Instant,
     val lastEditedAt: Instant,
-    val likes: Int = 0,
+    val likes: List<String> = emptyList(),
     val tags: List<String> = emptyList(),
     val replies: List<ReplyComment> = emptyList()
 )
