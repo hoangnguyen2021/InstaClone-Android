@@ -58,6 +58,7 @@ class InstaClonePostsViewModel @Inject constructor(
                         state = state.copy(
                             posts = posts,
                             arePostsLiked = posts.map { it.likes.contains(userPreferences.id) },
+                            postsLikes = posts.map { it.likes.size },
                             author = author,
                             isLoading = false
                         )
@@ -88,8 +89,25 @@ class InstaClonePostsViewModel @Inject constructor(
                             isLoading = false
                         )
                     } else {
+                        val postIndex = state.posts.indexOfFirst { it._id == postId }
+                        state = state.copy(
+                            arePostsLiked = state.arePostsLiked.toMutableList().apply {
+                                if (postIndex != -1) {
+                                    this[postIndex] = true
+                                }
+                                toList()
+                            },
+                            postsLikes = state.postsLikes.toMutableList().apply {
+                                if (postIndex != -1) {
+                                    this[postIndex] = this[postIndex].plus(1)
+                                }
+                                toList()
+                            }
+                        )
                         postRepository.likePost(postId, userId)
-                        getAllPostsByUser()
+                        state = state.copy(
+                            isLoading = false
+                        )
                     }
                 }
             } catch (e: Exception) {
@@ -116,8 +134,25 @@ class InstaClonePostsViewModel @Inject constructor(
                             isLoading = false
                         )
                     } else {
+                        val postIndex = state.posts.indexOfFirst { it._id == postId }
+                        state = state.copy(
+                            arePostsLiked = state.arePostsLiked.toMutableList().apply {
+                                if (postIndex != -1) {
+                                    this[postIndex] = false
+                                }
+                                toList()
+                            },
+                            postsLikes = state.postsLikes.toMutableList().apply {
+                                if (postIndex != -1) {
+                                    this[postIndex] = this[postIndex].minus(1)
+                                }
+                                toList()
+                            }
+                        )
                         postRepository.unlikePost(postId, userId)
-                        getAllPostsByUser()
+                        state = state.copy(
+                            isLoading = false
+                        )
                     }
                 }
             } catch (e: Exception) {
@@ -241,7 +276,6 @@ class InstaClonePostsViewModel @Inject constructor(
                             isLoading = false
                         )
                     } else {
-                        postRepository.likeComment(commentId, userId)
                         if (state.post != null) {
                             val commentIndex = state.post!!.comments.indexOfFirst { it._id == commentId }
                             state = state.copy(
@@ -257,6 +291,10 @@ class InstaClonePostsViewModel @Inject constructor(
                                 }
                             )
                         }
+                        postRepository.likeComment(commentId, userId)
+                        state = state.copy(
+                            isLoading = false
+                        )
                     }
                 }
             } catch (e: Exception) {
@@ -283,7 +321,6 @@ class InstaClonePostsViewModel @Inject constructor(
                             isLoading = false
                         )
                     } else {
-                        postRepository.unlikeComment(commentId, userId)
                         if (state.post != null) {
                             val commentIndex = state.post!!.comments.indexOfFirst { it._id == commentId }
                             state = state.copy(
@@ -298,6 +335,10 @@ class InstaClonePostsViewModel @Inject constructor(
                                 }
                             )
                         }
+                        postRepository.unlikeComment(commentId, userId)
+                        state = state.copy(
+                            isLoading = false
+                        )
                     }
                 }
             } catch (e: Exception) {

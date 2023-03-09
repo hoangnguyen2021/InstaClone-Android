@@ -27,6 +27,7 @@ fun InstaClonePosts(
     posts: List<InstaClonePost>,
     postIndex: Int,
     areLiked: List<Boolean>,
+    likes: List<Int>,
     author: InstaCloneUser,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
@@ -47,6 +48,7 @@ fun InstaClonePosts(
             InstaClonePost(
                 post = post,
                 isLiked = areLiked[i],
+                likes = likes[i],
                 author = author,
                 onLike = onLike,
                 onUnlike = onUnlike,
@@ -64,6 +66,7 @@ fun InstaClonePosts(
 fun InstaClonePost(
     post: InstaClonePost,
     isLiked: Boolean,
+    likes: Int,
     author: InstaCloneUser,
     onLike: (String) -> Unit,
     onUnlike: (String) -> Unit,
@@ -145,9 +148,9 @@ fun InstaClonePost(
                     )
                 }
             }
-            if (post.likes.isNotEmpty()) {
+            if (likes != 0) {
                 Likes(
-                    value = post.likes.size,
+                    value = likes,
                     onClick = {},
                     modifier = Modifier
                         .fillMaxWidth()

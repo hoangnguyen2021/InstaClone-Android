@@ -62,6 +62,7 @@ fun PostsScreen(
                 posts = postsUiState.posts,
                 postIndex = postIndex,
                 areLiked = postsUiState.arePostsLiked,
+                likes = postsUiState.postsLikes,
                 author = postsUiState.author!!,
                 onLike = { postsViewModel.likePost(it) },
                 onUnlike = { postsViewModel.unlikePost(it) },
