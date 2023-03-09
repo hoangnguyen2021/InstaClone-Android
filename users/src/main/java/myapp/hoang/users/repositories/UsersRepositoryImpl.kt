@@ -11,7 +11,7 @@ class UsersRepositoryImpl @Inject constructor(
         return usersRemoteDataSource.getUserById(id)
     }
 
-    override suspend fun getCommentorsByPostId(postId: String): List<InstaCloneUser> {
+    override suspend fun getCommentersByPostId(postId: String): List<InstaCloneUser> {
         return usersRemoteDataSource.getCommentorsByPostId(postId)
     }
 }

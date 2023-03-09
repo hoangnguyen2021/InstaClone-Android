@@ -52,51 +52,20 @@ fun CommentsScreen(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxSize()
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = LocalDimension.current.fourExtraLarge,
-                        alignment = Alignment.Start
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(LocalDimension.current.sixExtraLarge)
-                        .padding(horizontal = LocalDimension.current.medium)
-                ) {
-                    BackIconButton(
-                        onClick = onBack,
-                        modifier = Modifier
-                            .weight(0.1f)
-                            .wrapContentHeight()
-                    )
-                    Text(
-                        text = stringResource(R.string.comments),
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier
-                            .weight(0.9f)
-                            .wrapContentHeight()
-                    )
-                }
-                Column(
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Top,
+                CommentsTopBar(
+                    onBack = onBack
+                )
+                Caption(
+                    author = postsUiState.author!!,
+                    post = postsUiState.post!!,
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                ) {
-                    Caption(
-                        author = postsUiState.author!!,
-                        post = postsUiState.post!!,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(
-                                vertical = LocalDimension.current.small,
-                                horizontal = LocalDimension.current.medium
-                            )
-                    )
-                    FeedDivider()
-                }
+                        .padding(
+                            vertical = LocalDimension.current.small,
+                            horizontal = LocalDimension.current.medium
+                        )
+                )
                 Comments(
                     comments = postsUiState.post!!.comments,
                     commenters = postsUiState.commenters,
@@ -125,47 +94,88 @@ fun CommentsScreen(
 }
 
 @Composable
+fun CommentsTopBar(
+    onBack: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(
+            space = LocalDimension.current.fourExtraLarge,
+            alignment = Alignment.Start
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(LocalDimension.current.sixExtraLarge)
+            .padding(horizontal = LocalDimension.current.medium)
+    ) {
+        BackIconButton(
+            onClick = onBack,
+            modifier = Modifier
+                .weight(0.1f)
+                .wrapContentHeight()
+        )
+        Text(
+            text = stringResource(R.string.comments),
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = Modifier
+                .weight(0.9f)
+                .wrapContentHeight()
+        )
+    }
+}
+
+@Composable
 fun Caption(
     author: InstaCloneUser,
     post: InstaClonePost,
     modifier: Modifier = Modifier
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(
-            space = LocalDimension.current.small,
-            alignment = Alignment.Start
-        ),
-        modifier = modifier
+    Column(
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
     ) {
-        ProfilePic(
-            path = author.profilePicPath,
-            onClick = {},
-            modifier = Modifier
-                .weight(0.12f)
-                .size(LocalDimension.current.fourExtraLarge)
-        )
-        Column(
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.spacedBy(LocalDimension.current.extraSmall),
-            modifier = Modifier
-                .weight(0.88f)
-                .wrapContentHeight()
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(
+                space = LocalDimension.current.small,
+                alignment = Alignment.Start
+            ),
+            modifier = modifier
         ) {
-            UsernameAndTimestamp(
-                username = author.username,
-                createdAt = post.createdAt,
-                isEdited = post.isEdited,
-                onUsernameClick = {},
-                modifier = Modifier.wrapContentSize()
+            ProfilePic(
+                path = author.profilePicPath,
+                onClick = {},
+                modifier = Modifier
+                    .weight(0.12f)
+                    .size(LocalDimension.current.fourExtraLarge)
             )
-            Text(
-                text = post.caption,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Normal
-            )
+            Column(
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(LocalDimension.current.extraSmall),
+                modifier = Modifier
+                    .weight(0.88f)
+                    .wrapContentHeight()
+            ) {
+                UsernameAndTimestamp(
+                    username = author.username,
+                    createdAt = post.createdAt,
+                    isEdited = post.isEdited,
+                    onUsernameClick = {},
+                    modifier = Modifier.wrapContentSize()
+                )
+                Text(
+                    text = post.caption,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Normal
+                )
+            }
         }
+        FeedDivider()
     }
+
 }
 
 @Composable

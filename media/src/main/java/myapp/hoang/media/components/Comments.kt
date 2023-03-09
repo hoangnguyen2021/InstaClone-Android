@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.core_ui.LocalDimension
+import myapp.hoang.core_ui.components.LikeIconButtonWithNumber
 import myapp.hoang.core_ui.components.ProfilePic
 import myapp.hoang.core_ui.components.ReplyClickableText
 import myapp.hoang.core_ui.components.UsernameAndTimestamp
@@ -68,7 +69,7 @@ fun Comment(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(LocalDimension.current.extraSmall),
             modifier = Modifier
-                .weight(0.88f)
+                .weight(0.8f)
                 .wrapContentHeight()
         ) {
             UsernameAndTimestamp(
@@ -85,6 +86,21 @@ fun Comment(
             )
             ReplyClickableText(
                 onClick = {}
+            )
+        }
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .weight(0.08f)
+                .wrapContentHeight()
+        ) {
+            LikeIconButtonWithNumber(
+                isLiked = false,
+                number = 0,
+                onClick = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
             )
         }
     }

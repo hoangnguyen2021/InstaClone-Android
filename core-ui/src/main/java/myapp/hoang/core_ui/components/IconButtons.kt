@@ -1,14 +1,15 @@
 package myapp.hoang.core_ui.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.text.font.FontWeight
 import myapp.hoang.core_ui.*
 
 @Composable
@@ -463,5 +464,47 @@ fun SaveIconButton(
         SaveIcon(
             color = MaterialTheme.colorScheme.onPrimary
         )
+    }
+}
+
+@Composable
+fun LikeIconButtonWithNumber(
+    isLiked: Boolean,
+    number: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClick,
+        colors = IconButtonDefaults.iconButtonColors(
+            containerColor = Transparent,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = modifier
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(LocalDimension.current.twoExtraSmall),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+        ) {
+            if (isLiked) {
+                UnlikeIcon(
+                    modifier = Modifier.size(LocalDimension.current.medium)
+                )
+            } else {
+                LikeIcon(
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier.size(LocalDimension.current.medium)
+                )
+            }
+            Text(
+                text = number.toString(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSecondary,
+                fontWeight = FontWeight.Medium
+            )
+        }
     }
 }

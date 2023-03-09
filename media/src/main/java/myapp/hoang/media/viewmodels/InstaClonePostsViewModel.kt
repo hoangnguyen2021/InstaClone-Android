@@ -136,11 +136,11 @@ class InstaClonePostsViewModel @Inject constructor(
         getPostJob = viewModelScope.launch {
             state = try {
                 val post = postRepository.getPostById(id)
-                val commentors = usersRepository.getCommentorsByPostId(id)
+                val commenters = usersRepository.getCommentersByPostId(id)
                 Log.d(TAG, post.toString())
                 state.copy(
                     post = post,
-                    commenters = commentors,
+                    commenters = commenters,
                     isLoading = false
                 )
             } catch (e: Exception) {

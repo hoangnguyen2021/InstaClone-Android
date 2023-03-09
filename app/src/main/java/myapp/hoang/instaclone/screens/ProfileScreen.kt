@@ -99,8 +99,8 @@ fun ProfileScreen(
                     profilePicPath = uiState.author!!.profilePicPath,
                     displayName = uiState.author!!.fullName,
                     posts = uiState.posts.size,
-                    followers = 0,
-                    following = 0
+                    followers = uiState.author!!.followers.size,
+                    following = uiState.author!!.following.size
                 )
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
