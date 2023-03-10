@@ -65,6 +65,7 @@ dependencies {
     implementation(Kotlinx.coroutines)
     implementation(Kotlinx.serialization)
     implementation(Kotlinx.dateTime)
+    implementation(Kotlinx.collectionsImmutable)
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)
@@ -93,13 +94,6 @@ dependencies {
 
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
-
-    implementation(Google.material)
-
-    implementation(Retrofit.okHttp)
-    implementation(Retrofit.retrofit)
-    implementation(Retrofit.okHttpLoggingInterceptor)
-    implementation(Retrofit.moshiConverter)
 
     kapt(Room.roomCompiler)
     implementation(Room.roomKtx)

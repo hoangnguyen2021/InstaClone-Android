@@ -14,9 +14,9 @@ object Compose {
 
     const val bom = "androidx.compose:compose-bom:$bomVersion"
 
+    const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
     const val animation = "androidx.compose.animation:animation"
     const val foundation = "androidx.compose.foundation:foundation"
-    const val compiler = "androidx.compose.compiler:compiler:$compilerVersion"
     const val material3 = "androidx.compose.material3:material3"
     const val runtime = "androidx.compose.runtime:runtime"
     const val ui = "androidx.compose.ui:ui"

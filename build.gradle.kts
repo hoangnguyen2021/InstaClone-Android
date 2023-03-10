@@ -11,7 +11,6 @@ plugins {
     id("com.android.application") version Build.androidGradlePluginVersion apply false
     id("com.android.library") version Build.androidGradlePluginVersion apply false
     id("com.google.dagger.hilt.android") version DaggerHilt.version apply false
-
     kotlin("plugin.serialization") version Kotlin.version
 }
 
