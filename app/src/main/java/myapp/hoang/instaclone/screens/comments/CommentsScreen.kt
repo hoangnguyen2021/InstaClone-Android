@@ -39,13 +39,7 @@ fun CommentsScreen(
         postsViewModel.getPost(postId)
     }
 
-    LaunchedEffect(key1 = postsUiState.post) {
-        postsUiState.post?.let {
-            postsViewModel.getAuthorById(it.authorId)
-        }
-    }
-
-    if (postsUiState.author != null && postsUiState.post != null) {
+    if (postsUiState.post != null) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -56,7 +50,7 @@ fun CommentsScreen(
                     onBack = onBack
                 )
                 Caption(
-                    author = postsUiState.author!!,
+                    author = postsUiState.post!!.author,
                     post = postsUiState.post!!,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -101,7 +95,7 @@ fun CommentsScreen(
                 }
                 CommentFooter(
                     userPreferences = userPreferences,
-                    author = postsUiState.author!!,
+                    author = postsUiState.post!!.author,
                     commentContent = commentContent,
                     commentMode = commentMode,
                     onCommentChange = { commentContent = it },

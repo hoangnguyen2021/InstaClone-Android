@@ -12,13 +12,11 @@ import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.ReplyCommentForm
 import myapp.hoang.media.repositories.PostRepository
 import myapp.hoang.settings.repositories.UserPreferencesRepository
-import myapp.hoang.users.repositories.UsersRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class InstaClonePostsViewModel @Inject constructor(
     private val postRepository: PostRepository,
-    private val usersRepository: UsersRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(InstaClonePostsUiState())
@@ -34,7 +32,6 @@ class InstaClonePostsViewModel @Inject constructor(
     private var likePostJob: Job? = null
     private var unlikePostJob: Job? = null
     private var getPostJob: Job? = null
-    private var getAuthorByIdJob: Job? = null
     private var commentOnPostJob: Job? = null
     private var likeCommentJob: Job? = null
     private var unlikeCommentJob: Job? = null
@@ -56,12 +53,10 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         val posts = postRepository.getPostsByUserId(userId)
-                        val author = usersRepository.getUserById(userId)
                         state = state.copy(
                             posts = posts,
                             arePostsLiked = posts.map { it.likes.contains(userPreferences.id) },
                             postsLikes = posts.map { it.likes.size },
-                            author = author,
                             isLoading = false
                         )
                         Log.d(TAG, posts.toString())
@@ -212,25 +207,6 @@ class InstaClonePostsViewModel @Inject constructor(
 
     fun reloadPost(id: String) {
         getPost(id)
-    }
-
-    fun getAuthorById(id: String) {
-        getAuthorByIdJob?.cancel()
-
-        state = state.copy(
-            isLoading = true
-        )
-        getAuthorByIdJob = viewModelScope.launch {
-            try {
-                val author = usersRepository.getUserById(id)
-                state = state.copy(
-                    author = author,
-                    isLoading = false
-                )
-            } catch (e: Exception) {
-                Log.d(TAG, e.toString())
-            }
-        }
     }
 
     fun commentOnPost(postId: String, content: String) {

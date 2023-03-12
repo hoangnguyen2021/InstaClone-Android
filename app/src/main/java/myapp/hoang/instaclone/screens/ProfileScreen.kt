@@ -61,7 +61,7 @@ fun ProfileScreen(
         postsViewModel.getAllPostsByUser()
     }
 
-    if (uiState.author != null) {
+    if (uiState.posts.isNotEmpty()) {
         Column(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top,
@@ -70,7 +70,7 @@ fun ProfileScreen(
                 .wrapContentHeight()
         ) {
             ProfileTopBar(
-                username = uiState.author!!.username,
+                username = uiState.posts[0].author.username,
                 onProfileUsernameClick = onProfileUsernameClick
             )
             if (scrollState.value > profileBannerHeight) {
@@ -96,11 +96,11 @@ fun ProfileScreen(
                     )
             ) {
                 ProfileHeader(
-                    profilePicPath = uiState.author!!.profilePicPath,
-                    displayName = uiState.author!!.fullName,
+                    profilePicPath = uiState.posts[0].author.profilePicPath,
+                    displayName = uiState.posts[0].author.fullName,
                     posts = uiState.posts.size,
-                    followers = uiState.author!!.followers.size,
-                    following = uiState.author!!.following.size
+                    followers = uiState.posts[0].author.followers.size,
+                    following =uiState.posts[0].author.following.size
                 )
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,

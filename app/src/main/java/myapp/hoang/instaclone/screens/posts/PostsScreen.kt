@@ -27,48 +27,45 @@ fun PostsScreen(
 ) {
     val postsUiState by postsViewModel.uiState.collectAsStateWithLifecycle()
 
-    if (postsUiState.author != null) {
-        Column(
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Top,
-            modifier = Modifier.fillMaxSize()
+    Column(
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.Top,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(
+                space = LocalDimension.current.fourExtraLarge,
+                alignment = Alignment.Start
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(LocalDimension.current.sixExtraLarge)
+                .padding(horizontal = LocalDimension.current.medium)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(
-                    space = LocalDimension.current.fourExtraLarge,
-                    alignment = Alignment.Start
-                ),
+            BackIconButton(
+                onClick = onBack,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(LocalDimension.current.sixExtraLarge)
-                    .padding(horizontal = LocalDimension.current.medium)
-            ) {
-                BackIconButton(
-                    onClick = onBack,
-                    modifier = Modifier
-                        .weight(0.1f)
-                        .wrapContentHeight()
-                )
-                Text(
-                    text = stringResource(R.string.posts),
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier
-                        .weight(0.9f)
-                        .wrapContentHeight()
-                )
-            }
-            InstaClonePosts(
-                posts = postsUiState.posts,
-                postIndex = postIndex,
-                areLiked = postsUiState.arePostsLiked,
-                likes = postsUiState.postsLikes,
-                author = postsUiState.author!!,
-                onLike = { postsViewModel.likePost(it) },
-                onUnlike = { postsViewModel.unlikePost(it) },
-                onComment = onComment,
-                modifier = Modifier.fillMaxSize()
+                    .weight(0.1f)
+                    .wrapContentHeight()
+            )
+            Text(
+                text = stringResource(R.string.posts),
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier
+                    .weight(0.9f)
+                    .wrapContentHeight()
             )
         }
+        InstaClonePosts(
+            posts = postsUiState.posts,
+            postIndex = postIndex,
+            areLiked = postsUiState.arePostsLiked,
+            likes = postsUiState.postsLikes,
+            onLike = { postsViewModel.likePost(it) },
+            onUnlike = { postsViewModel.unlikePost(it) },
+            onComment = onComment,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
