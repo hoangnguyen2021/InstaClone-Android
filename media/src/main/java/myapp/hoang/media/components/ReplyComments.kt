@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.LikeIconButtonWithNumber
 import myapp.hoang.core_ui.components.ProfilePic
@@ -19,25 +18,26 @@ import myapp.hoang.media.models.ReplyComment
 
 @Composable
 fun ReplyComments(
-    comments: List<ReplyComment>,
+    commentId: String,
+    replyComments: List<ReplyComment>,
     areReplyCommentsLiked: List<Boolean>,
     replyCommentsLikes: List<Int>,
-    onLike: (String) -> Unit,
-    onUnlike: (String) -> Unit,
+    onLikeReplyComment: (String, String) -> Unit,
+    onUnlikeReplyComment: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
         userScrollEnabled = false,
         modifier = modifier
     ) {
-        itemsIndexed(items = comments) { i, comment ->
+        itemsIndexed(items = replyComments) { i, replyComment ->
             ReplyComment(
-                commenter = comment.author,
-                comment = comment,
+                commentId = commentId,
+                replyComment = replyComment,
                 isLiked = areReplyCommentsLiked[i],
                 likes = replyCommentsLikes[i],
-                onLike = onLike,
-                onUnlike = onUnlike,
+                onLikeReplyComment = onLikeReplyComment,
+                onUnlikeReplyComment = onUnlikeReplyComment,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -52,12 +52,12 @@ fun ReplyComments(
 
 @Composable
 fun ReplyComment(
-    comment: ReplyComment,
-    commenter: InstaCloneUser,
+    commentId: String,
+    replyComment: ReplyComment,
     isLiked: Boolean,
     likes: Int,
-    onLike: (String) -> Unit,
-    onUnlike: (String) -> Unit,
+    onLikeReplyComment: (String, String) -> Unit,
+    onUnlikeReplyComment: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -72,7 +72,7 @@ fun ReplyComment(
             modifier = Modifier.weight(0.12f)
         ) {}
         ProfilePic(
-            path = commenter.profilePicPath,
+            path = replyComment.author.profilePicPath,
             onClick = {},
             modifier = Modifier
                 .weight(0.08f)
@@ -86,14 +86,14 @@ fun ReplyComment(
                 .wrapContentHeight()
         ) {
             UsernameAndTimestamp(
-                username = commenter.username,
-                createdAt = comment.createdAt,
-                isEdited = comment.isEdited,
+                username = replyComment.author.username,
+                createdAt = replyComment.createdAt,
+                isEdited = replyComment.isEdited,
                 onUsernameClick = {},
                 modifier = Modifier.wrapContentSize()
             )
             Text(
-                text = comment.content,
+                text = replyComment.content,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Normal
             )
@@ -111,8 +111,8 @@ fun ReplyComment(
                 isLiked = isLiked,
                 number = likes,
                 onClick = {
-                    if (isLiked) onUnlike(comment._id)
-                    else onLike(comment._id)
+                    if (isLiked) onUnlikeReplyComment(commentId, replyComment._id)
+                    else onLikeReplyComment(commentId, replyComment._id)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

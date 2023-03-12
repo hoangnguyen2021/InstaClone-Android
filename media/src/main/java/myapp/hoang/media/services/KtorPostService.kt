@@ -9,9 +9,11 @@ import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POSTS_BY_USER_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POST_BY_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_POST
+import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_REPLY_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_REPLY_TO_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_POST
+import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_REPLY_COMMENT
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
@@ -85,6 +87,22 @@ class KtorPostService @Inject constructor(
         return client.post {
             url(ROUTE_REPLY_TO_COMMENT)
             setBody(replyCommentForm)
+        }.body()
+    }
+
+    override suspend fun likeReplyComment(replyCommentId: String, userId: String): String {
+        return client.put {
+            url(ROUTE_LIKE_REPLY_COMMENT)
+            parameter("replyCommentId", replyCommentId)
+            parameter("userId", userId)
+        }.body()
+    }
+
+    override suspend fun unlikeReplyComment(replyCommentId: String, userId: String): String {
+        return client.put {
+            url(ROUTE_UNLIKE_REPLY_COMMENT)
+            parameter("replyCommentId", replyCommentId)
+            parameter("userId", userId)
         }.body()
     }
 }

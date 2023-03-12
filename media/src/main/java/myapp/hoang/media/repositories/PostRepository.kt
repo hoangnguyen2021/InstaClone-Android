@@ -15,4 +15,6 @@ interface PostRepository {
     suspend fun likeComment(commentId: String, userId: String): String
     suspend fun unlikeComment(commentId: String, userId: String): String
     suspend fun replyToComment(replyCommentForm: ReplyCommentForm): String
+    suspend fun likeReplyComment(replyCommentId: String, userId: String): String
+    suspend fun unlikeReplyComment(replyCommentId: String, userId: String): String
 }

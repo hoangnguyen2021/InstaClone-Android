@@ -66,8 +66,14 @@ fun CommentsScreen(
                     commentsLikes = postsUiState.commentsLikes,
                     areReplyCommentLiked = postsUiState.areReplyCommentsLiked,
                     replyCommentsLikes = postsUiState.replyCommentsLikes,
-                    onLike = { postsViewModel.likeComment(it) },
-                    onUnlike = { postsViewModel.unlikeComment(it) },
+                    onLikeComment = { postsViewModel.likeComment(it) },
+                    onUnlikeComment = { postsViewModel.unlikeComment(it) },
+                    onLikeReplyComment = { commentId, replyCommentId ->
+                        postsViewModel.likeReplyComment(commentId, replyCommentId)
+                    },
+                    onUnlikeReplyComment = { commentId, replyCommentId ->
+                        postsViewModel.unlikeReplyComment(commentId, replyCommentId)
+                    },
                     onReply = { username, commentId ->
                         commentMode = CommentMode.Reply(username, commentId)
                     },

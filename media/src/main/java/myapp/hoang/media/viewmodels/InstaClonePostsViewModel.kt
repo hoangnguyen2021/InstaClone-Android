@@ -36,6 +36,8 @@ class InstaClonePostsViewModel @Inject constructor(
     private var likeCommentJob: Job? = null
     private var unlikeCommentJob: Job? = null
     private var replyToCommentJob: Job? = null
+    private var likeReplyCommentJob: Job? = null
+    private var unlikeReplyCommentJob: Job? = null
 
     fun getAllPostsByUser() {
         getAllPostsByUserJob?.cancel()
@@ -89,15 +91,11 @@ class InstaClonePostsViewModel @Inject constructor(
                         val postIndex = state.posts.indexOfFirst { it._id == postId }
                         state = state.copy(
                             arePostsLiked = state.arePostsLiked.toMutableList().apply {
-                                if (postIndex != -1) {
-                                    this[postIndex] = true
-                                }
+                                this[postIndex] = true
                                 toList()
                             },
                             postsLikes = state.postsLikes.toMutableList().apply {
-                                if (postIndex != -1) {
-                                    this[postIndex] = this[postIndex].plus(1)
-                                }
+                                this[postIndex] = this[postIndex].plus(1)
                                 toList()
                             }
                         )
@@ -134,15 +132,11 @@ class InstaClonePostsViewModel @Inject constructor(
                         val postIndex = state.posts.indexOfFirst { it._id == postId }
                         state = state.copy(
                             arePostsLiked = state.arePostsLiked.toMutableList().apply {
-                                if (postIndex != -1) {
-                                    this[postIndex] = false
-                                }
+                                this[postIndex] = false
                                 toList()
                             },
                             postsLikes = state.postsLikes.toMutableList().apply {
-                                if (postIndex != -1) {
-                                    this[postIndex] = this[postIndex].minus(1)
-                                }
+                                this[postIndex] = this[postIndex].minus(1)
                                 toList()
                             }
                         )
@@ -257,27 +251,25 @@ class InstaClonePostsViewModel @Inject constructor(
             try {
                 userPreferencesRepository.getUserPreferences().collect { userPreferences ->
                     val userId = userPreferences.id
-                    if (userId == null) {
+                    if (userId == null || state.post == null) {
                         state = state.copy(
                             isLoading = false
                         )
                     } else {
-                        if (state.post != null) {
-                            val commentIndex =
-                                state.post!!.comments.indexOfFirst { it._id == commentId }
-                            state = state.copy(
-                                areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
-                                    if (commentIndex != -1)
-                                        this[commentIndex] = true
-                                    toList()
-                                },
-                                commentsLikes = state.commentsLikes.toMutableList().apply {
-                                    if (commentIndex != -1)
-                                        this[commentIndex] = this[commentIndex].plus(1)
-                                    toList()
-                                }
-                            )
-                        }
+                        val commentIndex =
+                            state.post!!.comments.indexOfFirst { it._id == commentId }
+                        state = state.copy(
+                            areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
+                                if (commentIndex != -1)
+                                    this[commentIndex] = true
+                                toList()
+                            },
+                            commentsLikes = state.commentsLikes.toMutableList().apply {
+                                if (commentIndex != -1)
+                                    this[commentIndex] = this[commentIndex].plus(1)
+                                toList()
+                            }
+                        )
                         postRepository.likeComment(commentId, userId)
                         state = state.copy(
                             isLoading = false
@@ -303,26 +295,23 @@ class InstaClonePostsViewModel @Inject constructor(
             try {
                 userPreferencesRepository.getUserPreferences().collect { userPreferences ->
                     val userId = userPreferences.id
-                    if (userId == null) {
+                    if (userId == null || state.post == null) {
                         state = state.copy(
                             isLoading = false
                         )
                     } else {
-                        if (state.post != null) {
-                            val commentIndex =
-                                state.post!!.comments.indexOfFirst { it._id == commentId }
-                            state = state.copy(
-                                areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
-                                    if (commentIndex != -1) this[commentIndex] = false
-                                    toList()
-                                },
-                                commentsLikes = state.commentsLikes.toMutableList().apply {
-                                    if (commentIndex != -1)
-                                        this[commentIndex] = this[commentIndex].minus(1)
-                                    toList()
-                                }
-                            )
-                        }
+                        val commentIndex =
+                            state.post!!.comments.indexOfFirst { it._id == commentId }
+                        state = state.copy(
+                            areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
+                                this[commentIndex] = false
+                                toList()
+                            },
+                            commentsLikes = state.commentsLikes.toMutableList().apply {
+                                this[commentIndex] = this[commentIndex].minus(1)
+                                toList()
+                            }
+                        )
                         postRepository.unlikeComment(commentId, userId)
                         state = state.copy(
                             isLoading = false
@@ -365,6 +354,108 @@ class InstaClonePostsViewModel @Inject constructor(
                             isLoading = false
                         )
                         reloadPost(postId)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state = state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun likeReplyComment(commentId: String, replyCommentId: String) {
+        likeReplyCommentJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        likeReplyCommentJob = viewModelScope.launch {
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    if (userId == null || state.post == null) {
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        val commentIndex =
+                            state.post!!.comments.indexOfFirst { it._id == commentId }
+                        val replyCommentIndex =
+                            state.post!!.comments[commentIndex].replies.indexOfFirst { it._id == replyCommentId }
+                        state = state.copy(
+                            areReplyCommentsLiked = state.areReplyCommentsLiked.toMutableList()
+                                .apply {
+                                    this[commentIndex] = this[commentIndex].toMutableList().apply {
+                                        this[replyCommentIndex] = true
+                                        toList()
+                                    }
+                                    toList()
+                                },
+                            replyCommentsLikes = state.replyCommentsLikes.toMutableList().apply {
+                                this[commentIndex] = this[commentIndex].toMutableList().apply {
+                                    this[replyCommentIndex] = this[replyCommentIndex].plus(1)
+                                    toList()
+                                }
+                                toList()
+                            }
+                        )
+                        postRepository.likeReplyComment(replyCommentId, userId)
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state = state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun unlikeReplyComment(commentId: String, replyCommentId: String) {
+        unlikeReplyCommentJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        unlikeReplyCommentJob = viewModelScope.launch {
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    if (userId == null || state.post == null) {
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        val commentIndex =
+                            state.post!!.comments.indexOfFirst { it._id == commentId }
+                        val replyCommentIndex =
+                            state.post!!.comments[commentIndex].replies.indexOfFirst { it._id == replyCommentId }
+                        state = state.copy(
+                            areReplyCommentsLiked = state.areReplyCommentsLiked.toMutableList()
+                                .apply {
+                                    this[commentIndex] = this[commentIndex].toMutableList().apply {
+                                        this[replyCommentIndex] = false
+                                        toList()
+                                    }
+                                    toList()
+                                },
+                            replyCommentsLikes = state.replyCommentsLikes.toMutableList().apply {
+                                this[commentIndex] = this[commentIndex].toMutableList().apply {
+                                    this[replyCommentIndex] = this[replyCommentIndex].minus(1)
+                                    toList()
+                                }
+                                toList()
+                            }
+                        )
+                        postRepository.unlikeReplyComment(replyCommentId, userId)
+                        state = state.copy(
+                            isLoading = false
+                        )
                     }
                 }
             } catch (e: Exception) {

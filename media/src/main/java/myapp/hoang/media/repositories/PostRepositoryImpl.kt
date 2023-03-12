@@ -44,4 +44,12 @@ class PostRepositoryImpl(
     override suspend fun replyToComment(replyCommentForm: ReplyCommentForm): String {
         return postRemoteDataSource.replyToComment(replyCommentForm)
     }
+
+    override suspend fun likeReplyComment(replyCommentId: String, userId: String): String {
+        return postRemoteDataSource.likeReplyComment(replyCommentId, userId)
+    }
+
+    override suspend fun unlikeReplyComment(replyCommentId: String, userId: String): String {
+        return postRemoteDataSource.unlikeReplyComment(replyCommentId, userId)
+    }
 }

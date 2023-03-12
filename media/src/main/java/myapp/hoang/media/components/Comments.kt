@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.LikeIconButtonWithNumber
 import myapp.hoang.core_ui.components.ProfilePic
@@ -25,8 +24,10 @@ fun Comments(
     commentsLikes: List<Int>,
     areReplyCommentLiked: List<List<Boolean>>,
     replyCommentsLikes: List<List<Int>>,
-    onLike: (String) -> Unit,
-    onUnlike: (String) -> Unit,
+    onLikeComment: (String) -> Unit,
+    onUnlikeComment: (String) -> Unit,
+    onLikeReplyComment: (String, String) -> Unit,
+    onUnlikeReplyComment: (String, String) -> Unit,
     onReply: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -35,14 +36,15 @@ fun Comments(
     ) {
         itemsIndexed(items = comments) { i, comment ->
             Comment(
-                commenter = comment.author,
                 comment = comment,
                 isCommentLiked = areCommentsLiked[i],
                 commentLikes = commentsLikes[i],
                 areReplyCommentLiked = areReplyCommentLiked[i],
                 replyCommentsLikes = replyCommentsLikes[i],
-                onLike = onLike,
-                onUnlike = onUnlike,
+                onLikeComment = onLikeComment,
+                onUnlikeComment = onUnlikeComment,
+                onLikeReplyComment = onLikeReplyComment,
+                onUnlikeReplyComment = onUnlikeReplyComment,
                 onReply = onReply,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -55,13 +57,14 @@ fun Comments(
 @Composable
 fun Comment(
     comment: Comment,
-    commenter: InstaCloneUser,
     isCommentLiked: Boolean,
     commentLikes: Int,
     areReplyCommentLiked: List<Boolean>,
     replyCommentsLikes: List<Int>,
-    onLike: (String) -> Unit,
-    onUnlike: (String) -> Unit,
+    onLikeComment: (String) -> Unit,
+    onUnlikeComment: (String) -> Unit,
+    onLikeReplyComment: (String, String) -> Unit,
+    onUnlikeReplyComment: (String, String) -> Unit,
     onReply: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -83,7 +86,7 @@ fun Comment(
                 )
         ) {
             ProfilePic(
-                path = commenter.profilePicPath,
+                path = comment.author.profilePicPath,
                 onClick = {},
                 modifier = Modifier
                     .weight(0.12f)
@@ -97,7 +100,7 @@ fun Comment(
                     .wrapContentHeight()
             ) {
                 UsernameAndTimestamp(
-                    username = commenter.username,
+                    username = comment.author.username,
                     createdAt = comment.createdAt,
                     isEdited = comment.isEdited,
                     onUsernameClick = {},
@@ -110,7 +113,7 @@ fun Comment(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 ReplyClickableText(
-                    onClick = { onReply(commenter.username, comment._id) }
+                    onClick = { onReply(comment.author.username, comment._id) }
                 )
             }
             Box(
@@ -123,8 +126,8 @@ fun Comment(
                     isLiked = isCommentLiked,
                     number = commentLikes,
                     onClick = {
-                        if (isCommentLiked) onUnlike(comment._id)
-                        else onLike(comment._id)
+                        if (isCommentLiked) onUnlikeComment(comment._id)
+                        else onLikeComment(comment._id)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -133,11 +136,12 @@ fun Comment(
             }
         }
         ReplyComments(
-            comments = comment.replies,
+            commentId = comment._id,
+            replyComments = comment.replies,
             areReplyCommentsLiked = areReplyCommentLiked,
             replyCommentsLikes = replyCommentsLikes,
-            onLike = {},
-            onUnlike = {},
+            onLikeReplyComment = onLikeReplyComment,
+            onUnlikeReplyComment = onUnlikeReplyComment,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(max = 9999.dp) // hack for nested LazyColumn
