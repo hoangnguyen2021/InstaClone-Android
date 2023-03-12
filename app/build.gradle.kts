@@ -1,9 +1,10 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("kotlinx-serialization")
+    id("dagger.hilt.android.plugin")
 }
 
 android {

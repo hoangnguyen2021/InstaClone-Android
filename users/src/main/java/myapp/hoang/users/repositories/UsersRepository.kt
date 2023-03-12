@@ -4,5 +4,4 @@ import myapp.hoang.core.models.InstaCloneUser
 
 interface UsersRepository {
     suspend fun getUserById(id: String): InstaCloneUser
-    suspend fun getCommentersByPostId(postId: String): List<InstaCloneUser>
 }

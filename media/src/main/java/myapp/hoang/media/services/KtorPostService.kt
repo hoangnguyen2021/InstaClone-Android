@@ -9,11 +9,13 @@ import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POSTS_BY_USER_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_GET_POST_BY_ID
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_LIKE_POST
+import myapp.hoang.core.config.NetworkConfig.ROUTE_REPLY_TO_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_COMMENT
 import myapp.hoang.core.config.NetworkConfig.ROUTE_UNLIKE_POST
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
+import myapp.hoang.media.models.ReplyCommentForm
 import javax.inject.Inject
 
 class KtorPostService @Inject constructor(
@@ -76,6 +78,13 @@ class KtorPostService @Inject constructor(
             url(ROUTE_UNLIKE_COMMENT)
             parameter("commentId", commentId)
             parameter("userId", userId)
+        }.body()
+    }
+
+    override suspend fun replyToComment(replyCommentForm: ReplyCommentForm): String {
+        return client.post {
+            url(ROUTE_REPLY_TO_COMMENT)
+            setBody(replyCommentForm)
         }.body()
     }
 }

@@ -17,6 +17,7 @@ import myapp.hoang.settings.models.UserPreferences
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.instaclone.R
+import myapp.hoang.instaclone.models.CommentMode
 import myapp.hoang.media.components.Comments
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
@@ -31,7 +32,8 @@ fun CommentsScreen(
 ) {
     val postsUiState by postsViewModel.uiState.collectAsStateWithLifecycle()
 
-    var comment by remember { mutableStateOf("") }
+    var commentContent by remember { mutableStateOf("") }
+    var commentMode by remember { mutableStateOf<CommentMode>(CommentMode.Comment) }
 
     LaunchedEffect(key1 = true) {
         postsViewModel.getPost(postId)
@@ -48,8 +50,6 @@ fun CommentsScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxSize()
             ) {
                 CommentsTopBar(
@@ -68,31 +68,60 @@ fun CommentsScreen(
                 )
                 Comments(
                     comments = postsUiState.post!!.comments,
-                    commenters = postsUiState.commenters,
-                    areLiked = postsUiState.areCommentsLiked,
-                    likes = postsUiState.commentsLikes,
+                    areCommentsLiked = postsUiState.areCommentsLiked,
+                    commentsLikes = postsUiState.commentsLikes,
+                    areReplyCommentLiked = postsUiState.areReplyCommentsLiked,
+                    replyCommentsLikes = postsUiState.replyCommentsLikes,
                     onLike = { postsViewModel.likeComment(it) },
                     onUnlike = { postsViewModel.unlikeComment(it) },
+                    onReply = { username, commentId ->
+                        commentMode = CommentMode.Reply(username, commentId)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
                 )
             }
-            CommentFooter(
-                userPreferences = userPreferences,
-                author = postsUiState.author!!,
-                comment = comment,
-                onCommentChange = { comment = it },
-                onComment = {
-                    postsViewModel.commentOnPost(postsUiState.post!!._id, comment)
-                    comment = ""
-                },
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .align(Alignment.BottomStart)
                     .background(color = MaterialTheme.colorScheme.secondaryContainer)
-            )
+            ) {
+                if (commentMode is CommentMode.Reply) {
+                    ReplyIndicator(
+                        replyingToUsername = (commentMode as CommentMode.Reply).username,
+                        onClose = { commentMode = CommentMode.Comment },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                            .padding(LocalDimension.current.medium)
+                    )
+                }
+                CommentFooter(
+                    userPreferences = userPreferences,
+                    author = postsUiState.author!!,
+                    commentContent = commentContent,
+                    commentMode = commentMode,
+                    onCommentChange = { commentContent = it },
+                    onComment = {
+                        if (commentMode is CommentMode.Comment) {
+                            postsViewModel.commentOnPost(postsUiState.post!!._id, commentContent)
+                        } else {
+                            postsViewModel.replyToComment(
+                                postsUiState.post!!._id,
+                                (commentMode as CommentMode.Reply).commentId,
+                                commentContent
+                            )
+                        }
+                        commentContent = ""
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                )
+            }
         }
     }
 }
@@ -179,14 +208,41 @@ fun Caption(
         }
         FeedDivider()
     }
+}
 
+@Composable
+fun ReplyIndicator(
+    replyingToUsername: String,
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start,
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(R.string.replying_to, replyingToUsername),
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colorScheme.onSecondary,
+            modifier = Modifier.weight(0.95f)
+        )
+        CloseIconButton(
+            onClick = onClose,
+            modifier = Modifier
+                .weight(0.05f)
+                .size(LocalDimension.current.small)
+        )
+    }
 }
 
 @Composable
 fun CommentFooter(
     userPreferences: UserPreferences,
     author: InstaCloneUser,
-    comment: String,
+    commentContent: String,
+    commentMode: CommentMode,
     onCommentChange: (String) -> Unit,
     onComment: () -> Unit,
     modifier: Modifier = Modifier
@@ -197,9 +253,13 @@ fun CommentFooter(
         modifier = modifier
     ) {
         CommentTextField(
-            value = comment,
+            value = commentContent,
             onValueChange = { onCommentChange(it) },
-            label = "Add a comment for ${author.username}...",
+            label =
+            if (commentMode is CommentMode.Comment)
+                stringResource(R.string.add_a_comment_for, author.username)
+            else
+                stringResource(R.string.replying_as, author.username),
             profilePicPath = userPreferences.profilePicPath,
             modifier = Modifier
                 .weight(0.85f)
@@ -213,7 +273,7 @@ fun CommentFooter(
         ) {
             TransparentButton(
                 text = stringResource(R.string.post),
-                isEnabled = comment.isNotEmpty(),
+                isEnabled = commentContent.isNotEmpty(),
                 onClick = onComment,
                 modifier = Modifier.wrapContentSize()
             )

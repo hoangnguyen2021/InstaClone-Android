@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import myapp.hoang.media.models.CommentForm
+import myapp.hoang.media.models.ReplyCommentForm
 import myapp.hoang.media.repositories.PostRepository
 import myapp.hoang.settings.repositories.UserPreferencesRepository
 import myapp.hoang.users.repositories.UsersRepository
@@ -37,6 +38,7 @@ class InstaClonePostsViewModel @Inject constructor(
     private var commentOnPostJob: Job? = null
     private var likeCommentJob: Job? = null
     private var unlikeCommentJob: Job? = null
+    private var replyToCommentJob: Job? = null
 
     fun getAllPostsByUser() {
         getAllPostsByUserJob?.cancel()
@@ -180,13 +182,21 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         val post = postRepository.getPostById(id)
-                        val commenters = usersRepository.getCommentersByPostId(id)
                         Log.d(TAG, post.toString())
                         state.copy(
                             post = post,
-                            commenters = commenters,
                             areCommentsLiked = post.comments.map { it.likes.contains(userPreferences.id) },
                             commentsLikes = post.comments.map { it.likes.size },
+                            areReplyCommentsLiked = post.comments.map { comment ->
+                                comment.replies.map { replyComment ->
+                                    replyComment.likes.contains(userPreferences.id)
+                                }
+                            },
+                            replyCommentsLikes = post.comments.map { comment ->
+                                comment.replies.map { replyComment ->
+                                    replyComment.likes.size
+                                }
+                            },
                             isLoading = false
                         )
                     }
@@ -277,7 +287,8 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         if (state.post != null) {
-                            val commentIndex = state.post!!.comments.indexOfFirst { it._id == commentId }
+                            val commentIndex =
+                                state.post!!.comments.indexOfFirst { it._id == commentId }
                             state = state.copy(
                                 areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
                                     if (commentIndex != -1)
@@ -322,7 +333,8 @@ class InstaClonePostsViewModel @Inject constructor(
                         )
                     } else {
                         if (state.post != null) {
-                            val commentIndex = state.post!!.comments.indexOfFirst { it._id == commentId }
+                            val commentIndex =
+                                state.post!!.comments.indexOfFirst { it._id == commentId }
                             state = state.copy(
                                 areCommentsLiked = state.areCommentsLiked.toMutableList().apply {
                                     if (commentIndex != -1) this[commentIndex] = false
@@ -339,6 +351,44 @@ class InstaClonePostsViewModel @Inject constructor(
                         state = state.copy(
                             isLoading = false
                         )
+                    }
+                }
+            } catch (e: Exception) {
+                Log.d(TAG, e.toString())
+                state = state.copy(
+                    isLoading = false
+                )
+            }
+        }
+    }
+
+    fun replyToComment(postId: String, commentId: String, content: String) {
+        replyToCommentJob?.cancel()
+
+        state = state.copy(
+            isLoading = true
+        )
+        replyToCommentJob = viewModelScope.launch {
+            try {
+                userPreferencesRepository.getUserPreferences().collect { userPreferences ->
+                    val userId = userPreferences.id
+                    if (userId == null) {
+                        state = state.copy(
+                            isLoading = false
+                        )
+                    } else {
+                        val replyCommentForm = ReplyCommentForm(
+                            authorId = userId,
+                            commentId = commentId,
+                            content = content,
+                            createdAt = Clock.System.now(),
+                            lastEditedAt = Clock.System.now()
+                        )
+                        postRepository.replyToComment(replyCommentForm)
+                        state = state.copy(
+                            isLoading = false
+                        )
+                        reloadPost(postId)
                     }
                 }
             } catch (e: Exception) {

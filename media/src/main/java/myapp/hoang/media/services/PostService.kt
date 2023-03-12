@@ -3,6 +3,7 @@ package myapp.hoang.media.services
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
+import myapp.hoang.media.models.ReplyCommentForm
 
 interface PostService {
     suspend fun createPost(postForm: PostForm): String
@@ -13,4 +14,5 @@ interface PostService {
     suspend fun commentOnPost(commentForm: CommentForm): String
     suspend fun likeComment(commentId: String, userId: String): String
     suspend fun unlikeComment(commentId: String, userId: String): String
+    suspend fun replyToComment(replyCommentForm: ReplyCommentForm): String
 }

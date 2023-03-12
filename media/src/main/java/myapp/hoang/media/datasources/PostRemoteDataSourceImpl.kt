@@ -5,6 +5,7 @@ import myapp.hoang.core.coroutines.DispatcherProvider
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
+import myapp.hoang.media.models.ReplyCommentForm
 import myapp.hoang.media.services.PostService
 import javax.inject.Inject
 
@@ -57,6 +58,12 @@ class PostRemoteDataSourceImpl @Inject constructor(
     override suspend fun unlikeComment(commentId: String, userId: String): String {
         return withContext(dispatcherProvider.io) {
             postService.unlikeComment(commentId, userId)
+        }
+    }
+
+    override suspend fun replyToComment(replyCommentForm: ReplyCommentForm): String {
+        return withContext(dispatcherProvider.io) {
+            postService.replyToComment(replyCommentForm)
         }
     }
 }

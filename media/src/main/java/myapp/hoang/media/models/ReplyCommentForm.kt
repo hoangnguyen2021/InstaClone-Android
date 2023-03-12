@@ -5,13 +5,12 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CommentForm(
+data class ReplyCommentForm(
     val authorId: String,
-    val postId: String,
+    val commentId: String,
     val content: String,
     val isEdited: Boolean = false,
     val createdAt: Instant = Clock.System.now(),
     val lastEditedAt: Instant = Clock.System.now(),
-    val likes: List<String> = emptyList(),
     val tags: List<String> = emptyList()
 )

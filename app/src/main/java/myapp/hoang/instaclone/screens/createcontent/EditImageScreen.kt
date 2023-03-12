@@ -79,7 +79,9 @@ fun EditImageScreen(
                             viewModel.resetImageFilter(selectedMedia.index)
                             onBack()
                         },
-                        modifier = Modifier.weight(0.1f)
+                        modifier = Modifier
+                            .weight(0.1f)
+                            .size(LocalDimension.current.mediumLarge)
                     )
             }
             MagicWandIcon(

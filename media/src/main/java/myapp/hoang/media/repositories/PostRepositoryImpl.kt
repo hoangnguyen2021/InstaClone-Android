@@ -4,6 +4,7 @@ import myapp.hoang.media.datasources.PostRemoteDataSource
 import myapp.hoang.media.models.CommentForm
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.models.PostForm
+import myapp.hoang.media.models.ReplyCommentForm
 
 class PostRepositoryImpl(
     private val postRemoteDataSource: PostRemoteDataSource
@@ -38,5 +39,9 @@ class PostRepositoryImpl(
 
     override suspend fun unlikeComment(commentId: String, userId: String): String {
         return postRemoteDataSource.unlikeComment(commentId, userId)
+    }
+
+    override suspend fun replyToComment(replyCommentForm: ReplyCommentForm): String {
+        return postRemoteDataSource.replyToComment(replyCommentForm)
     }
 }

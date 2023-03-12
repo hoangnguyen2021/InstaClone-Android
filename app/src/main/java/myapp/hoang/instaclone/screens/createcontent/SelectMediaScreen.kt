@@ -109,7 +109,9 @@ fun SelectMediaScreen(
             ) {
                 CloseIconButton(
                     onClick = onClose,
-                    modifier = Modifier.weight(0.1f)
+                    modifier = Modifier
+                        .weight(0.1f)
+                        .size(LocalDimension.current.mediumLarge)
                 )
                 Text(
                     text = stringResource(R.string.new_post),

@@ -16,4 +16,7 @@
     <string name="posts">Posts</string>
     <string name="post">Post</string>
     <string name="comments">Comments</string>
+    <string name="add_a_comment_for">Add a comment for %1$s…</string>
+    <string name="replying_as">Replying as %1$s…</string>
+    <string name="replying_to">Replying to %1$s</string>
 </resources>
