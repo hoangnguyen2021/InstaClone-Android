@@ -40,14 +40,20 @@ fun CommentsScreen(
     }
 
     if (postsUiState.post != null) {
-        Box(
+        Column(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(if (commentMode is CommentMode.Comment) 0.92f else 0.86f)
             ) {
                 CommentsTopBar(
-                    onBack = onBack
+                    onBack = onBack,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(LocalDimension.current.sixExtraLarge)
+                        .padding(horizontal = LocalDimension.current.medium)
                 )
                 Caption(
                     author = postsUiState.post!!.author,
@@ -85,8 +91,7 @@ fun CommentsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
-                    .align(Alignment.BottomStart)
+                    .weight(if (commentMode is CommentMode.Comment) 0.08f else 0.14f)
                     .background(color = MaterialTheme.colorScheme.secondaryContainer)
             ) {
                 if (commentMode is CommentMode.Reply) {
@@ -95,8 +100,8 @@ fun CommentsScreen(
                         onClose = { commentMode = CommentMode.Comment },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight()
-                            .padding(LocalDimension.current.medium)
+                            .weight(0.06f)
+                            .padding(horizontal = LocalDimension.current.medium)
                     )
                 }
                 CommentFooter(
@@ -119,7 +124,7 @@ fun CommentsScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight()
+                        .weight(0.08f)
                 )
             }
         }
@@ -128,7 +133,8 @@ fun CommentsScreen(
 
 @Composable
 fun CommentsTopBar(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -136,10 +142,7 @@ fun CommentsTopBar(
             space = LocalDimension.current.fourExtraLarge,
             alignment = Alignment.Start
         ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(LocalDimension.current.sixExtraLarge)
-            .padding(horizontal = LocalDimension.current.medium)
+        modifier = modifier
     ) {
         BackIconButton(
             onClick = onBack,

@@ -12,6 +12,5 @@ data class CommentForm(
     val isEdited: Boolean = false,
     val createdAt: Instant = Clock.System.now(),
     val lastEditedAt: Instant = Clock.System.now(),
-    val likes: List<String> = emptyList(),
     val tags: List<String> = emptyList()
 )
