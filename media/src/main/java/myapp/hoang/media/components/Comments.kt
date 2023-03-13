@@ -142,6 +142,7 @@ fun Comment(
             replyCommentsLikes = replyCommentsLikes,
             onLikeReplyComment = onLikeReplyComment,
             onUnlikeReplyComment = onUnlikeReplyComment,
+            onReply = onReply,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(max = 9999.dp) // hack for nested LazyColumn

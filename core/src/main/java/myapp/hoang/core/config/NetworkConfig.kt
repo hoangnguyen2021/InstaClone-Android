@@ -1,7 +1,7 @@
 package myapp.hoang.core.config
 
 object NetworkConfig {
-    const val HOST = "192.168.1.65"
+    const val HOST = "192.168.86.174"
     private const val ROUTE_AUTH = "auth"
     private const val ROUTE_MEDIA = "media"
     private const val ROUTE_PROFILE_PIC = "profile-pics"

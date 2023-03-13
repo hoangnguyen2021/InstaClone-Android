@@ -24,6 +24,7 @@ fun ReplyComments(
     replyCommentsLikes: List<Int>,
     onLikeReplyComment: (String, String) -> Unit,
     onUnlikeReplyComment: (String, String) -> Unit,
+    onReply: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -38,6 +39,7 @@ fun ReplyComments(
                 likes = replyCommentsLikes[i],
                 onLikeReplyComment = onLikeReplyComment,
                 onUnlikeReplyComment = onUnlikeReplyComment,
+                onReply = onReply,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -58,6 +60,7 @@ fun ReplyComment(
     likes: Int,
     onLikeReplyComment: (String, String) -> Unit,
     onUnlikeReplyComment: (String, String) -> Unit,
+    onReply: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -98,7 +101,7 @@ fun ReplyComment(
                 fontWeight = FontWeight.Normal
             )
             ReplyClickableText(
-                onClick = {}
+                onClick = { onReply(replyComment.author.username, commentId) }
             )
         }
         Box(
