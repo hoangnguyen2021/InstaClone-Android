@@ -93,7 +93,7 @@ fun PartiallyClickableText(
 @Composable
 fun ProfileUsername(
     username: String,
-    onClick: () -> Unit
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -101,10 +101,7 @@ fun ProfileUsername(
             space = LocalDimension.current.extraSmall,
             alignment = Alignment.Start
         ),
-        modifier = Modifier
-            .wrapContentWidth()
-            .fillMaxHeight()
-            .clickable(onClick = onClick)
+        modifier = modifier
     ) {
         Text(
             text = username,

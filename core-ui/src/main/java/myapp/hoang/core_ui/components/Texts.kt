@@ -37,7 +37,8 @@ fun InstaCloneBrand(
 @Composable
 fun ProfileStat(
     value: Int,
-    unit: String
+    unit: String,
+    modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,9 +46,7 @@ fun ProfileStat(
             space = LocalDimension.current.twoExtraSmall,
             alignment = Alignment.CenterVertically
         ),
-        modifier = Modifier
-            .wrapContentWidth()
-            .fillMaxHeight()
+        modifier = modifier
     ) {
         Text(
             text = value.toString(),

@@ -14,14 +14,16 @@ import myapp.hoang.core_ui.*
 
 @Composable
 fun NewPostIconButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
             containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        ),
+        modifier = modifier
     ) {
         NewPostIcon(
             color = MaterialTheme.colorScheme.onPrimary
@@ -31,14 +33,16 @@ fun NewPostIconButton(
 
 @Composable
 fun HeartIconButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
             containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        ),
+        modifier = modifier
     ) {
         HeartIcon(
             color = MaterialTheme.colorScheme.onPrimary
@@ -65,14 +69,16 @@ fun MessageIconButton(
 
 @Composable
 fun MenuIconButton(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     IconButton(
         onClick = onClick,
         colors = IconButtonDefaults.iconButtonColors(
             containerColor = Transparent,
             contentColor = MaterialTheme.colorScheme.onPrimary
-        )
+        ),
+        modifier = modifier
     ) {
         MenuIcon(
             color = MaterialTheme.colorScheme.onPrimary

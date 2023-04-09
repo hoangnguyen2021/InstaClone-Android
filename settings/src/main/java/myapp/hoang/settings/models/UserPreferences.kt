@@ -15,5 +15,7 @@ data class UserPreferences(
     val fullName: String? = null,
     val birthday: LocalDate? = null,
     val agreedToPolicy: Boolean? = null,
-    val profilePicPath: String? = null
+    val profilePicPath: String? = null,
+    val followers: List<String> = emptyList(),
+    val following: List<String> = emptyList()
 )

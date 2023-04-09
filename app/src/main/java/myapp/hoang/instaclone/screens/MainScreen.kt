@@ -103,6 +103,7 @@ fun MainScreenContent(
                     composable(route = MainScreen.ProfileScreen.route) {
                         ProfileScreen(
                             postsViewModel = postsViewModel,
+                            userPreferences = userPreferences,
                             onProfileUsernameClick = {
                                 onCurrentDrawerChange(MainScreenDrawer.SelectAccountDrawer)
                                 scope.launch {

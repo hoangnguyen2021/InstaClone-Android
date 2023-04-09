@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">InstaClone</string>
 
+    <string name="posts">Posts</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
     <string name="edit_profile">Edit profile</string>
     <string name="profile_tab_title">Profile</string>
     <string name="profile_tab_description">When you share photos and videos, they\'ll appear on your profile.</string>
@@ -13,7 +16,6 @@
     <string name="select_media_limit_alert">The limit is 10 photos or videos.</string>
     <string name="write_caption_prompt">Write a caption…</string>
 
-    <string name="posts">Posts</string>
     <string name="post">Post</string>
     <string name="comments">Comments</string>
     <string name="add_a_comment_for">Add a comment for %1$s…</string>
