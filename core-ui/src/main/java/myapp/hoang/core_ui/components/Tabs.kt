@@ -1,5 +1,7 @@
 package myapp.hoang.core_ui.components
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
@@ -36,7 +38,10 @@ fun ProfileTabRow(
             ProfileTab(
                 selected = pagerState.currentPage == i,
                 icon = tab.icon,
-                onClick = { onScrollToPage(i) }
+                onClick = { onScrollToPage(i) },
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .fillMaxHeight()
             )
         }
     }
@@ -52,10 +57,10 @@ fun ProfileTab(
     Tab(
         selected = selected,
         onClick = onClick,
-        modifier = modifier,
         icon = icon,
         selectedContentColor = MaterialTheme.colorScheme.onSurface,
-        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant
+        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = modifier
     )
 }
 

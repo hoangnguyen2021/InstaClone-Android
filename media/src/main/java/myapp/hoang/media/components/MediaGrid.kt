@@ -177,10 +177,11 @@ fun PostsGrid(
         horizontalArrangement = Arrangement.spacedBy(LocalDimension.current.twoExtraSmall),
         modifier = modifier
     ) {
-        itemsIndexed(items = posts) { index, item ->
+        itemsIndexed(items = posts) { index, post ->
             PostPreview(
-                mediaPaths = item.mediaPaths,
-                onClick = { onPostClick(item._id, index) }
+                mediaPaths = post.mediaPaths,
+                onClick = { onPostClick(post._id, index) },
+                modifier = Modifier.fillMaxSize()
             )
         }
     }
@@ -193,6 +194,7 @@ fun PostPreview(
     modifier: Modifier = Modifier
 ) {
     if (mediaPaths.isNotEmpty()) {
+        // show first media in preview
         val previewUrl = ServiceUtils.buildAmazonS3ObjectUrl(mediaPaths.first())
 
         Box(
