@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.*
@@ -18,7 +17,6 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.login.viewmodels.LoginViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun LoginScreen(
     onCreateAccount: () -> Unit,

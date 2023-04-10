@@ -15,7 +15,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.palm.composestateevents.EventEffect
 import kotlinx.coroutines.launch
@@ -26,7 +25,6 @@ import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 import myapp.hoang.onboarding.signup.models.SignupForm
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun ConfirmationCodeScreen(
     viewModel: SignupViewModel = hiltViewModel(),

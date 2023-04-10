@@ -15,14 +15,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SaveLoginInfoScreen(
     viewModel: SignupViewModel = hiltViewModel(),

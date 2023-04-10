@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -26,7 +25,6 @@ import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
 @OptIn(
     ExperimentalPermissionsApi::class,
-    ExperimentalLifecycleComposeApi::class,
     ExperimentalMaterial3Api::class
 )
 @Composable

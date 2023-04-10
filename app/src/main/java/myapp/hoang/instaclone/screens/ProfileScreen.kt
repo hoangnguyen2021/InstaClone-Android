@@ -15,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -41,8 +40,7 @@ val profileTabs = listOf(
 )
 
 @OptIn(
-    ExperimentalPagerApi::class,
-    ExperimentalLifecycleComposeApi::class
+    ExperimentalPagerApi::class
 )
 @Composable
 fun ProfileScreen(

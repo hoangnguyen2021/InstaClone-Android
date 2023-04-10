@@ -1,8 +1,8 @@
 object Compose {
-    private const val bomVersion = "2023.01.00"
+    private const val bomVersion = "2023.04.00"
 
-    const val version = "1.3.3"
-    const val compilerVersion = "1.4.2"
+    const val version = "1.4.1"
+    const val compilerVersion = "1.4.4"
     private const val material3Version = "1.0.1"
     private const val hiltNavigationVersion = "1.0.0"
     private const val pagingVersion = "1.0.0-rc1"

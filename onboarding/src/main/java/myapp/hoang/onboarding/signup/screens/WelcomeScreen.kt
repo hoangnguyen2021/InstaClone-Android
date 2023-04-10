@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.Black
 import myapp.hoang.core_ui.LocalDimension
@@ -23,7 +22,6 @@ import myapp.hoang.core_ui.onBoardingBackgroundBrush
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun WelcomeScreen(
     viewModel: SignupViewModel = hiltViewModel(),

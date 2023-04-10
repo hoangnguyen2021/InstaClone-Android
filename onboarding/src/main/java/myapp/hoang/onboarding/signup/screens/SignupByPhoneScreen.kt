@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core.utils.Validator
@@ -23,7 +22,6 @@ import myapp.hoang.core_ui.components.*
 import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SignupByPhoneScreen(
     viewModel: SignupViewModel = hiltViewModel(),

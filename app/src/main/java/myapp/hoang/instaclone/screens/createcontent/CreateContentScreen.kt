@@ -3,7 +3,6 @@ package myapp.hoang.instaclone.screens.createcontent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,7 +18,6 @@ import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
  * New Post flow.
  *
  */
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateContentScreen(
     onClose: () -> Unit

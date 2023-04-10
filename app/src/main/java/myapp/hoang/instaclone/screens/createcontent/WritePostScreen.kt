@@ -8,7 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.palm.composestateevents.EventEffect
 import myapp.hoang.core_ui.LocalDimension
@@ -18,7 +17,6 @@ import myapp.hoang.core_ui.components.WritePostCaptionTextField
 import myapp.hoang.instaclone.R
 import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun WritePostScreen(
     onBack: () -> Unit,

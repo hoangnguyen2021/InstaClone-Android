@@ -9,13 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kotlinx.datetime.toJavaLocalDate
@@ -28,7 +26,6 @@ import myapp.hoang.onboarding.R
 import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 import java.time.LocalDate
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun BirthdayScreen(
     viewModel: SignupViewModel = hiltViewModel(),

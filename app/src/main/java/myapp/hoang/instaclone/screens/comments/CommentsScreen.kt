@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core.models.InstaCloneUser
 import myapp.hoang.settings.models.UserPreferences
@@ -22,7 +21,6 @@ import myapp.hoang.media.components.Comments
 import myapp.hoang.media.models.InstaClonePost
 import myapp.hoang.media.viewmodels.InstaClonePostsViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CommentsScreen(
     userPreferences: UserPreferences,

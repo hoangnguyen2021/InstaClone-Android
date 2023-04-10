@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -24,10 +23,7 @@ import myapp.hoang.users.viewmodels.UserPreferencesViewModel
 class MainActivity : ComponentActivity() {
     private val userPreferencesViewModel by viewModels<UserPreferencesViewModel>()
 
-    @OptIn(
-        ExperimentalPagerApi::class,
-        ExperimentalLifecycleComposeApi::class
-    )
+    @OptIn(ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

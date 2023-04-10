@@ -1,7 +1,6 @@
 package myapp.hoang.onboarding.signup.screens
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -20,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
@@ -41,8 +39,7 @@ import myapp.hoang.onboarding.signup.viewmodels.SignupViewModel
 
 @OptIn(
     ExperimentalMaterial3Api::class,
-    ExperimentalPermissionsApi::class,
-    ExperimentalLifecycleComposeApi::class
+    ExperimentalPermissionsApi::class
 )
 @Composable
 fun ProfilePictureScreen(

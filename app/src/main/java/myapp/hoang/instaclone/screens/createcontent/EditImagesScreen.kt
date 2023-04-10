@@ -7,13 +7,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.LocalDimension
 import myapp.hoang.core_ui.components.*
 import myapp.hoang.media.viewmodels.MediaSharedStorageViewModel
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun EditImagesScreen(
     onBack: () -> Unit,

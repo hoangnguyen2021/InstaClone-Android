@@ -10,7 +10,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import myapp.hoang.core_ui.*
 import myapp.hoang.core_ui.components.*
@@ -25,7 +24,6 @@ val editImageTabs = listOf(
     EditImageTab(text = "Edit")
 )
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun EditImageScreen(
     selectedMediaListIndex: Int,
